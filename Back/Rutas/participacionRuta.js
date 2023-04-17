@@ -1,18 +1,19 @@
 import express from "express";
 import { sequelize } from "../loadSequelize.js";
-import { Evento } from "../Models/models.js";
+import { Participacion } from "../Models/models.js";
 
 const router = express.Router();
 
+//GET GENERAL
 router.get("/", function (req, res, next) {
     sequelize
       .sync()
       .then(() => {
-        Evento.findAll()
-          .then((eventos) =>
+        Participacion.findAll()
+          .then((participaciones) =>
             res.json({
               ok: true,
-              data: eventos,
+              data: participaciones,
             })
           )
           .catch((error) =>
@@ -30,14 +31,14 @@ router.get("/", function (req, res, next) {
       );
   });
   
-// GET DE UN SOLO EVENTO
+//GET PARA SOLO UNA PARTICIPACION
 router.get('/:id', function (req, res, next) {
     sequelize.sync().then(() => {
   
-        Evento.findOne({ where: { id: req.params.id } })
-            .then(al => res.json({
+        Participacion.findOne({ where: { id: req.params.id } })
+            .then(el => res.json({
                 ok: true,
-                data: al
+                data: el
             }))
             .catch(error => res.json({
                 ok: false,
@@ -56,7 +57,7 @@ router.get('/:id', function (req, res, next) {
   router.post('/', function (req, res, next) {
     sequelize.sync().then(() => {
         
-        Evento.create(req.body)
+        Participacion.create(req.body)
             .then((el) => res.json({ ok: true, data: el }))
             .catch((error) => res.json({ ok: false, error: error.message }))
   
@@ -70,17 +71,17 @@ router.get('/:id', function (req, res, next) {
   });
   
   
-  //PUT DE UN SOLO EVENTO
+  // PUT SOLO UNA PARTICIPACION
   router.put('/:id', function (req, res, next) {
     sequelize.sync().then(() => {
   
-        Evento.findOne({ where: { id: req.params.id } })
-            .then(evento =>
-                evento.update(req.body)
+        Participacion.findOne({ where: { id: req.params.id } })
+            .then(participaciones =>
+              participaciones.update(req.body)
             )
-            .then(eventoMod => res.json({
+            .then(participacionesMod => res.json({
                 ok: true,
-                data: eventoMod
+                data: participacionesMod
             }))
             .catch(error => res.json({
                 ok: false,
@@ -97,12 +98,12 @@ router.get('/:id', function (req, res, next) {
   
   
   
-  //ELIMINAR
+  // ELIMINAR
   router.delete('/:id', function (req, res, next) {
   
     sequelize.sync().then(() => {
   
-        Evento.destroy({ where: { id: req.params.id } })
+        Participacion.destroy({ where: { id: req.params.id } })
             .then((data) => res.json({ ok: true, data }))
             .catch((error) => res.json({ ok: false, error }))
   

@@ -2,14 +2,20 @@ import express from "express";
 
 import indexRutas from "./Rutas/indexRutas.js";
 import usuarioRuta from "./Rutas/usuarioRuta.js";
+import eventoRuta from "./Rutas/eventoRuta.js"
+import participacionRuta from "./Rutas/participacionRuta.js"
 
 const app = express();
 
 app.use(express.json());
 
+app.use('/', indexRutas);
+
 app.use('/api/usuarios', usuarioRuta)
 
-app.use('/', indexRutas);
+app.use('/api/eventos', eventoRuta)
+
+app.use('/api/participacion', participacionRuta)
 
 const PORT = process.env.PORT || 5000;
 
