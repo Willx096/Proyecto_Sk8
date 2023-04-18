@@ -13,7 +13,7 @@ export const Usuario = sequelize.define('Usuario', {
     nickname: dataType.STRING,
     contacto: dataType.STRING
 
-} , {tablename: 'usuarios', timestamps: false})
+} , {tableName: 'usuarios', timestamps: false})
 
 export const Evento = sequelize.define('Evento', {
     titulo: dataType.STRING,
@@ -26,11 +26,11 @@ export const Evento = sequelize.define('Evento', {
     participantes: dataType.INTEGER,
     foto: dataType.STRING,
 
-} , {tablename: 'eventos', timestamps: false})
+} , {tableName: 'eventos', timestamps: false})
 
 export const Participacion = sequelize.define('Participacion', {
     id_evento: dataType.INTEGER,
     id_usuario: dataType.INTEGER,
     valoracion: dataType.INTEGER
 
-} , {tablename: 'participaciones', timestamps: false})
+} , {tableName: 'participaciones', timestamps: false})
