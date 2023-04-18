@@ -29,7 +29,7 @@ router.get("/", function (req, res, next) {
     );
 });
 
-// GET de un solo client
+//Para el perfil de un usuario
 router.get('/:id', function (req, res, next) {
   sequelize.sync().then(() => {
 
