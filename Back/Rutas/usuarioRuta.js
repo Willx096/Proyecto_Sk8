@@ -71,11 +71,13 @@ router.post('/', function (req, res, next) {
 
 // put solo de uno
 router.put('/:id', function (req, res, next) {
-  sequelize.sync().then(() => {
 
+  sequelize.sync().then(() => {
       Usuario.findOne({ where: { id: req.params.id } })
-          .then(usuario =>
-              usuario.update(req.body)
+          .then(usuario => {
+            usuario.update(req.body);
+            usuario.save();
+          }   
           )
           .then(usuarioMod => res.json({
               ok: true,

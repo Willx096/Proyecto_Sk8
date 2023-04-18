@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import {Table} from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Example from "./EditarPerfil";
 
 function Perfil() {
 
@@ -37,7 +38,7 @@ function Perfil() {
         <Card.Text>
           {datos.descripcion}
         </Card.Text>
-        <Button variant="primary">Editar</Button>
+            <Example />
       </Card.Body>
     </Card>
  
