@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import { Container,Navbar,Nav,NavDropdown,} from "react-bootstrap";
+import { Routes, Route,Link } from "react-router-dom";
+import Inicio from "./Inicio";
+import Eventos from "./Eventos/Eventos";
+import NuevoEvento from "./Eventos/NuevoEvento";
+import Perfil from "./Usuarios/Perfil";
+import Registro from "./Usuarios/Registro";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Container>
+        <Navbar bg="dark" variant="dark" expand="lg">
+          <Container>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="navbar-dark-example">
+              <Nav className="me-auto">
+                {/* <Link to="/" className="nav-link">
+                  Inicio
+                </Link> */}
+                <Link to="/eventos" className="nav-link">
+                  Eventos
+                </Link>
+                <NavDropdown
+                  id="nav-dropdown-dark-example"
+                  menuVariant="dark"
+                  title="Usuarios"
+                >
+                  <Link className="dropdown-item" to="/perfil">
+                    Perfil
+                  </Link>
+                  <Link className="dropdown-item" to="/nuevo-evento">
+                    Crear Evento
+                  </Link>
+                </NavDropdown>
+                <Link to="/registro" className="nav-link">
+                  Registro
+                </Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/eventos" element={<Eventos />} />
+          <Route path="/nuevo-evento" element={<NuevoEvento />} />
+          <Route path="/perfil" element={<Perfil />} />
+          <Route path="/registro" element={<Registro />} />
+        </Routes>
+      </Container>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
