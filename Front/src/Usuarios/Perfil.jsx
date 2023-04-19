@@ -4,6 +4,7 @@ import {Table} from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Example from "./EditarPerfil";
+import Eliminar from "./Eliminar";
 
 function Perfil() {
 
@@ -39,6 +40,7 @@ function Perfil() {
           {datos.descripcion}
         </Card.Text>
             <Example />
+            <Eliminar />
       </Card.Body>
     </Card>
  

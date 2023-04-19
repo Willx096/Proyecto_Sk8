@@ -11,6 +11,7 @@ function Example() {
 
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  // const [lafoto, setLafoto] = useState()
 
   function editarUsuario(e) {
   
@@ -18,21 +19,22 @@ function Example() {
     
     const usuario = {
       nombre,
-      descripcion
+      descripcion,
+      // foto
     };
 
     const URL = "http://localhost:5000/api/usuarios/1";
     var myHeaders = new Headers();
 
-    var formData = new FormData();
-    formData.append("nombre", usuario.nombre);
-    formData.append("descripcion", usuario.descripcion);
-
+    // var formData = new FormData();
+    // formData.append("nombre", usuario.nombre);
+    // formData.append("descripcion", usuario.descripcion);
+    // formData.append("foto", usuario.foto)
 
     var requestOptions = {
       method: "PUT",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(usuario),
       redirect: "follow",
     };
 
@@ -80,6 +82,10 @@ function Example() {
               <Form.Label>Descripcion</Form.Label>
               <Form.Control as="textarea" rows={3} value={descripcion}
           onInput={(e) => setDescripcion(e.target.value)}/>
+          {/* <Form.Text>imatge</Form.Text>
+      <Form.Control
+        type="file"
+        onInput={(e) => setLafoto(e.target.files[0])} /> */}
             </Form.Group>
           </Form>
         </Modal.Body>
