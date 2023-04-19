@@ -7,10 +7,10 @@ function Registro(props) {
     nombre: "",
     apellido: "",
     email: "",
-    nivel: "",
+    nivel: "Empezando",
     fecha_nacimiento: "",
     pswd: "",
-    experiencia: "",
+    experiencia: 0,
     foto: null,
     descripcion: "",
     nickname: "",
@@ -19,6 +19,9 @@ function Registro(props) {
 
   function CrearUsuario(e) {
     e.preventDefault();
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
       nombre: usuario.nombre,
@@ -33,8 +36,10 @@ function Registro(props) {
       nickname: usuario.nickname,
       contacto: usuario.contacto,
     });
+
     var requestOptions = {
       method: "POST",
+      headers: myHeaders,
       body: raw,
       redirect: "follow",
     };
@@ -43,18 +48,30 @@ function Registro(props) {
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
-    // setUsuario({ nombre: "", email: "", foto: null });
+    setUsuario({
+      nombre: "",
+      apellido: "",
+      email: "",
+      nivel: "",
+      fecha_nacimiento: "",
+      pswd: "",
+      experiencia: 0,
+      foto: null,
+      descripcion: "",
+      nickname: "",
+      contacto: null,
+    });
     e.preventDefault();
-
   }
   return (
     <div>
-      <Row>
-        <Col md={4}>
+      <Row md={2}>
+        <Col>
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Nombre</Form.Label>
               <Form.Control
+                required
                 value={usuario.nombre}
                 onInput={(e) =>
                   setUsuario({ ...usuario, nombre: e.target.value })
@@ -133,11 +150,18 @@ function Registro(props) {
                   placeholder="Password"
                 />
               </Form.Group>
+              <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label>Foto de perfil</Form.Label>
+                <Form.Control type="file" />
+              </Form.Group>
             </Form.Group>
             <Button variant="primary" onClick={CrearUsuario} type="button">
               Registrarse
             </Button>
           </Form>
+        </Col>
+        <Col>
+          <h5>Consejos para Registrarse</h5>
         </Col>
       </Row>
     </div>
