@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
@@ -35,13 +35,17 @@ function Registro(props) {
     });
     var requestOptions = {
       method: "POST",
+      body: raw,
       redirect: "follow",
     };
 
-    fetch("localhost:5000/api/usuarios", requestOptions)
+    fetch("http://localhost:5000/api/usuarios", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
+    // setUsuario({ nombre: "", email: "", foto: null });
+    e.preventDefault();
+
   }
   return (
     <div>
@@ -83,22 +87,35 @@ function Registro(props) {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control value={usuario.email}
+              <Form.Control
+                value={usuario.email}
                 onInput={(e) =>
                   setUsuario({ ...usuario, email: e.target.value })
-                } type="email" placeholder="email@gmail.com" />
+                }
+                type="email"
+                placeholder="email@gmail.com"
+              />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Fecha de nacimiento</Form.Label>
-              <Form.Control value={usuario.fecha_nacimiento}
+              <Form.Control
+                value={usuario.fecha_nacimiento}
                 onInput={(e) =>
                   setUsuario({ ...usuario, fecha_nacimiento: e.target.value })
-                } type="date" placeholder="Disabled input" />
+                }
+                type="date"
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Nivel</Form.Label>
-              <Form.Select>
+              <Form.Select
+                value={usuario.nivel}
+                onInput={(e) =>
+                  setUsuario({ ...usuario, nivel: e.target.value })
+                }
+                type="text"
+              >
                 <option>Empezando</option>
                 <option>Principiante</option>
                 <option>Casual</option>
@@ -107,20 +124,18 @@ function Registro(props) {
               </Form.Select>
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control value={usuario.pswd}
-                onInput={(e) =>
-                  setUsuario({ ...usuario, pswd: e.target.value })
-                } type="password" placeholder="Password" />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check
-                  type="checkbox"
-                  label="Acepto terminos de condicion"
+                <Form.Control
+                  value={usuario.pswd}
+                  onInput={(e) =>
+                    setUsuario({ ...usuario, pswd: e.target.value })
+                  }
+                  type="password"
+                  placeholder="Password"
                 />
               </Form.Group>
             </Form.Group>
             <Button variant="primary" onClick={CrearUsuario} type="button">
-              Submit
+              Registrarse
             </Button>
           </Form>
         </Col>
