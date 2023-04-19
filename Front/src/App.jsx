@@ -1,8 +1,7 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import { Container,Navbar,Nav,NavDropdown,} from "react-bootstrap";
 import { Routes, Route,Link } from "react-router-dom";
+
 import Inicio from "./Inicio";
 import Eventos from "./Eventos/Eventos";
 import NuevoEvento from "./Eventos/NuevoEvento";
@@ -10,12 +9,17 @@ import Perfil from "./Usuarios/Perfil";
 import Registro from "./Usuarios/Registro";
 import "./App.css";
 
+//Context para poder cambiar id mientras no hay login
+import GlobalContext from "./GlobalContext";
+
 function App() {
 
+  const id = ("2")
 
 
   return (
     <div className="App">
+    <GlobalContext.Provider value={{id}}>
       <Container>
         <Navbar bg="dark" variant="dark" expand="lg">
           <Container>
@@ -55,6 +59,7 @@ function App() {
           <Route path="/registro" element={<Registro />} />
         </Routes>
       </Container>
+      </GlobalContext.Provider>
     </div>
   );
 }

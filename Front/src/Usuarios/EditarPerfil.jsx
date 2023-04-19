@@ -1,57 +1,55 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
+import React, { useState, useContext } from "react";
+import {Button, Form, Modal} from "react-bootstrap";
 
-function Example() {
+//solo id
+import GlobalContext from "../GlobalContext";
+
+function Editar() {
+  const { id } = useContext(GlobalContext)
+  
+  //para mostrar o no el modal
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // const [descripcion, setDescripcion] = useState("");
   const [nombre, setNombre] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  // const [lafoto, setLafoto] = useState()
+  const [lafoto, setLafoto] = useState();
 
+  //funcion que modifica los datos de la base de datos
   function editarUsuario(e) {
-  
-    e.preventDefault();
     
+    e.preventDefault();
+   
     const usuario = {
       nombre,
-      descripcion,
-      // foto
+      // descripcion,
+      lafoto,
     };
 
-    const URL = "http://localhost:5000/api/usuarios/1";
-    var myHeaders = new Headers();
+    const URL = `http://localhost:5000/api/usuarios/${id}`;
 
-    // var formData = new FormData();
-    // formData.append("nombre", usuario.nombre);
+    var formData = new FormData();
+    formData.append("nombre", usuario.nombre);
     // formData.append("descripcion", usuario.descripcion);
-    // formData.append("foto", usuario.foto)
+    formData.append("file", usuario.lafoto);
 
     var requestOptions = {
       method: "PUT",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(usuario),
+      body: formData,
       redirect: "follow",
     };
 
     fetch(URL, requestOptions)
-      .then((response) => {
-        response.json()
-      })
+      .then((response) => response.json())
       .then((data) => {
         console.log("Respuesta del servidor:", data);
       })
       .catch((error) => console.log("error", error));
 
     setNombre("");
-    setDescripcion("");
+    // setDescripcion("");
   }
-
-
 
 
   return (
@@ -79,13 +77,13 @@ function Example() {
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>Descripcion</Form.Label>
+              {/* <Form.Label>Descripcion</Form.Label>
               <Form.Control as="textarea" rows={3} value={descripcion}
-          onInput={(e) => setDescripcion(e.target.value)}/>
-          {/* <Form.Text>imatge</Form.Text>
+          onInput={(e) => setDescripcion(e.target.value)}/> */}
+          <Form.Text>imatge</Form.Text>
       <Form.Control
         type="file"
-        onInput={(e) => setLafoto(e.target.files[0])} /> */}
+        onInput={(e) => setLafoto(e.target.files[0])} />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -102,4 +100,4 @@ function Example() {
   );
 }
 
-export default Example;
+export default Editar;

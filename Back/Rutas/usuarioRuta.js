@@ -1,8 +1,29 @@
 import express from "express";
 import { sequelize } from "../loadSequelize.js";
-import { Usuario } from "../Models/models.js";
+import { Usuario, Evento, Participacion } from "../Models/models.js";
+
+//Instalar para subir y modificar foto
+import multer from "multer";
+
+Evento.hasMany(Participacion, { foreignKey: "id_evento" });
+Usuario.hasMany(Participacion, { foreignKey: "id_usuarios" });
+
+
 const router = express.Router();
 
+//Lo que indica donde y como se guarda la foto
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "fotos");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage }).single("file");
+
+//Para la lista de usuarios que tendra el admin
 router.get("/", function (req, res, next) {
   sequelize
     .sync()
@@ -29,90 +50,101 @@ router.get("/", function (req, res, next) {
     );
 });
 
-//Para el perfil de un usuario
-router.get('/:id', function (req, res, next) {
-  sequelize.sync().then(() => {
-
+//Para el perfil del usuario
+router.get("/:id", function (req, res, next) {
+  sequelize
+    .sync()
+    .then(() => {
       Usuario.findOne({ where: { id: req.params.id } })
-          .then(el => res.json({
-              ok: true,
-              data: el
-          }))
-          .catch(error => res.json({
-              ok: false,
-              error: error
-          }))
-
-  }).catch((error) => {
+        .then((el) =>
+          res.json({
+            ok: true,
+            data: el,
+          })
+        )
+        .catch((error) =>
+          res.json({
+            ok: false,
+            error: error,
+          })
+        );
+    })
+    .catch((error) => {
       res.json({
-          ok: false,
-          error: error
+        ok: false,
+        error: error,
+      });
+    });
+});
+
+//Para modificar un usuario
+router.put("/:id", function (req, res, next) {
+  upload(req, res, function (err) {
+    if (err) {
+      return res.status(500).json(err);
+    }
+
+    sequelize
+
+      .sync()
+      .then(() => {
+        req.body.foto = req.file.path.split("\\")[1];
+
+        Usuario.findOne({ where: { id: req.params.id } })
+          .then((al) => al.update(req.body))
+          .then((ret) =>
+            res.json({
+              ok: true,
+              data: ret,
+            })
+          )
+          .catch((error) =>
+            res.json({
+              ok: false,
+              error: error,
+            })
+          );
       })
+      .catch((error) => {
+        res.json({
+          ok: false,
+          error: error,
+        });
+      });
   });
 });
 
 // POST
-router.post('/', function (req, res, next) {
-  sequelize.sync().then(() => {
-      
+router.post("/", function (req, res, next) {
+  sequelize
+    .sync()
+    .then(() => {
       Usuario.create(req.body)
-          .then((el) => res.json({ ok: true, data: el }))
-          .catch((error) => res.json({ ok: false, error: error.message }))
-
-
-  }).catch((error) => {
+        .then((el) => res.json({ ok: true, data: el }))
+        .catch((error) => res.json({ ok: false, error: error.message }));
+    })
+    .catch((error) => {
       res.json({
-          ok: false,
-          error: error.message
-      })
-  });
+        ok: false,
+        error: error.message,
+      });
+    });
 });
-
-
-// put solo de uno
-router.put('/:id', function (req, res, next) {
-
-  sequelize.sync().then(() => {
-      Usuario.findOne({ where: { id: req.params.id } })
-          .then(usuario => {
-            usuario.update(req.body);
-            usuario.save();
-          }   
-          )
-          .then(usuarioMod => res.json({
-              ok: true,
-              data: usuarioMod
-          }))
-          .catch(error => res.json({
-              ok: false,
-              error: error.message
-          }));
-
-  }).catch((error) => {
-      res.json({
-          ok: false,
-          error: error.message
-      })
-  });
-});
-
-
 
 // DELETE
-router.delete('/:id', function (req, res, next) {
-
-  sequelize.sync().then(() => {
-
+router.delete("/:id", function (req, res, next) {
+  sequelize
+    .sync()
+    .then(() => {
       Usuario.destroy({ where: { id: req.params.id } })
-          .then((data) => res.json({ ok: true, data }))
-          .catch((error) => res.json({ ok: false, error }))
-
-  }).catch((error) => {
+        .then((data) => res.json({ ok: true, data }))
+        .catch((error) => res.json({ ok: false, error }));
+    })
+    .catch((error) => {
       res.json({
-          ok: false,
-          error: error
-      })
-  });
-
+        ok: false,
+        error: error,
+      });
+    });
 });
 export default router;
