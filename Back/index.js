@@ -1,4 +1,5 @@
 import express from "express";
+import cors from 'cors';
 
 import indexRutas from "./Rutas/indexRutas.js";
 import usuarioRuta from "./Rutas/usuarioRuta.js";
@@ -6,6 +7,8 @@ import eventoRuta from "./Rutas/eventoRuta.js"
 import participacionRuta from "./Rutas/participacionRuta.js"
 
 const app = express();
+
+app.use(cors())
 
 app.use(express.json());
 
