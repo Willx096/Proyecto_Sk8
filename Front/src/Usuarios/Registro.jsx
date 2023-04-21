@@ -6,7 +6,7 @@ function Registro(props) {
   const [validated, setValidated] = useState(false);
   //Creamos este state clave refrescar el valor de la foto
   const [clave, setClave] = useState(0);
-  //State con array de objetos de usuario para no hacer mucho states
+  //State con array de objetos de usuario para no hacer muchos states
   const [usuario, setUsuario] = useState({
     nombre: "",
     apellido: "",
@@ -14,7 +14,7 @@ function Registro(props) {
     nivel: "Empezando",
     fecha_nacimiento: "",
     pswd: "",
-    experiencia: 0,
+    experiencia: "Menos de un mes",
     foto: null,
     descripcion: "",
     nickname: "",
@@ -27,9 +27,9 @@ function Registro(props) {
     if (form.checkValidity() === false) {
       e.preventDefault();
       e.stopPropagation();
+      setValidated(true);
+      return;
     }
-
-    setValidated(true);
 
     const formData = new FormData();
     formData.append("nombre", usuario.nombre);
@@ -69,6 +69,7 @@ function Registro(props) {
         });
         //cambiamos el valor de clave a 1
         setClave(clave + 1);
+        setValidated(false);
       })
       .catch((error) => console.log("error", error));
   }
@@ -87,7 +88,9 @@ function Registro(props) {
             <Form.Control
               required
               value={usuario.nombre}
-              onInput={(e) => setUsuario({ ...usuario, nombre: e.target.value })}
+              onInput={(e) =>
+                setUsuario({ ...usuario, nombre: e.target.value })
+              }
               type="txt"
               placeholder="Franzisco"
             />
@@ -101,7 +104,9 @@ function Registro(props) {
             <Form.Control
               required
               value={usuario.apellido}
-              onInput={(e) => setUsuario({ ...usuario, apellido: e.target.value })}
+              onInput={(e) =>
+                setUsuario({ ...usuario, apellido: e.target.value })
+              }
               type="txt"
               placeholder="Perez"
             />
@@ -114,7 +119,9 @@ function Registro(props) {
             <Form.Label>Nombre de usuario</Form.Label>
             <Form.Control
               value={usuario.nickname}
-              onInput={(e) => setUsuario({ ...usuario, nickname: e.target.value })}
+              onInput={(e) =>
+                setUsuario({ ...usuario, nickname: e.target.value })
+              }
               type="txt"
               placeholder="Fran34"
               required
@@ -131,19 +138,33 @@ function Registro(props) {
               value={usuario.email}
               onInput={(e) => setUsuario({ ...usuario, email: e.target.value })}
               type="email"
-              placeholder="email@gmail.com"
+              placeholder="f3ranz4@gmail.com"
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">
               Introduce un emial.
             </Form.Control.Feedback>
           </Form.Group>
+
+          <Form.Group className="mb-3" controlId="validationCustomUsername">
+            <Form.Label>Contacto</Form.Label>
+            <Form.Control
+              value={usuario.contacto}
+              onInput={(e) =>
+                setUsuario({ ...usuario, contacto: e.target.value })
+              }
+              type="txt"
+              placeholder="684925275/instagram"
+            />
+          </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Fecha de nacimiento</Form.Label>
             <Form.Control
               required
               value={usuario.fecha_nacimiento}
-              onInput={(e) => setUsuario({ ...usuario, fecha_nacimiento: e.target.value })}
+              onInput={(e) =>
+                setUsuario({ ...usuario, fecha_nacimiento: e.target.value })
+              }
               type="date"
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -166,32 +187,67 @@ function Registro(props) {
               <option>Tony Hawk</option>
             </Form.Select>
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                value={usuario.pswd}
-                onInput={(e) => setUsuario({ ...usuario, pswd: e.target.value })}
-                type="password"
-                placeholder="Password"
-              />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Introduce una contraseña.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Foto de perfil</Form.Label>
-              <Form.Control
-                type="file"
-                key={clave}
-                onChange={(e) => setUsuario({ ...usuario, foto: e.target.files[0] })}
-              />
-            </Form.Group>
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Registrar
-          </Button>
+          <Form.Group className="mb-3">
+            <Form.Label>Tiempo patinando</Form.Label>
+            <Form.Select
+              required
+              value={usuario.experiencia}
+              onInput={(e) =>
+                setUsuario({ ...usuario, experiencia: e.target.value })
+              }
+              type="text"
+            >
+              <option>Menos de un mes</option>
+              <option>Unos mese</option>
+              <option>1 año</option>
+              <option>Más de 1 año</option>
+              <option>Muchos años</option>
+            </Form.Select>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              required
+              value={usuario.pswd}
+              onInput={(e) => setUsuario({ ...usuario, pswd: e.target.value })}
+              type="password"
+              placeholder="Password"
+            />
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Introduce una contraseña.
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Row>
+        <Row md={3}>
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Foto de perfil</Form.Label>
+            <Form.Control
+              type="file"
+              key={clave}
+              onChange={(e) =>
+                setUsuario({ ...usuario, foto: e.target.files[0] })
+              }
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Descripción</Form.Label>
+            <Form.Control
+              type="text"
+              as="textarea"
+              value={usuario.descripcion}
+              onChange={(e) =>
+                setUsuario({ ...usuario, descripcion: e.target.value })
+              }
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Button variant="primary" type="submit">
+              Registrar-se
+            </Button>
+          </Form.Group>
         </Row>
       </Form>
     </Container>

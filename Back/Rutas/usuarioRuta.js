@@ -2,12 +2,12 @@ import express from "express";
 import { sequelize } from "../loadSequelize.js";
 import { Usuario } from "../Models/models.js";
 import multer from "multer";
-import jsonwebtoken from 'jsonwebtoken';
+import jsonwebtoken from "jsonwebtoken";
 
-import { secretKey, expiredAfter } from './loginconfig.js';
+import { secretKey, expiredAfter } from "./loginconfig.js";
 
 //bcrypt es un modulo que nos permite encriptar en una dirección
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 const router = express.Router();
 
@@ -49,25 +49,30 @@ router.get("/", function (req, res, next) {
 });
 
 // GET de un solo client
-router.get('/:id', function (req, res, next) {
-  sequelize.sync().then(() => {
-
+router.get("/:id", function (req, res, next) {
+  sequelize
+    .sync()
+    .then(() => {
       Usuario.findOne({ where: { id: req.params.id } })
-          .then(el => res.json({
-              ok: true,
-              data: el
-          }))
-          .catch(error => res.json({
-              ok: false,
-              error: error
-          }))
-
-  }).catch((error) => {
+        .then((el) =>
+          res.json({
+            ok: true,
+            data: el,
+          })
+        )
+        .catch((error) =>
+          res.json({
+            ok: false,
+            error: error,
+          })
+        );
+    })
+    .catch((error) => {
       res.json({
-          ok: false,
-          error: error
-      })
-  });
+        ok: false,
+        error: error,
+      });
+    });
 });
 
 // POST
@@ -76,16 +81,16 @@ router.post("/", function (req, res, next) {
     if (err) {
       return res.status(500).json(err);
     }
+    console.log("guardado usuario");
 
     sequelize
       .sync()
       .then(() => {
         const hash = bcrypt.hashSync(req.body.pswd, 10);
         req.body.pswd = hash;
-        req.body.foto = req.file.path.split("\\")[1];
-        console.log("body", req.body.file);
+        console.log("body", req.body);
+        req.body.foto = req.file ? req.file.path.split("\\")[1] : "noFoto.jpg";
         Usuario.create(req.body)
-
           .then((el) => res.json({ ok: true, data: el }))
           .catch((error) => res.json({ ok: false, error }));
         // return res.status(200).send(req.file);
@@ -99,49 +104,48 @@ router.post("/", function (req, res, next) {
   });
 });
 
-
 // put solo de uno
-router.put('/:id', function (req, res, next) {
-  sequelize.sync().then(() => {
-
+router.put("/:id", function (req, res, next) {
+  sequelize
+    .sync()
+    .then(() => {
       Usuario.findOne({ where: { id: req.params.id } })
-          .then(usuario =>
-              usuario.update(req.body)
-          )
-          .then(usuarioMod => res.json({
-              ok: true,
-              data: usuarioMod
-          }))
-          .catch(error => res.json({
-              ok: false,
-              error: error.message
-          }));
-
-  }).catch((error) => {
+        .then((usuario) => usuario.update(req.body))
+        .then((usuarioMod) =>
+          res.json({
+            ok: true,
+            data: usuarioMod,
+          })
+        )
+        .catch((error) =>
+          res.json({
+            ok: false,
+            error: error.message,
+          })
+        );
+    })
+    .catch((error) => {
       res.json({
-          ok: false,
-          error: error.message
-      })
-  });
+        ok: false,
+        error: error.message,
+      });
+    });
 });
 
-
-
 // DELETE
-router.delete('/:id', function (req, res, next) {
-
-  sequelize.sync().then(() => {
-
+router.delete("/:id", function (req, res, next) {
+  sequelize
+    .sync()
+    .then(() => {
       Usuario.destroy({ where: { id: req.params.id } })
-          .then((data) => res.json({ ok: true, data }))
-          .catch((error) => res.json({ ok: false, error }))
-
-  }).catch((error) => {
+        .then((data) => res.json({ ok: true, data }))
+        .catch((error) => res.json({ ok: false, error }));
+    })
+    .catch((error) => {
       res.json({
-          ok: false,
-          error: error
-      })
-  });
-
+        ok: false,
+        error: error,
+      });
+    });
 });
 export default router;
