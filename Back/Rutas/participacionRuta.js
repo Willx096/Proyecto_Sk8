@@ -1,6 +1,10 @@
 import express from "express";
 import { sequelize } from "../loadSequelize.js";
-import { Participacion } from "../Models/models.js";
+import { Usuario, Evento, Participacion } from "../Models/models.js";
+
+Evento.hasMany(Participacion, { foreignKey: "id_evento" });
+Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
+Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
 
 const router = express.Router();
 
@@ -9,7 +13,12 @@ router.get("/", function (req, res, next) {
     sequelize
       .sync()
       .then(() => {
-        Participacion.findAll()
+        Participacion.findAll({include:
+          {
+            model: Evento,
+          },
+          
+      })
           .then((participaciones) =>
             res.json({
               ok: true,

@@ -6,8 +6,8 @@ import { Usuario, Evento, Participacion } from "../Models/models.js";
 import multer from "multer";
 
 Evento.hasMany(Participacion, { foreignKey: "id_evento" });
-Usuario.hasMany(Participacion, { foreignKey: "id_usuarios" });
-
+Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
+Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
 
 const router = express.Router();
 
@@ -55,7 +55,15 @@ router.get("/:id", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
-      Usuario.findOne({ where: { id: req.params.id } })
+      Usuario.findOne({
+        where: { id: req.params.id },
+        include: [
+          {
+            model: Evento,
+          },
+          { model: Participacion },
+        ],
+      })
         .then((el) =>
           res.json({
             ok: true,
