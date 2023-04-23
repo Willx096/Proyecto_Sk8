@@ -1,16 +1,127 @@
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
+import { Row, Col } from 'react-bootstrap';
+import 'leaflet/dist/leaflet.css';
 
-function Mapa() {
-  const position = [51.505, -0.09]; // Coordenadas iniciales del mapa
-  
-  return (
-    <MapContainer center={position} zoom={13} style={{ height: "400px" }}>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Marker position={position}>        
-      </Marker>
-    </MapContainer>
-  );
+
+const primers = [
+    {
+        "adr": "figueres",
+        "lat": 42.2667,
+        "long": 2.9667
+    },
+    {
+        "adr": "molina",
+        "lat": 42.3427392,
+        "long": 1.9562059
+    },
+    {
+        "adr": "girona",
+        "lat": 41.9842,
+        "long": 2.8239
+    }
+]
+
+export default () => {
+
+    
+
+    /**
+     *  Valores que varian del estado actual a uno actualizado
+     */
+    const [address, setAddress] = useState('');
+    const [center, setCenter] = useState([42.3427392, 1.9562059]);
+    const [llocs, setLlocs] = useState(primers);
+
+
+    /**
+     *  Llama la función getLocation y comprueba si el navegador es compatible con la API,
+     * si es asi lama a la función getCurrentPosition() de la API, que recupera la ubicación actual del usuario y llama a la función coords() con las coordenadas de esa ubicación como argumento.
+     * */
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(coords);
+        }
+    }
+
+    /**
+     * Toma las coordenadas recibidas de la función getCurrentPosition() y las utiliza para actualizar el centro del mapa. En este ejemplo, la función utiliza la función setCenter() para establecer las coordenadas de la posición como el nuevo centro del mapa.
+     */
+
+    function coords(position) {
+        console.log("centre", position)
+        setCenter([position.coords.latitude, position.coords.longitude]);
+    }
+
+    useEffect(() => {
+        getLocation();
+
+    }, [])
+    
+
+
+    function GestioEventsMapa() {
+        const map = useMapEvents({
+            click: (e) => {
+                const { lat, lng } = e.latlng;
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("adr", data);
+                        setAddress(data.display_name);
+                        setLlocs([...llocs, {"adr":data.display_name, lat, long:lng}])
+
+                    });
+            },
+            locationfound: (location) => {
+                console.log('location found:', location)
+            },
+        })
+        return null
+    }
+
+    const CentraMapa = ({ centre }) => {
+        const map = useMap();
+        useEffect(() => {
+            map.setView(centre);
+        }, centre);
+        return null;
+    }
+
+
+    const marcadors = llocs.map((e, idx) => (
+        <Marker key={idx} position={[e.lat, e.long]}>
+        <Popup>
+            {e.adr}
+        </Popup>
+    </Marker>
+    ))
+
+    return (
+        <>
+
+            <h1>mapa</h1>
+            {address}
+            <hr />
+            <Row>
+                <Col >
+
+                    <MapContainer
+                        className="el-puto-mapa"
+                        center={center}
+                        zoom={10}
+                        scrollWheelZoom={true}
+                    >
+                        <CentraMapa centre={center} />
+                        <GestioEventsMapa />
+                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                        {marcadors}
+                    </MapContainer>
+                </Col>
+            </Row>
+
+
+        </>
+    )
 }
-
-export default Mapa;
