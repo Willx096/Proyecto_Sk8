@@ -22,17 +22,17 @@ const primers = [
     }
 ]
 
-export default () => {
+export default ({direccion, setDireccion,}) => {
 
     
 
     /**
      *  Valores que varian del estado actual a uno actualizado
      */
-    const [address, setAddress] = useState('');
-    const [center, setCenter] = useState([42.3427392, 1.9562059]);
+    
     const [llocs, setLlocs] = useState(primers);
-
+    const [center, setCenter] = useState([42.3427392, 1.9562059]);
+    
 
     /**
      *  Llama la función getLocation y comprueba si el navegador es compatible con la API,
@@ -78,8 +78,9 @@ export default () => {
                     .then(response => response.json())
                     .then(data => {
                         console.log("adr", data);
-                        setAddress(data.display_name);
-                        setLlocs([...llocs, {"adr":data.display_name, lat, long:lng}])
+                        setDireccion(data.display_name);                        
+                        setLlocs([ {"adr":data.display_name, lat, long:lng}])
+                        setCenter([lat,lng])
 
                     });
             },
@@ -118,8 +119,7 @@ export default () => {
     return (
         <>
 
-            <h1>mapa</h1>
-            {address}
+            
             <hr />
             <Row>
                 <Col >

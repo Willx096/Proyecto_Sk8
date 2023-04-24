@@ -1,0 +1,23 @@
+.box{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 150px;
+    height: 300px;
+}
+
+
+
+.highlighted-date {
+    background-color: rgb(200,200,200);
+  }
+  
+  
+  .el-puto-mapa {
+    height: 500px;
+    pointer-events: auto !important;
+  }
+  
+  .map-container .leaflet-container {
+    z-index: 1;
+  }
