@@ -27,7 +27,7 @@ function NuevoEvento(props) {
   })
 
   useEffect(()=>{
-    setEvento({ ...evento, direccion: direccion, })
+    setEvento({ ...evento, direccion: direccion.display_name, longitud:direccion.lon*1, latitud:direccion.lat*1})
     
   }, [direccion])
 

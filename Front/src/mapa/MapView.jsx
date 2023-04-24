@@ -78,7 +78,8 @@ export default ({direccion, setDireccion,}) => {
                     .then(response => response.json())
                     .then(data => {
                         console.log("adr", data);
-                        setDireccion(data.display_name);                        
+                        // setDireccion(data.address.postcode + "," + data.address.road + ","  + data.address.state_district + "," + data.address.state + "," + data.address.country);
+                        setDireccion(data);              
                         setLlocs([ {"adr":data.display_name, lat, long:lng}])
                         setCenter([lat,lng])
 
@@ -127,7 +128,7 @@ export default ({direccion, setDireccion,}) => {
                     <MapContainer
                         className="el-puto-mapa"
                         center={center}
-                        zoom={10}
+                        zoom={11}
                         scrollWheelZoom={true}
                     >
                         <CentraMapa centre={center} />
