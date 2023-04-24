@@ -102,6 +102,10 @@ function NuevoEvento(props) {
             <Form.Control value={evento.fecha} onInput={(e) => setEvento({ ...evento, fecha: e.target.value })} type="date" placeholder="Contraseña" />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Hora</Form.Label>
+            <Form.Control value={evento.hora} onInput={(e) => setEvento({ ...evento, hora: e.target.value })} type="time" rows={3} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Address</Form.Label>
             <Form.Control value={evento.direccion} onInput={(e) => setEvento({ ...evento, direccion: e.target.value })}   type="text" as="textarea" rows={3} />
           </Form.Group>
