@@ -75,14 +75,15 @@ function Registro(props) {
   }
 
   return (
-    <Container className="d-grid h-100">
+    <Container>
       <Form
+        id="registro-id"
         noValidate
         validated={validated}
         className="text-center"
         onSubmit={CrearUsuario}
       >
-        <Row md={3}>
+        <Row xs={1} sm={2} md={3}>
           <Form.Group className="mb-3" controlId="validationCustom01">
             <Form.Label>Nombre</Form.Label>
             <Form.Control
@@ -146,7 +147,7 @@ function Registro(props) {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="validationCustomUsername">
+          <Form.Group className="mb-3" controlId="validationCustomContact">
             <Form.Label>Contacto</Form.Label>
             <Form.Control
               value={usuario.contacto}
