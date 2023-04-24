@@ -46,7 +46,8 @@ export default () => {
     }
 
     /**
-     * Toma las coordenadas recibidas de la función getCurrentPosition() y las utiliza para actualizar el centro del mapa. En este ejemplo, la función utiliza la función setCenter() para establecer las coordenadas de la posición como el nuevo centro del mapa.
+     * Toma las coordenadas recibidas de la función getCurrentPosition() y las utiliza para actualizar el centro del mapa. 
+     * En este ejemplo, la función utiliza la función setCenter() para establecer las coordenadas de la posición como el nuevo centro del mapa.
      */
 
     function coords(position) {
@@ -60,6 +61,14 @@ export default () => {
     }, [])
     
 
+    /**
+     * Este código define una función de React llamada GestioEventsMapa que utiliza el hook useMapEvents proporcionado por la biblioteca Leaflet.js. 
+     * Este hook se utiliza para manejar eventos de interacción con el mapa.
+     * recibe un objeto que especifica los eventos a manejar y las funciones que se ejecutarán cuando se produzcan esos eventos.
+     * El objeto de eventos incluye dos propiedades: click y locationfound. 
+     * La propiedad click especifica una función que se ejecutará cuando el usuario haga clic en el mapa. 
+     * La función llama a la API de OpenStreetMap Nominatim para obtener la dirección correspondiente a las coordenadas del lugar en el que se hizo clic. Una vez que se recibe la respuesta de la API, la función actualiza el estado de la dirección y agrega un nuevo objeto con la dirección, latitud y longitud a la lista de lugares (llocs).
+     */
 
     function GestioEventsMapa() {
         const map = useMapEvents({
@@ -74,13 +83,21 @@ export default () => {
 
                     });
             },
+            /**
+             * Especifica una función que se ejecutará cuando el mapa encuentre la ubicación del usuario. En este ejemplo, la función simplemente imprime la ubicación en la consola.
+             */
             locationfound: (location) => {
                 console.log('location found:', location)
             },
         })
         return null
     }
-
+    /**
+     * La función CentraMapa toma un objeto centre como prop que contiene las coordenadas de la ubicación a la que se debe centrar el mapa.
+     * La función useMap devuelve el objeto map del mapa Leaflet actual, que se almacena en la variable map.
+     * La función useEffect se utiliza para actualizar el centro del mapa cada vez que cambian las coordenadas del centro.
+     * la función setView() se utiliza para establecer las coordenadas del centro como el nuevo centro del mapa.
+     */
     const CentraMapa = ({ centre }) => {
         const map = useMap();
         useEffect(() => {

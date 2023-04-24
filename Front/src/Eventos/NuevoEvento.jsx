@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import {Form, Col, Row, Button, Card} from  'react-bootstrap';
-
-
-
+import MapView from "../mapa/MapView";
+import 'leaflet/dist/leaflet.css';
 
 
 function NuevoEvento(props) {
@@ -100,17 +99,18 @@ fetch("http://localhost:5000/api/eventos", requestOptions)
   </Form>  
      </Col>
      <Col className="box">
-     <Card style={{ width: '18rem' }}>
+     {/* <Card style={{ width: '18rem' }}>
      <Card.Body>
         <Card.Title>Consejo para crear un evento.</Card.Title>
         <Card.Text>
           
         </Card.Text>
         </Card.Body>
-        </Card>
-     </Col>
-     
+        </Card> */}
+        <MapView></MapView>
+     </Col>         
     </Row>
+    
    
   
  
