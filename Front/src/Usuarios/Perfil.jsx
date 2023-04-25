@@ -8,6 +8,7 @@ import Eliminar from "./Eliminar";
 import GlobalContext from "../GlobalContext";
 import Editar from "./EditarPerfil";
 
+
 function Perfil() {
   const { id } = useContext(GlobalContext)
   const [datos, setDatos] = useState(null);
@@ -38,18 +39,22 @@ function Perfil() {
 //para que antes de leer lo q sigue cargue los datos
 if (!datos) return <>...</>
 
+const foto = <img src={"http://localhost:5000/"+datos.foto} style={{ width: 100}}alt="" />
+
 const filas = datos.Eventos.map((el, index) => (
   <tr key={index}>
     <td>{el.titulo}</td>
     <td>{el.descripcion}</td>
+    <td>{el.Usuario.nombre}</td>
   </tr>
 ));
 
 const filitas = datos.Participacions.map((el, index) => (
   <tr key={index}>
-    <td>{el.id_evento}</td>
-    
-   
+    <td>{el.Evento.titulo}</td>
+    <td>{el.Evento.descripcion}</td>
+    <td>{el.Evento.fecha}</td>
+    <td>{el.Evento.titulo}</td>
   </tr>
 ));
 
@@ -63,7 +68,9 @@ const filitas = datos.Participacions.map((el, index) => (
       {datos.apellido}
     </Col>
     <Col>
-      {datos.foto}
+    {
+      foto
+    }
     </Col>
     </Row>
     <Row lg={3}>

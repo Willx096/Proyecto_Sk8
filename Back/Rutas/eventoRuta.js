@@ -5,16 +5,21 @@ import { Evento, Participacion, Usuario } from "../Models/models.js";
 const router = express.Router();
 
 Evento.hasMany(Participacion, { foreignKey: "id_evento" });
-Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
-Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
+Evento.belongsTo(Usuario, { foreignKey: "id_usuario" })
+
+// Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
+// Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
 
 router.get("/", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
       Evento.findAll({ include: [
-        {model: Participacion},
-        // { model: Usuario },
+        {model: Participacion,
+           include: {
+            model: Usuario
+           } },
+        { model: Usuario },
         
       ] } )
         .then((eventos) =>

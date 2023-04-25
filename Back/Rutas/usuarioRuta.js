@@ -2,12 +2,15 @@ import express from "express";
 import { sequelize } from "../loadSequelize.js";
 import { Usuario, Evento, Participacion } from "../Models/models.js";
 
+
 //Instalar para subir y modificar foto
 import multer from "multer";
 
 Evento.hasMany(Participacion, { foreignKey: "id_evento" });
 Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
 Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
+
+Participacion.belongsTo(Evento, { foreignKey: "id_evento" });
 
 const router = express.Router();
 
@@ -28,7 +31,26 @@ router.get("/", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
-      Usuario.findAll()
+      Usuario.findAll({
+        include: [
+          {
+            model: Evento,
+            include: 
+              
+              { model: Usuario },
+            
+          },
+          {
+            model: Participacion,
+            include: [
+              {
+                model: Evento,
+              },
+              { model: Usuario },
+            ],
+          },
+        ],
+      })
         .then((usuarios) =>
           res.json({
             ok: true,
@@ -60,8 +82,17 @@ router.get("/:id", function (req, res, next) {
         include: [
           {
             model: Evento,
+            include: 
+              
+              { model: Usuario },
+            
           },
-          { model: Participacion },
+          {
+            model: Participacion,
+            include: {
+              model: Evento,
+            },
+          },
         ],
       })
         .then((el) =>
