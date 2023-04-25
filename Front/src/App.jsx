@@ -45,9 +45,9 @@ function App() {
                 <Link to="/registro" className="nav-link">
                   Registro
                 </Link>
-                <Link to="/mapa" className="nav-link">
+                {/* <Link to="/mapa" className="nav-link">
                   Mapa
-                </Link>
+                </Link> */}
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -58,7 +58,7 @@ function App() {
           <Route path="/nuevo-evento" element={<NuevoEvento />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/registro" element={<Registro />} />
-          <Route path="/mapa" element={<MapView />} />
+          {/* <Route path="/mapa" element={<MapView />} /> */}
         </Routes>
       </Container>
     </div>

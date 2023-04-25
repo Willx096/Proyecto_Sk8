@@ -78,7 +78,6 @@ export default ({direccion, setDireccion,}) => {
                     .then(response => response.json())
                     .then(data => {
                         console.log("adr", data);
-                        // setDireccion(data.address.postcode + "," + data.address.road + ","  + data.address.state_district + "," + data.address.state + "," + data.address.country);
                         setDireccion(data);              
                         setLlocs([ {"adr":data.display_name, lat, long:lng}])
                         setCenter([lat,lng])
