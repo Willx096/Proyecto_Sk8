@@ -48,6 +48,7 @@ const filas = datos.Eventos.map((el, index) => (
 const filitas = datos.Participacions.map((el, index) => (
   <tr key={index}>
     <td>{el.id_evento}</td>
+    
    
   </tr>
 ));
