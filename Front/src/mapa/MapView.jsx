@@ -120,7 +120,7 @@ export default ({direccion, setDireccion,}) => {
         <>
 
             
-            <hr />
+            
             <Row>
                 <Col >
 
