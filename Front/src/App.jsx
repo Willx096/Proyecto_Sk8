@@ -8,7 +8,9 @@ import Eventos from "./Eventos/Eventos";
 import NuevoEvento from "./Eventos/NuevoEvento";
 import Perfil from "./Usuarios/Perfil";
 import Registro from "./Usuarios/Registro";
+import MapView from "./mapa/MapView";
 import "./App.css";
+
 
 function App() {
 
@@ -43,6 +45,9 @@ function App() {
                 <Link to="/registro" className="nav-link">
                   Registro
                 </Link>
+                {/* <Link to="/mapa" className="nav-link">
+                  Mapa
+                </Link> */}
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -53,6 +58,7 @@ function App() {
           <Route path="/nuevo-evento" element={<NuevoEvento />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/registro" element={<Registro />} />
+          {/* <Route path="/mapa" element={<MapView />} /> */}
         </Routes>
       </Container>
     </div>
