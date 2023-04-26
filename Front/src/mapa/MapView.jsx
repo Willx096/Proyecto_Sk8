@@ -125,7 +125,7 @@ export default ({direccion, setDireccion,}) => {
                 <Col >
 
                     <MapContainer
-                        className="el-puto-mapa"
+                        className="mapa"
                         center={center}
                         zoom={11}
                         scrollWheelZoom={true}

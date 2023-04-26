@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Col, Row, Button, Container } from "react-bootstrap";
+import { Form, Col, Row, Button, Container, FormGroup } from "react-bootstrap";
 import MapView from "../mapa/MapView";
 import "leaflet/dist/leaflet.css";
 import "../mapa/leaflet.css";
@@ -73,7 +73,7 @@ function NuevoEvento(props) {
   }
 
   return (
-    <Container className="d-grid h-100">
+    <Container fluid="lg">
       <Row>
         <Col>
           <Form>
@@ -123,55 +123,38 @@ function NuevoEvento(props) {
                   <option value="intermedio">Intermedio</option>
                   <option value="avanzado">Avanzado</option>
                 </Form.Select>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Fecha</Form.Label>
+                  <Form.Control
+                    value={evento.fecha}
+                    onInput={(e) =>
+                      setEvento({ ...evento, fecha: e.target.value })
+                    }
+                    type="date"
+                    placeholder="Contraseña"
+                  />
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlTextarea1"
+                  >
+                    <Form.Label>Hora</Form.Label>
+                    <Form.Control
+                      value={evento.hora}
+                      onInput={(e) =>
+                        setEvento({ ...evento, hora: e.target.value })
+                      }
+                      type="time"
+                      rows={3}
+                    />
+                  </Form.Group>
+                </Form.Group>
               </Form.Group>
+              <Row size={2}>
                 <MapView direccion={direccion} setDireccion={setDireccion} />
+              </Row>
             </Row>
-            
-              
-              
-            
+            <br></br>
             <Row md={2}>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Fecha</Form.Label>
-                <Form.Control
-                  value={evento.fecha}
-                  onInput={(e) =>
-                    setEvento({ ...evento, fecha: e.target.value })
-                  }
-                  type="date"
-                  placeholder="Contraseña"
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Label>Hora</Form.Label>
-                <Form.Control
-                  value={evento.hora}
-                  onInput={(e) =>
-                    setEvento({ ...evento, hora: e.target.value })
-                  }
-                  type="time"
-                  rows={3}
-                />
-              </Form.Group>
-
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  value={evento.direccion}
-                  onInput={(e) =>
-                    setEvento({ ...evento, direccion: e.target.value })
-                  }
-                  type="text"
-                  as="textarea"
-                  rows={3}
-                />
-              </Form.Group>
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlTextarea1"
@@ -187,11 +170,27 @@ function NuevoEvento(props) {
                   rows={3}
                 />
               </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <Form.Label>Address</Form.Label>
+                <Form.Control
+                  value={evento.direccion}
+                  onInput={(e) =>
+                    setEvento({ ...evento, direccion: e.target.value })
+                  }
+                  type="text"
+                  as="textarea"
+                  rows={3}
+                />
+              </Form.Group>
             </Row>
-
-            <Button variant="primary" type="button" onClick={CrearEvento}>
-              Crear
-            </Button>
+            <div className="d-flex justify-content-center">
+              <Button variant="primary" type="button" onClick={CrearEvento}>
+                Crear
+              </Button>
+            </div>
           </Form>
         </Col>
       </Row>
