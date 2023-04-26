@@ -15,9 +15,15 @@ function Editar({ perfil, refresh, setRefresh }) {
   // const [descripcion, setDescripcion] = useState("");
   const [nombre, setNombre] = useState(perfil.nombre);
   const [apellido, setApellido] = useState(perfil.apellido);
-  const [nickname, setNickname] = useState(perfil.nickname);
+  const [email, setEmail] = useState(perfil.email);
+  const [fecha, setFecha] = useState(perfil.fecha_nacimiento);
+  const [nivel, setNivel] = useState(perfil.nivel);
+  const [pswd, setPswd] = useState(perfil.pswd);
+  const [experiencia, setExperiencia] = useState(perfil.experiencia);
   const [lafoto, setLafoto] = useState();
-  const [descripcion, setDescripcion] = useState();
+  const [descripcion, setDescripcion] = useState(perfil.descripcion);
+  const [nickname, setNickname] = useState(perfil.nickname);
+  const [contacto, setContacto] = useState(perfil.contacto);
 
   useEffect(() => {
     if (perfil) {
@@ -33,9 +39,15 @@ function Editar({ perfil, refresh, setRefresh }) {
     const usuario = {
       nombre,
       apellido,
-      nickname,
-      descripcion,
+      email,
+      fecha,
+      nivel,
+      pswd,
+      experiencia,
       lafoto,
+      descripcion,
+      nickname,
+      contacto,
     };
 
     const URL = `http://localhost:5000/api/usuarios/${id}`;
@@ -43,9 +55,15 @@ function Editar({ perfil, refresh, setRefresh }) {
     var formData = new FormData();
     formData.append("nombre", usuario.nombre);
     formData.append("apellido", usuario.apellido);
-    formData.append("nickname", usuario.nickname);
-    formData.append("descripcion", usuario.descripcion);
+    formData.append("email", usuario.email);
+    formData.append("fecha", usuario.fecha);
+    formData.append("nivel", usuario.nivel);
+    formData.append("pswd", usuario.pswd);
+    formData.append("experiencia", usuario.experiencia);
     formData.append("file", usuario.lafoto);
+    formData.append("descripcion", usuario.descripcion);
+    formData.append("nickname", usuario.nickname);
+    formData.append("contacto", usuario.contacto);
 
     var requestOptions = {
       method: "PUT",
@@ -57,8 +75,8 @@ function Editar({ perfil, refresh, setRefresh }) {
       .then((response) => response.json())
       .then((data) => {
         console.log("Respuesta del servidor:", data);
-        setRefresh(refresh+1)
-        setShow(false)
+        setRefresh(refresh + 1);
+        setShow(false);
       })
       .catch((error) => console.log("error", error));
 
@@ -76,45 +94,110 @@ function Editar({ perfil, refresh, setRefresh }) {
         <Modal.Header closeButton>
           <Modal.Title>Editar perfil</Modal.Title>
         </Modal.Header>
+        
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group>
               <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
-                placeholder=""
                 value={nombre}
                 onInput={(e) => setNombre(e.target.value)}
                 autoFocus
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group>
               <Form.Label>Apellido</Form.Label>
               <Form.Control
                 type="text"
-                placeholder=""
                 value={apellido}
                 onInput={(e) => setApellido(e.target.value)}
                 autoFocus
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group>
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                required
+                value={email}
+                onInput={(e) => setEmail(e.target.value)}
+                type="email"
+              />
+                                   </Form.Group>
+            <Form.Group >
               <Form.Label>Nickname</Form.Label>
               <Form.Control
                 type="text"
-                placeholder=""
                 value={nickname}
                 onInput={(e) => setNickname(e.target.value)}
                 autoFocus
               />
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
+            <Form.Group >
+              <Form.Label>Fecha</Form.Label>
+              <Form.Control
+                value={fecha}
+                onInput={(e) => setFecha(e.target.value)}
+                type="date"
+              />
+            </Form.Group>
+            <Form.Group >
+              <Form.Label>Nivel</Form.Label>
+              <Form.Select
+                required
+                value={nivel}
+                onInput={(e) => setNivel(e.target.value)}
+                type="text"
+              >
+                <option>Empezando</option>
+                <option>Principiante</option>
+                <option>Casual</option>
+                <option>Pro</option>
+                <option>Tony Hawk</option>
+              </Form.Select>
+                          </Form.Group>
+            <Form.Group >
+              <Form.Label>Tiempo patinando</Form.Label>
+              <Form.Select
+                required
+                value={experiencia}
+                onInput={(e) => setUsuario(e.target.value)}
+                type="text"
+              >
+                <option>Menos de un mes</option>
+                <option>Unos mese</option>
+                <option>1 año</option>
+                <option>Más de 1 año</option>
+                <option>Muchos años</option>
+              </Form.Select>
+                          </Form.Group>
+            <Form.Group >
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                required
+                value={pswd}
+                onInput={(e) => setPswd(e.target.value)}
+                type="password"
+              />
+                        <Form.Control.Feedback type="invalid">
+                Introduce una contraseña.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group >
+              <Form.Label>Contacto</Form.Label>
+              <Form.Control
+                value={contacto}
+                onInput={(e) => setContacto(e.target.value)}
+                type="txt"
+              />
+            </Form.Group>
+            <Form.Group>
               <Form.Label>Descripcion</Form.Label>
-              <Form.Control as="textarea" placeholder="" rows={3} value={descripcion}
-          onInput={(e) => setDescripcion(e.target.value)}/>
+              <Form.Control
+                type="textarea"
+                value={descripcion}
+                onInput={(e) => setDescripcion(e.target.value)}
+              />
               <Form.Text>Imagen</Form.Text>
               <Form.Control
                 type="file"
@@ -123,6 +206,7 @@ function Editar({ perfil, refresh, setRefresh }) {
             </Form.Group>
           </Form>
         </Modal.Body>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancelar

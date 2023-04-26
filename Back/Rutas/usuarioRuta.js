@@ -132,6 +132,8 @@ router.put("/:id", function (req, res, next) {
 
       .sync()
       .then(() => {
+        const hash = bcrypt.hashSync(req.body.pswd, 10);
+        req.body.pswd = hash;
         req.body.foto = req.file ? req.file.path.split("\\")[1] : "noFoto.jpg";
 
         Usuario.findOne({ where: { id: req.params.id } })

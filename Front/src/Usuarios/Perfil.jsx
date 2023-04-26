@@ -88,7 +88,7 @@ function Perfil() {
         </Row>
         <Row>Nivel: {datos.nivel}</Row>
         <Row>Experiencia: {datos.experiencia} años</Row>
-        <Row lg={3}>{datos.contact}</Row>
+        <Row lg={3}>{datos.contacto}</Row>
         <br />
         <Row lg={3}>
           <Col>
