@@ -9,7 +9,6 @@ function Inicio(props) {
     <>
       <div>
         <video src={encabezado} autoPlay loop muted className="img-fluid" alt="imagen-inicio" />
-        <h1>Hello!</h1>
       </div>
       <hr />
       <Registro />
