@@ -4,9 +4,11 @@ import { Evento, Participacion, Usuario } from "../Models/models.js";
 
 const router = express.Router();
 
+//conexiones entre tablas necesarias
 Evento.hasMany(Participacion, { foreignKey: "id_evento" });
 Evento.belongsTo(Usuario, { foreignKey: "id_usuario" })
 
+//conexiones no necesarias por ahora
 // Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
 // Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
 

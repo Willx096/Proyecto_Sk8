@@ -2,10 +2,14 @@ import express from "express";
 import { sequelize } from "../loadSequelize.js";
 import { Usuario, Evento, Participacion } from "../Models/models.js";
 
+//conexion entre tablas
+Participacion.belongsTo(Usuario, { foreignKey: "id_usuario" });
 
-Evento.hasMany(Participacion, { foreignKey: "id_evento" });
-Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
-Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
+//conexiones no necesarias por ahora
+// Evento.hasMany(Participacion, { foreignKey: "id_evento" });
+// Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
+// Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
+// Evento.belongsTo(Usuario, { foreignKey: "id_usuario" })
 
 const router = express.Router();
 
@@ -14,7 +18,10 @@ router.get("/", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
-      Participacion.findAll({ include: { model: Usuario } })
+      Participacion.findAll({ include: [{ model: Usuario },
+        {
+          model: Evento,
+        }] })
         .then((participaciones) =>
           res.json({
             ok: true,

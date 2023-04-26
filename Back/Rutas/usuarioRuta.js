@@ -6,11 +6,13 @@ import { Usuario, Evento, Participacion } from "../Models/models.js";
 //Instalar para subir y modificar foto
 import multer from "multer";
 
-Evento.hasMany(Participacion, { foreignKey: "id_evento" });
+//conexion entre tablas
 Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
 Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
-
 Participacion.belongsTo(Evento, { foreignKey: "id_evento" });
+
+//conexiones no necesarios por ahora
+// Evento.hasMany(Participacion, { foreignKey: "id_evento" });
 
 const router = express.Router();
 
@@ -83,15 +85,15 @@ router.get("/:id", function (req, res, next) {
           {
             model: Evento,
             include: 
-              
-              { model: Usuario },
-            
-          },
+                           [ { model: Usuario },
+              { model: Participacion }]
+                      },
           {
             model: Participacion,
-            include: {
+            include: [{
               model: Evento,
             },
+            { model: Usuario }]
           },
         ],
       })

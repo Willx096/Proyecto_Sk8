@@ -14,11 +14,15 @@ function Editar({ perfil, refresh, setRefresh }) {
 
   // const [descripcion, setDescripcion] = useState("");
   const [nombre, setNombre] = useState(perfil.nombre);
+  const [apellido, setApellido] = useState(perfil.apellido);
+  const [nickname, setNickname] = useState(perfil.nickname);
   const [lafoto, setLafoto] = useState();
+  const [descripcion, setDescripcion] = useState();
 
   useEffect(() => {
     if (perfil) {
       setNombre(perfil.nombre);
+      setDescripcion(perfil.descripcion);
     }
   }, [perfil]);
 
@@ -28,7 +32,9 @@ function Editar({ perfil, refresh, setRefresh }) {
 
     const usuario = {
       nombre,
-      // descripcion,
+      apellido,
+      nickname,
+      descripcion,
       lafoto,
     };
 
@@ -36,7 +42,9 @@ function Editar({ perfil, refresh, setRefresh }) {
 
     var formData = new FormData();
     formData.append("nombre", usuario.nombre);
-    // formData.append("descripcion", usuario.descripcion);
+    formData.append("apellido", usuario.apellido);
+    formData.append("nickname", usuario.nickname);
+    formData.append("descripcion", usuario.descripcion);
     formData.append("file", usuario.lafoto);
 
     var requestOptions = {
@@ -55,7 +63,7 @@ function Editar({ perfil, refresh, setRefresh }) {
       .catch((error) => console.log("error", error));
 
     setNombre("");
-    // setDescripcion("");
+    setDescripcion("");
   }
 
   return (
@@ -66,7 +74,7 @@ function Editar({ perfil, refresh, setRefresh }) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Editar perfil</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -80,14 +88,34 @@ function Editar({ perfil, refresh, setRefresh }) {
                 autoFocus
               />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Apellido</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder=""
+                value={apellido}
+                onInput={(e) => setApellido(e.target.value)}
+                autoFocus
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Nickname</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder=""
+                value={nickname}
+                onInput={(e) => setNickname(e.target.value)}
+                autoFocus
+              />
+            </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              {/* <Form.Label>Descripcion</Form.Label>
-              <Form.Control as="textarea" rows={3} value={descripcion}
-          onInput={(e) => setDescripcion(e.target.value)}/> */}
-              <Form.Text>imatge</Form.Text>
+              <Form.Label>Descripcion</Form.Label>
+              <Form.Control as="textarea" placeholder="" rows={3} value={descripcion}
+          onInput={(e) => setDescripcion(e.target.value)}/>
+              <Form.Text>Imagen</Form.Text>
               <Form.Control
                 type="file"
                 onInput={(e) => setLafoto(e.target.files[0])}
@@ -97,7 +125,7 @@ function Editar({ perfil, refresh, setRefresh }) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Cerrar
+            Cancelar
           </Button>
           <Button variant="primary" onClick={editarUsuario}>
             Guardar cambios
