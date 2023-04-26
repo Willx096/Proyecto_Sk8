@@ -1,16 +1,28 @@
 import express from "express";
 import { sequelize } from "../loadSequelize.js";
-import { Usuario } from "../Models/models.js";
-import multer from "multer";
-import jsonwebtoken from "jsonwebtoken";
+import { Usuario, Evento, Participacion } from "../Models/models.js";
 
-import { secretKey, expiredAfter } from "./loginconfig.js";
+// import jsonwebtoken from "jsonwebtoken";
+
+// import { secretKey, expiredAfter } from "./loginconfig.js";
 
 //bcrypt es un modulo que nos permite encriptar en una dirección
 import bcrypt from "bcrypt";
 
+//Instalar para subir y modificar foto
+import multer from "multer";
+
+//conexion entre tablas
+Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
+Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
+Participacion.belongsTo(Evento, { foreignKey: "id_evento" });
+
+//conexiones no necesarios por ahora
+// Evento.hasMany(Participacion, { foreignKey: "id_evento" });
+
 const router = express.Router();
 
+//Lo que indica donde y como se guarda la foto
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "fotos");
@@ -22,11 +34,28 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single("file");
 
+//Para la lista de usuarios que tendra el admin
 router.get("/", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
-      Usuario.findAll()
+      Usuario.findAll({
+        include: [
+          {
+            model: Evento,
+            include: { model: Usuario },
+          },
+          {
+            model: Participacion,
+            include: [
+              {
+                model: Evento,
+              },
+              { model: Usuario },
+            ],
+          },
+        ],
+      })
         .then((usuarios) =>
           res.json({
             ok: true,
@@ -48,12 +77,29 @@ router.get("/", function (req, res, next) {
     );
 });
 
-// GET de un solo client
+//Para el perfil del usuario
 router.get("/:id", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
-      Usuario.findOne({ where: { id: req.params.id } })
+      Usuario.findOne({
+        where: { id: req.params.id },
+        include: [
+          {
+            model: Evento,
+            include: [{ model: Usuario }, { model: Participacion }],
+          },
+          {
+            model: Participacion,
+            include: [
+              {
+                model: Evento,
+              },
+              { model: Usuario },
+            ],
+          },
+        ],
+      })
         .then((el) =>
           res.json({
             ok: true,
@@ -73,6 +119,45 @@ router.get("/:id", function (req, res, next) {
         error: error,
       });
     });
+});
+
+//Para modificar un usuario
+router.put("/:id", function (req, res, next) {
+  upload(req, res, function (err) {
+    if (err) {
+      return res.status(500).json(err);
+    }
+
+    sequelize
+
+      .sync()
+      .then(() => {
+        const hash = bcrypt.hashSync(req.body.pswd, 10);
+        req.body.pswd = hash;
+        req.body.foto = req.file ? req.file.path.split("\\")[1] : "noFoto.jpg";
+
+        Usuario.findOne({ where: { id: req.params.id } })
+          .then((al) => al.update(req.body))
+          .then((ret) =>
+            res.json({
+              ok: true,
+              data: ret,
+            })
+          )
+          .catch((error) =>
+            res.json({
+              ok: false,
+              error: error,
+            })
+          );
+      })
+      .catch((error) => {
+        res.json({
+          ok: false,
+          error: error,
+        });
+      });
+  });
 });
 
 // POST

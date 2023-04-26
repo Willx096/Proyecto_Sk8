@@ -42,6 +42,7 @@ function NuevoEvento(props) {
       direccion: evento.direccion,
       nivel: evento.nivel,
       participantes: evento.participantes,
+      id_usuario: 2
       // foto: evento.foto,
     });
 
