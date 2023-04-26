@@ -1,7 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-
-import { Routes, Route,Link } from "react-router-dom";
-
 import Inicio from "./Inicio";
 import Eventos from "./Eventos/Eventos";
 import NuevoEvento from "./Eventos/NuevoEvento";
