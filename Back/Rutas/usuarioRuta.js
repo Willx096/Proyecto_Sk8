@@ -1,17 +1,13 @@
 import express from "express";
 import { sequelize } from "../loadSequelize.js";
-import multer from "multer";
-import jsonwebtoken from "jsonwebtoken";
+import { Usuario, Evento, Participacion } from "../Models/models.js";
 
-import { secretKey, expiredAfter } from "./loginconfig.js";
+// import jsonwebtoken from "jsonwebtoken";
+
+// import { secretKey, expiredAfter } from "./loginconfig.js";
 
 //bcrypt es un modulo que nos permite encriptar en una dirección
 import bcrypt from "bcrypt";
-
-const router = express.Router();
-
-import { Usuario, Evento, Participacion } from "../Models/models.js";
-
 
 //Instalar para subir y modificar foto
 import multer from "multer";
@@ -47,10 +43,7 @@ router.get("/", function (req, res, next) {
         include: [
           {
             model: Evento,
-            include: 
-              
-              { model: Usuario },
-            
+            include: { model: Usuario },
           },
           {
             model: Participacion,
@@ -84,7 +77,6 @@ router.get("/", function (req, res, next) {
     );
 });
 
-// GET de un solo client
 //Para el perfil del usuario
 router.get("/:id", function (req, res, next) {
   sequelize
@@ -95,16 +87,16 @@ router.get("/:id", function (req, res, next) {
         include: [
           {
             model: Evento,
-            include: 
-                           [ { model: Usuario },
-              { model: Participacion }]
-                      },
+            include: [{ model: Usuario }, { model: Participacion }],
+          },
           {
             model: Participacion,
-            include: [{
-              model: Evento,
-            },
-            { model: Usuario }]
+            include: [
+              {
+                model: Evento,
+              },
+              { model: Usuario },
+            ],
           },
         ],
       })
@@ -140,7 +132,7 @@ router.put("/:id", function (req, res, next) {
 
       .sync()
       .then(() => {
-        req.body.foto = req.file.path.split("\\")[1];
+        req.body.foto = req.file ? req.file.path.split("\\")[1] : "noFoto.jpg";
 
         Usuario.findOne({ where: { id: req.params.id } })
           .then((al) => al.update(req.body))
@@ -222,8 +214,6 @@ router.put("/:id", function (req, res, next) {
       });
     });
 });
-
-
 
 // DELETE
 router.delete("/:id", function (req, res, next) {
