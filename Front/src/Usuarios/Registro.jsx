@@ -143,7 +143,7 @@ function Registro(props) {
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">
-              Introduce un emial.
+              Introduce un email.
             </Form.Control.Feedback>
           </Form.Group>
 

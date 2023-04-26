@@ -25,6 +25,7 @@ export const Evento = sequelize.define('Evento', {
     nivel: dataType.STRING,
     participantes: dataType.INTEGER,
     foto: dataType.STRING,
+    direccion : dataType.STRING
 
 } , {tableName: 'eventos', timestamps: false})
 

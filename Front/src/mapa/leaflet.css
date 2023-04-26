@@ -1,0 +1,48 @@
+/* .box{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 150px;
+    height: 300px;
+    background-color: aliceblue;
+} */
+
+
+.highlighted-date {
+    background-color: rgb(200,200,200);
+  }
+  
+  .image{
+    background-image: url("../image/photo-1536318431364-5cc762cfc8ec.jpg");
+    background-repeat: no-repeat;
+    background-size: cover ;
+  }
+  .mapa {
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    height: 350px; 
+    width: 625px;
+    pointer-events: auto !important;
+    margin-top: 20px;
+    border-radius: 12px;
+    
+  }
+
+  .leaflet-container {
+    width: 100%;
+    height: 360px;
+  }
+
+ 
+  
+  .map-container .leaflet-container {   
+    background-color: aliceblue;
+    z-index: 1;
+  }
+
+  .crear{
+    display: flex;
+    align-items: center;
+
+  }
