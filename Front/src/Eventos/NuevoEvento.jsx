@@ -73,7 +73,7 @@ function NuevoEvento(props) {
   }
 
   return (
-    <Container fluid="lg">
+    <Container fluid="lg" className="image">
       <Row>
         <Col>
           <Form>

@@ -12,7 +12,11 @@
     background-color: rgb(200,200,200);
   }
   
-  
+  .image{
+    background-image: url("../image/photo-1536318431364-5cc762cfc8ec.jpg");
+    background-repeat: no-repeat;
+    background-size: cover ;
+  }
   .mapa {
     display: flex;
     align-items: center;
