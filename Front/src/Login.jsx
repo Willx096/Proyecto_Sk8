@@ -1,19 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { useContext} from "react";
-import GlobalContext from "./GlobalContext";
 
 function Login({showLogin, handleLogin, setShowLogin} ) {
     const [error, setError] = useState(false)
     const [email, setEmail] = useState("")
     const [pswd, setPswd] = useState("")
-  //   const {  handleLogin } = useContext(GlobalContext);
-  //   //para el modal
-  // const [show, setShow] = useState(false);
-
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
 
   return (
     <>

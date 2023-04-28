@@ -79,7 +79,7 @@ router.get("/", autentica , function (req, res, next) {
 });
 
 //Para el perfil del usuario
-router.get("/:id", function (req, res, next) {
+router.get("/:id",autentica, function (req, res, next) {
   sequelize
     .sync()
     .then(() => {

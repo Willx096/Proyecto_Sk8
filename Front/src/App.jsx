@@ -14,11 +14,9 @@ import Login from "./Login";
 
 //Context para poder cambiar id mientras no hay login
 import GlobalContext from "./GlobalContext";
-
 import jwt_decode from "jwt-decode";
+import { Container } from "react-bootstrap";
 function App() {
- 
-
 
   //prueba 1 version login
   //usestates
@@ -26,6 +24,7 @@ function App() {
   const [error, setError] = useState([]); 
   const [token, setToken] = useState(''); 
   const [username, setUsername] = useState(''); 
+  const [userid, setUserid] = useState(''); 
   
   //cuando no estas login
   const navigateTo = useNavigate();
@@ -38,6 +37,7 @@ function App() {
     if (token) {
       const decoded = jwt_decode(token); 
       setUsername(decoded.email); 
+      setUserid(decoded.id); 
           } else {
       setUsername(''); 
     }
@@ -80,8 +80,9 @@ function App() {
 
   return (
     <>
-    <GlobalContext.Provider value={{username, token, setMostrarLogin, logout, handleLogin, mostrarLogin}}>
+    <GlobalContext.Provider value={{username,userid, token, setMostrarLogin, logout, handleLogin, mostrarLogin}}>
       <NavUsuario />
+      <Container>
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/eventos" element={<Eventos />} />
@@ -89,6 +90,7 @@ function App() {
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/registro" element={<Registro />} />
       </Routes>
+      </Container>
       <Login handleLogin={handleLogin} showLogin={mostrarLogin} setShowLogin={setMostrarLogin} />
       </GlobalContext.Provider>
     </>
