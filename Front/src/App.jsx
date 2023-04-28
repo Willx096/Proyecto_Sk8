@@ -4,7 +4,7 @@ import Eventos from "./Eventos/Eventos";
 import NuevoEvento from "./Eventos/NuevoEvento";
 import Perfil from "./Usuarios/Perfil";
 import Registro from "./Usuarios/Registro";
-
+import ListaUsuarios from "./Usuarios/ListaUsuarios"
 import { useState, useEffect} from "react";
 import {useNavigate } from "react-router-dom"
 import NavUsuario from "./Navs/NavUsuario";
@@ -25,6 +25,8 @@ function App() {
   const [token, setToken] = useState(''); 
   const [username, setUsername] = useState(''); 
   const [userid, setUserid] = useState(''); 
+  const [admin, setAdmin] = useState(0); // Estado para almacenar si el usuario logueado tiene permisos de administrador o no
+
   
   //cuando no estas login
   const navigateTo = useNavigate();
@@ -38,8 +40,10 @@ function App() {
       const decoded = jwt_decode(token); 
       setUsername(decoded.email); 
       setUserid(decoded.id); 
+      setAdmin(decoded.admin || 0); // Almacena si el usuario tiene permisos de administrador o no
           } else {
-      setUsername(''); 
+      setUsername('');
+      setAdmin(0); // Si no hay token, establece permisos de administrador a 0
     }
     goHome(); 
   }, [token])
@@ -80,7 +84,7 @@ function App() {
 
   return (
     <>
-    <GlobalContext.Provider value={{username,userid, token, setMostrarLogin, logout, handleLogin, mostrarLogin}}>
+    <GlobalContext.Provider value={{username,userid,admin, token, setMostrarLogin, logout, handleLogin, mostrarLogin}}>
       <NavUsuario />
       <Container>
       <Routes>
@@ -88,6 +92,7 @@ function App() {
         <Route path="/eventos" element={<Eventos />} />
         <Route path="/nuevo-evento" element={<NuevoEvento />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/lista-usuarios" element={<ListaUsuarios />} />
         <Route path="/registro" element={<Registro />} />
       </Routes>
       </Container>

@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
 
+
 const NavUsuario = () => {
-  const { username,userid, setMostrarLogin, logout } = useContext(GlobalContext);
+  const { username,userid,admin,   setMostrarLogin, logout } = useContext(GlobalContext);
   console.log(username, "hola");
   console.log(userid, "hola");
+  console.log(admin, "hola");
 
   if (!username) {
     return (
@@ -58,12 +60,18 @@ const NavUsuario = () => {
                 Crear Evento
               </Link>
             </NavDropdown>
+            {/* Si el usuario es un administrador, mostrar links adicionales */}
+            { admin ? <>
+              <Nav.Link as={Link} to="/lista-usuarios" className='nav-link'>Lista de usuarios</Nav.Link>
+            </> : <></>}
+            
           </Nav>
         </Navbar.Collapse>
-        <button
+        {/* Nose porque esta aqui esto  */}
+        {/* <button
           className="nav-link cursor-pointer"
           onClick={() => setMostrarLogin(true)}
-        ></button>
+        ></button> */}
         <button className="nav-link cursor-pointer" onClick={logout}>
           Logout
         </button>

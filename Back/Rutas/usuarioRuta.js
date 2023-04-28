@@ -221,6 +221,7 @@ router.post('/login', (req, res) => {
                   email,
                   nom: usuario.nombre,
                   id: usuario.id,
+                  admin: usuario.admin
                   
               },
               secretKey

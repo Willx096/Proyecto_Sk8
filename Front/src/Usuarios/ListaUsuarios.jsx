@@ -1,11 +1,15 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import {Table} from "react-bootstrap"
+import GlobalContext from "../GlobalContext.js";
+
 
 function ListaUsuarios() {
 
+  const { token } = useContext(GlobalContext);
   const [datos, setDatos] = useState([]);
   const [error, setError] = useState(false);
+
 
   function cargarPerfil() {
 

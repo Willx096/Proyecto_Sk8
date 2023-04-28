@@ -11,7 +11,8 @@ export const Usuario = sequelize.define('Usuario', {
     foto: dataType.STRING,
     descripcion: dataType.STRING,
     nickname: dataType.STRING,
-    contacto: dataType.STRING
+    contacto: dataType.STRING,
+    admin: dataType.INTEGER
 
 } , {tableName: 'usuarios', timestamps: false})
 
