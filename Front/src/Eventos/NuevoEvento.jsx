@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Col, Row, Button, Container, FormGroup } from "react-bootstrap";
+import { Form, Col, Row, Button, Container, FormGroup, FormLabel } from "react-bootstrap";
 import MapView from "../mapa/MapView";
 import "leaflet/dist/leaflet.css";
 import "../mapa/leaflet.css";
@@ -82,9 +82,9 @@ function NuevoEvento(props) {
               <Form.Group className="mb-3" controlId="formBasicEmail" as={Col}>
                 <Form.Label>Titulo</Form.Label>
                 <Form.Control
-                  value={evento.titulo}
-                  onInput={(e) =>
-                    setEvento({ ...evento, titulo: e.target.value })
+                    value={evento.titulo}
+                    onInput={(e) =>
+                      setEvento({ ...evento, titulo: e.target.value })
                   }
                   type="text"
                   placeholder="Inserta un titulo"

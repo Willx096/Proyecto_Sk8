@@ -1,92 +1,77 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Card, Button, Container, ListGroupItem, ListGroup } from "react-bootstrap";
+import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
 
 function Eventos(props) {
-
-
-  
   const [direccion, setDireccion] = useState("");
-  const [evento, setEvento] = useState({
-    titulo: "",
-    descripcion: "",
-    fecha: "",
-    hora: "",
-    direccion: "",
-    latitud: 0,
-    longitud: 0,
-    nivel: "",
-    participantes: "",
-  });
+  const [evento, setEvento] = useState([
+    {
+      titulo: "",
+      descripcion: "",
+      fecha: "",
+      hora: "",
+      direccion: "",
+      latitud: 0,
+      longitud: 0,
+      nivel: "",
+      participantes: "",
+    },
+  ]);
 
   useEffect(() => {
-    setEvento({
-      ...evento,
-      direccion: direccion.display_name,
-      longitud: direccion.lon * 1,
-      latitud: direccion.lat * 1,
-    });
-  }, [direccion]);
+    fetch("http://localhost:5000/api/eventos")
+      .then((response) => response.json())
+      .then((x) => {
+        console.log(x);
+        setEvento(x.data);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
 
+  console.log(evento);
+  const llistaEventos = evento.map((e, idx) => {
+    return (
+      <Col key={idx} md={4} xs={12} sm={6} lg={3} className="mb-3 ">
+        <Card>
+          <Card.Body>
+            <Card.Title>{e.titulo}</Card.Title>
+            <Card.Text>{e.descripcion}</Card.Text>
+            <Card.Text>{e.fecha}</Card.Text>
+            <Card.Text>{e.hora}</Card.Text>
+            <Card.Text>{e.direccion}</Card.Text>
+            <Card.Text>{e.participantes}</Card.Text>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
+      </Col>
+    );
+  });
 
-function MostrarEvento(e){
-
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
-var raw = JSON.stringify({
-  "titulo": "",
-  "descripcion": "",
-  "fecha": "",
-  "hora": "",
-  "latitud": "",
-  "nivel": "",
-  "participantes": "",
-  "foto": ""
-});
-
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("localhost:5000/api/eventos", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-
-
-}
-
-
+  const marcadores = evento.map((e, idx) => (
+    <Marker key={idx} position={[e.latitude, e.longitude]}>
+      <Tooltip>
+        <p>Titulo:{e.titulo}</p>
+        <p>Descripcon:{e.descripcion}</p>
+        <p>Fecha:{e.fecha}</p>
+        <p>Hora:{e.hora}</p>
+      </Tooltip>
+    </Marker>
+  ));
 
   return (
-    <Container>
-      <MapView direccion={direccion} setDireccion={setDireccion} />
-      <Card style={{ width: "18rem" }}>
-        {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
-        <Card.Body>
-          <Card.Title>Evento</Card.Title>
-          <Card.Text>
-            <ListGroup.Item>Titulo</ListGroup.Item>
-            <ListGroup.Item>Descripción</ListGroup.Item>
-            <ListGroup.Item>Fecha</ListGroup.Item>
-            <ListGroup.Item>Hora</ListGroup.Item>
-            <ListGroup.Item>direccion</ListGroup.Item>
-            <ListGroup.Item>Nivel</ListGroup.Item>
-            <ListGroup.Item>Participantes</ListGroup.Item>
-          </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
-        </Card.Body>
-      </Card>
-    </Container>
+    <>
+      <Container fluid="lg">
+        <MapView direccion={direccion} setDireccion={setDireccion} />
+        {marcadores}
+      </Container>
+      <br />
+      <Container fluid="lg">
+        <Row>{llistaEventos}</Row>
+      </Container>
+    </>
   );
 }
-
-Eventos.propTypes = {};
 
 export default Eventos;
