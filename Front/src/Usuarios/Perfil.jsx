@@ -9,7 +9,7 @@ import GlobalContext from "../GlobalContext";
 import Editar from "./EditarPerfil";
 
 function Perfil() {
-  const { id } = useContext(GlobalContext);
+  const { id, token } = useContext(GlobalContext);
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
   //para que cuando se actualizan los datos se vuelva a ejecutar el cargarPerfil
@@ -17,8 +17,13 @@ function Perfil() {
 
   //funcion que llama a los datos de la base de datos
   function cargarPerfil() {
+    
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', authorization: token },}
+    
     //cuando tengamos el login podremos poner con el context {id} en vez de poner directamente el 1
-    fetch(`http://localhost:5000/api/usuarios/${id}`)
+    fetch(`http://localhost:5000/api/usuarios/2`, requestOptions)
       .then((resultado) => resultado.json())
       .then((resultado2) => {
         if (resultado2.ok === true) {

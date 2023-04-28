@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import GlobalContext from "../GlobalContext";
 
 function Eliminar() {
-  const { id } = useContext(GlobalContext);
+  // const { id } = useContext(GlobalContext);
 
   //nos permite tener una funcion que al ejecutarse nos envie a la pagina de inicio
   const navigateTo = useNavigate();
@@ -17,7 +17,7 @@ function Eliminar() {
   function eliminarUsuario(e) {
     e.preventDefault();
 
-    const URL = `http://localhost:5000/api/usuarios/${id}`;
+    const URL = `http://localhost:5000/api/usuarios/2`;
 
     var requestOptions = {
       method: "DELETE",

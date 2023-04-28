@@ -50,7 +50,7 @@ function Editar({ perfil, refresh, setRefresh }) {
       contacto,
     };
 
-    const URL = `http://localhost:5000/api/usuarios/${id}`;
+    const URL = `http://localhost:5000/api/usuarios/2`;
 
     var formData = new FormData();
     formData.append("nombre", usuario.nombre);

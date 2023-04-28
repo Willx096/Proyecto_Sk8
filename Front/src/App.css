@@ -1,3 +1,10 @@
 .separa {
     margin-right: 20px;
 }
+
+.login {
+    background-color: transparent;
+    outline: transparent;
+    border-color: transparent;
+    padding: 0;
+}

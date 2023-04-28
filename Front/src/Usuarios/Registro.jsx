@@ -18,7 +18,8 @@ function Registro(props) {
     foto: null,
     descripcion: "",
     nickname: "",
-    contacto: null,
+    //he quitado el null porque da error
+    contacto: "",
   });
 
   function CrearUsuario(e) {
@@ -65,7 +66,7 @@ function Registro(props) {
           foto: null,
           descripcion: "",
           nickname: "",
-          contacto: null,
+          contacto: "",
         });
         //cambiamos el valor de clave a 1
         setClave(clave + 1);

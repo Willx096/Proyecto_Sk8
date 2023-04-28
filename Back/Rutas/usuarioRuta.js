@@ -2,9 +2,10 @@ import express from "express";
 import { sequelize } from "../loadSequelize.js";
 import { Usuario, Evento, Participacion } from "../Models/models.js";
 
-// import jsonwebtoken from "jsonwebtoken";
-
-// import { secretKey, expiredAfter } from "./loginconfig.js";
+//login y seguridad
+import jsonwebtoken from "jsonwebtoken";
+import { autentica} from './middleware.js';
+import { secretKey, expiredAfter } from "./loginconfig.js";
 
 //bcrypt es un modulo que nos permite encriptar en una dirección
 import bcrypt from "bcrypt";
@@ -35,7 +36,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single("file");
 
 //Para la lista de usuarios que tendra el admin
-router.get("/", function (req, res, next) {
+router.get("/", autentica , function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
@@ -187,6 +188,49 @@ router.post("/", function (req, res, next) {
         });
       });
   });
+});
+
+//para el login
+router.post('/login', (req, res) => {
+  const response = {};
+  //recogemos del front el email i la contraseña
+  const { email, pswd } = req.body;
+  //si no nos llega el email o la contraseña mostrar error
+  if (!email || !pswd) {
+     res.status(400).json({ ok: false, msg: "Nose ha recibido el email y la contraseña." });
+  }
+  //una vez comprovado que nos ha llegado el email y contraseña
+  Usuario.findOne({ where: { email} })
+  //si se encuentra algun usuario con el mismo email se obtenienen los datos del usuario
+        .then((usuario) => {
+        console.log(usuario)
+        //se compara la contraseña facilitada con la de la base de datos
+          if (usuario && bcrypt.compareSync(pswd, usuario.pswd)) {
+            //si coinciden se nos devuelven los datos del usuario
+              return usuario;
+          }
+          //sino nos muestra que son incorrectos 
+          else {
+              throw "email o contraseña incorrectos";
+          }
+      })
+      .then(usuario => {
+          response.token = jsonwebtoken.sign(
+              {
+                  expiredAt: new Date().getTime() + expiredAfter,
+                  email,
+                  nom: usuario.nombre,
+                  id: usuario.id,
+                  
+              },
+              secretKey
+          );
+          response.ok = true;
+
+          res.json(response);
+      })
+      .catch(err => res.status(400).json({ ok: false, msg: err }))
+
 });
 
 // put solo de uno
