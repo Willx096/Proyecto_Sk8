@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Card, Button, Container, Row, Col, } from "react-bootstrap";
+import { Marker, Tooltip } from 'react-leaflet';
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
 
@@ -30,7 +31,7 @@ function Eventos(props) {
       .catch((error) => console.log("error", error));
   }, []);
 
-  console.log(evento);
+  console.log(llistaEventos);
   const llistaEventos = evento.map((e, idx) => {
     return (
       <Col key={idx} md={4} xs={12} sm={6} lg={3} className="mb-3 ">
@@ -49,6 +50,8 @@ function Eventos(props) {
     );
   });
 
+  // 
+
   const marcadores = evento.map((e, idx) => (
     <Marker key={idx} position={[e.latitude, e.longitude]}>
       <Tooltip>
@@ -56,6 +59,8 @@ function Eventos(props) {
         <p>Descripcon:{e.descripcion}</p>
         <p>Fecha:{e.fecha}</p>
         <p>Hora:{e.hora}</p>
+        <p>Latitud:{e.latitud}</p>
+        <p>Longitud:{e.longitud}</p>
       </Tooltip>
     </Marker>
   ));
