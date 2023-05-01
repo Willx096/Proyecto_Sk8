@@ -32,7 +32,8 @@ export const Evento = sequelize.define('Evento', {
 export const Participacion = sequelize.define('Participacion', {
     id_evento: dataType.INTEGER,
     id_usuario: dataType.INTEGER,
-    valoracion: dataType.INTEGER
+    valoracion: dataType.STRING,
+    puntuacion: dataType.INTEGER
 
 } , {tableName: 'participaciones', timestamps: false})
 

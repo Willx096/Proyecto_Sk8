@@ -16,7 +16,6 @@ function NuevoEvento(props) {
     longitud: 0,
     nivel: "",
     participantes: "",
-    // foto: "",
   });
 
   useEffect(() => {
@@ -42,8 +41,7 @@ function NuevoEvento(props) {
       direccion: evento.direccion,
       nivel: evento.nivel,
       participantes: evento.participantes,
-      id_usuario: 2
-      // foto: evento.foto,
+      id_usuario: 2,
     });
 
     var requestOptions = {
@@ -67,14 +65,18 @@ function NuevoEvento(props) {
           longitud: 0,
           nivel: "",
           participantes: "",
-          // foto: "",
         });
       })
       .catch((error) => console.log("error", error));
   }
 
   return (
-    <Container fluid="lg" className="image">
+    <Container fluid="lg">
+      {/* className="image" demomento */}
+      <Row>
+        <h3>Crear un nuevo evento</h3>
+        {/*deberiamos pensar un titulo o dejar este que indica que esta pantalla  */}
+      </Row>
       <Row>
         <Col>
           <Form>

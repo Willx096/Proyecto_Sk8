@@ -1,8 +1,7 @@
 import React from "react";
-import { Container, Image } from "react-bootstrap";
 import encabezado from "../public/VideoInicio.mp4";
-import "./inicio.css";
 import Registro from "./Usuarios/Registro";
+import "./inicio.css";
 
 function Inicio(props) {
   return (

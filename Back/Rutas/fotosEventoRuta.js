@@ -2,22 +2,18 @@ import express from "express";
 import { sequelize } from "../loadSequelize.js";
 import { FotosEvento, Usuario, Evento, Participacion } from "../Models/models.js";
 
-//login y seguridad
-
-//Instalar para subir y modificar foto
 import multer from "multer";
 
-//conexion entre tablas
-// Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
-// Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
-// Participacion.belongsTo(Evento, { foreignKey: "id_evento" });
+//Conexiones entre tablas
+Evento.hasMany(FotosEvento, { foreignKey: "id_evento" });
+Usuario.hasMany(FotosEvento, { foreignKey: "id_usuario" });
 
-//conexiones no necesarios por ahora
-// Evento.hasMany(Participacion, { foreignKey: "id_evento" });
+FotosEvento.belongsTo(Evento, { foreignKey: "id_evento" });
+FotosEvento.belongsTo(Usuario, { foreignKey: "id_usuario" });
+
 
 const router = express.Router();
 
-//Lo que indica donde y como se guarda la foto
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "fotos");
@@ -29,28 +25,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single("file");
 
-//Para la lista de usuarios que tendra el admin
+//Para mostrar las fotos de las valoraciones
 router.get("/",  function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
-      FotosEvento.findAll(
-        // include: [
-        //   {
-        //     model: Evento,
-        //     include: { model: Usuario },
-        //   },
-        //   {
-        //     model: Participacion,
-        //     include: [
-        //       {
-        //         model: Evento,
-        //       },
-        //       { model: Usuario },
-        //     ],
-        //   },
-        // ],
-      )
+      FotosEvento.findAll()
         .then((usuarios) =>
           res.json({
             ok: true,
@@ -72,28 +52,13 @@ router.get("/",  function (req, res, next) {
     );
 });
 
-//Para el perfil del usuario
+//Aqui ira el que muestre las fotos de un usuario y evento concreto
 router.get("/:id", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
       FotosEvento.findOne({
         where: { id: req.params.id },
-        // include: [
-        //   {
-        //     model: Evento,
-        //     include: [{ model: Usuario }, { model: Participacion }],
-        //   },
-        //   {
-        //     model: Participacion,
-        //     include: [
-        //       {
-        //         model: Evento,
-        //       },
-        //       { model: Usuario },
-        //     ],
-        //   },
-        // ],
       })
         .then((el) =>
           res.json({
@@ -116,7 +81,7 @@ router.get("/:id", function (req, res, next) {
     });
 });
 
-//Para modificar un usuario
+//Para modificar las fotos colgadas
 router.put("/:id", function (req, res, next) {
   upload(req, res, function (err) {
     if (err) {
@@ -155,7 +120,7 @@ router.put("/:id", function (req, res, next) {
   });
 });
 
-// POST
+//Para colgar las fotos
 router.post("/", function (req, res, next) {
   upload(req, res, function (err) {
     if (err) {
@@ -182,35 +147,7 @@ router.post("/", function (req, res, next) {
   });
 });
 
-// put solo de uno
-router.put("/:id", function (req, res, next) {
-  sequelize
-    .sync()
-    .then(() => {
-      FotosEvento.findOne({ where: { id: req.params.id } })
-        .then((usuario) => usuario.update(req.body))
-        .then((usuarioMod) =>
-          res.json({
-            ok: true,
-            data: usuarioMod,
-          })
-        )
-        .catch((error) =>
-          res.json({
-            ok: false,
-            error: error.message,
-          })
-        );
-    })
-    .catch((error) => {
-      res.json({
-        ok: false,
-        error: error.message,
-      });
-    });
-});
-
-// DELETE
+//Eliminar fotos
 router.delete("/:id", function (req, res, next) {
   sequelize
     .sync()

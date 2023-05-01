@@ -5,14 +5,13 @@ import { Button, Form, Modal } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
 
 function Editar({ perfil, refresh, setRefresh }) {
-  const { id } = useContext(GlobalContext);
+  const { userid } = useContext(GlobalContext);
 
   //para mostrar o no el modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // const [descripcion, setDescripcion] = useState("");
   const [nombre, setNombre] = useState(perfil.nombre);
   const [apellido, setApellido] = useState(perfil.apellido);
   const [email, setEmail] = useState(perfil.email);
@@ -24,13 +23,6 @@ function Editar({ perfil, refresh, setRefresh }) {
   const [descripcion, setDescripcion] = useState(perfil.descripcion);
   const [nickname, setNickname] = useState(perfil.nickname);
   const [contacto, setContacto] = useState(perfil.contacto);
-
-  useEffect(() => {
-    if (perfil) {
-      setNombre(perfil.nombre);
-      setDescripcion(perfil.descripcion);
-    }
-  }, [perfil]);
 
   //funcion que modifica los datos de la base de datos
   function editarUsuario(e) {
@@ -50,7 +42,7 @@ function Editar({ perfil, refresh, setRefresh }) {
       contacto,
     };
 
-    const URL = `http://localhost:5000/api/usuarios/2`;
+    const URL = `http://localhost:5000/api/usuarios/${userid}`;
 
     var formData = new FormData();
     formData.append("nombre", usuario.nombre);
@@ -79,9 +71,6 @@ function Editar({ perfil, refresh, setRefresh }) {
         setShow(false);
       })
       .catch((error) => console.log("error", error));
-
-    setNombre("");
-    setDescripcion("");
   }
 
   return (
@@ -94,7 +83,7 @@ function Editar({ perfil, refresh, setRefresh }) {
         <Modal.Header closeButton>
           <Modal.Title>Editar perfil</Modal.Title>
         </Modal.Header>
-        
+
         <Modal.Body>
           <Form>
             <Form.Group>
@@ -123,8 +112,8 @@ function Editar({ perfil, refresh, setRefresh }) {
                 onInput={(e) => setEmail(e.target.value)}
                 type="email"
               />
-                                   </Form.Group>
-            <Form.Group >
+            </Form.Group>
+            <Form.Group>
               <Form.Label>Nickname</Form.Label>
               <Form.Control
                 type="text"
@@ -133,7 +122,7 @@ function Editar({ perfil, refresh, setRefresh }) {
                 autoFocus
               />
             </Form.Group>
-            <Form.Group >
+            <Form.Group>
               <Form.Label>Fecha</Form.Label>
               <Form.Control
                 value={fecha}
@@ -141,7 +130,7 @@ function Editar({ perfil, refresh, setRefresh }) {
                 type="date"
               />
             </Form.Group>
-            <Form.Group >
+            <Form.Group>
               <Form.Label>Nivel</Form.Label>
               <Form.Select
                 required
@@ -155,23 +144,23 @@ function Editar({ perfil, refresh, setRefresh }) {
                 <option>Pro</option>
                 <option>Tony Hawk</option>
               </Form.Select>
-                          </Form.Group>
-            <Form.Group >
+            </Form.Group>
+            <Form.Group>
               <Form.Label>Tiempo patinando</Form.Label>
               <Form.Select
                 required
                 value={experiencia}
-                onInput={(e) => setUsuario(e.target.value)}
+                onInput={(e) => setExperiencia(e.target.value)}
                 type="text"
               >
                 <option>Menos de un mes</option>
-                <option>Unos mese</option>
+                <option>Unos meses</option>
                 <option>1 año</option>
                 <option>Más de 1 año</option>
                 <option>Muchos años</option>
               </Form.Select>
-                          </Form.Group>
-            <Form.Group >
+            </Form.Group>
+            <Form.Group>
               <Form.Label>Password</Form.Label>
               <Form.Control
                 required
@@ -179,11 +168,11 @@ function Editar({ perfil, refresh, setRefresh }) {
                 onInput={(e) => setPswd(e.target.value)}
                 type="password"
               />
-                        <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type="invalid">
                 Introduce una contraseña.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group >
+            <Form.Group>
               <Form.Label>Contacto</Form.Label>
               <Form.Control
                 value={contacto}
@@ -198,7 +187,7 @@ function Editar({ perfil, refresh, setRefresh }) {
                 value={descripcion}
                 onInput={(e) => setDescripcion(e.target.value)}
               />
-              <Form.Text>Imagen</Form.Text>
+              <Form.Label>Imagen</Form.Label>
               <Form.Control
                 type="file"
                 onInput={(e) => setLafoto(e.target.files[0])}
