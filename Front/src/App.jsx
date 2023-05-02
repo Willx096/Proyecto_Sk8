@@ -1,104 +1,124 @@
-import { Routes, Route } from "react-router-dom";
+//Componentes
 import Inicio from "./Inicio";
 import Eventos from "./Eventos/Eventos";
 import NuevoEvento from "./Eventos/NuevoEvento";
 import Perfil from "./Usuarios/Perfil";
 import Registro from "./Usuarios/Registro";
-import ListaUsuarios from "./Usuarios/ListaUsuarios"
-import { useState, useEffect} from "react";
-import {useNavigate } from "react-router-dom"
-import NavUsuario from "./Navs/NavUsuario";
-import "./App.css";
+import ListaUsuarios from "./Usuarios/ListaUsuarios";
+import NavUsuario from "./Navs/Navbar";
 import Login from "./Login";
-
-
-//Context para poder cambiar id mientras no hay login
-import GlobalContext from "./GlobalContext";
-import jwt_decode from "jwt-decode";
+//Estilo
+import "./App.css";
+//React
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import PerfilEvento from "./Eventos/PerfilEvento";
+//Para el login
+import jwt_decode from "jwt-decode";
+import GlobalContext from "./GlobalContext";
+
 function App() {
+  //useStates
+  const [showLogin, setShowLogin] = useState(false);
+  const [error, setError] = useState([]);
+  const [token, setToken] = useState("");
+  const [username, setUsername] = useState("");
+  const [userid, setUserid] = useState("");
+  const [admin, setAdmin] = useState(0);
+  const [nombreNav, setNombreNav] = useState("");
 
-  //prueba 1 version login
-  //usestates
-  const [mostrarLogin, setMostrarLogin] = useState(false); 
-  const [error, setError] = useState([]); 
-  const [token, setToken] = useState(''); 
-  const [username, setUsername] = useState(''); 
-  const [userid, setUserid] = useState(''); 
-  const [admin, setAdmin] = useState(0); // Estado para almacenar si el usuario logueado tiene permisos de administrador o no
-
-  
-  //cuando no estas login
+  //Navegación
   const navigateTo = useNavigate();
+
   const goHome = () => {
-    navigateTo('/')
+    navigateTo("/");
+  };
+
+  const goEventos = () => {
+    navigateTo("/eventos");
   };
 
   //token
   useEffect(() => {
     if (token) {
-      const decoded = jwt_decode(token); 
-      setUsername(decoded.email); 
-      setUserid(decoded.id); 
-      setAdmin(decoded.admin || 0); // Almacena si el usuario tiene permisos de administrador o no
-          } else {
-      setUsername('');
-      setAdmin(0); // Si no hay token, establece permisos de administrador a 0
+      const decoded = jwt_decode(token);
+      setUsername(decoded.email);
+      setUserid(decoded.id);
+      setNombreNav(decoded.nombre);
+      setAdmin(decoded.admin || 0);
+      goEventos();
+    } else {
+      setUsername("");
+      setAdmin(0);
+      goHome();
     }
-    goHome(); 
-  }, [token])
+  }, [token]);
 
-  //funcion que permite iniciar sesion
-  function handleLogin (email, pswd) {
+  //Funcion para iniciar sesion
+  function iniciaSesion(email, pswd) {
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, pswd }) 
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, pswd }),
     };
 
-    fetch("http://localhost:5000/api/usuarios/login", requestOptions) 
-      .then(response => {
-        console.log("El primer then")
-        return response.json()
+    fetch("http://localhost:5000/api/usuarios/login", requestOptions)
+      .then((response) => {
+        return response.json();
       })
-      .then(resp => {
+      .then((resp) => {
         JSON.stringify(resp);
         if (resp.ok === true) {
-          
-          setToken(resp.token); 
-          setMostrarLogin(false); 
+          setToken(resp.token);
+          setShowLogin(false);
         } else {
-          console.log("No Oks")
-          console.log("resp", resp)
-          setError(resp.msg); 
+          console.log("resp", resp);
+          setError(resp.msg);
         }
       })
-      .catch(e => setError(e))
-  };
+      .catch((e) => setError(e));
+  }
 
-  //cerrar sesion
+  //Funcion para cerrar sesion
   function logout() {
-    setToken('');
+    setToken("");
     goHome();
   }
 
   return (
     <>
-    <GlobalContext.Provider value={{username,userid,admin, token, setMostrarLogin, logout, handleLogin, mostrarLogin}}>
-      <NavUsuario />
-      <Container>
-      <Routes>
-        <Route path="/" element={<Inicio />} />
-        <Route path="/eventos" element={<Eventos />} />
-        <Route path="/perfil-evento" element={<PerfilEvento />} />
-        <Route path="/nuevo-evento" element={<NuevoEvento />} />
-        <Route path="/perfil" element={<Perfil />} />
-        <Route path="/lista-usuarios" element={<ListaUsuarios />} />
-        <Route path="/registro" element={<Registro />} />
-      </Routes>
-      </Container>
-      <Login handleLogin={handleLogin} showLogin={mostrarLogin} setShowLogin={setMostrarLogin} />
+      <GlobalContext.Provider
+        value={{
+          showLogin,
+          setShowLogin,
+          username,
+          userid,
+          admin,
+          token,
+          nombreNav,
+          logout,
+          goHome,
+        }}
+      >
+        <NavUsuario />
+        <Container>
+          <Routes>
+            <Route path="/" element={<Inicio />} />
+            <Route path="/perfil-evento" element={<PerfilEvento />} />
+
+            <Route path="/eventos" element={<Eventos />} />
+            <Route path="/nuevo-evento" element={<NuevoEvento />} />
+            <Route path="/perfil" element={<Perfil />} />
+            <Route path="/lista-usuarios" element={<ListaUsuarios />} />
+            <Route path="/registro" element={<Registro />} />
+          </Routes>
+        </Container>
+        <Login
+          iniciaSesion={iniciaSesion}
+          showLogin={showLogin}
+          setShowLogin={setShowLogin}
+        />
       </GlobalContext.Provider>
     </>
   );

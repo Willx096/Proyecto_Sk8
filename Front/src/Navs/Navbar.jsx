@@ -1,15 +1,13 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
 
-
 const NavUsuario = () => {
-  const { username,userid,admin,   setMostrarLogin, logout } = useContext(GlobalContext);
-  console.log(username, "hola");
-  console.log(userid, "hola");
-  console.log(admin, "hola");
+  const { username, admin, nombreNav, setShowLogin, logout } =
+    useContext(GlobalContext);
 
+  // console.log(nombre)
   if (!username) {
     return (
       <Navbar bg="light" variant="light" expand="lg">
@@ -18,20 +16,20 @@ const NavUsuario = () => {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar>
-              <button
-                className="nav-link cursor-pointer"
-                onClick={() => setMostrarLogin(true)}
-              ></button>
+              {/* hacer este tambien con boton de bootstrap o asi */}
+              <button className="login" onClick={() => setShowLogin(true)}>
+                Iniciar sesion
+              </button>
             </Navbar>
             <Navbar>
-              <div
+              <button
                 onClick={() =>
                   document.getElementById("registro-id").scrollIntoView()
                 }
                 className="nav-link"
               >
-                Registro
-              </div>
+                Registrarse
+              </button>
             </Navbar>
           </Navbar.Collapse>
         </Container>
@@ -54,30 +52,34 @@ const NavUsuario = () => {
             <NavDropdown
               id="nav-dropdown-dark-example"
               menuVariant="dark"
-              title="Usuarios"
+              title={nombreNav}
             >
-              <Nav.Link as={Link} className="dropdown-item" to="/perfil">
+              <Link as={Link} className="dropdown-item" to="/perfil">
                 Perfil
-              </Nav.Link>
+              </Link>
               <Link className="dropdown-item" to="/nuevo-evento">
                 Crear Evento
               </Link>
             </NavDropdown>
-            {/* Si el usuario es un administrador, mostrar links adicionales */}
-            { admin ? <>
-              <Nav.Link as={Link} to="/lista-usuarios" className='nav-link'>Lista de usuarios</Nav.Link>
-            </> : <></>}
-            
+            <Nav.Link as={Link} to="/eventos" className="nav-link">
+              Eventos
+            </Nav.Link>
+            {/* Si el usuario es un administrador, mostrar links adicionales (alomejor habria que añadir mas funcionalidades al admin?¿) */}
+            {admin ? (
+              <>
+                <Nav.Link as={Link} to="/lista-usuarios" className="nav-link">
+                  Lista de usuarios
+                </Nav.Link>
+              </>
+            ) : (
+              <></>
+            )}
           </Nav>
         </Navbar.Collapse>
-        {/* Nose porque esta aqui esto  */}
-        {/* <button
-          className="nav-link cursor-pointer"
-          onClick={() => setMostrarLogin(true)}
-        ></button> */}
-        <button className="nav-link cursor-pointer" onClick={logout}>
-          Logout
-        </button>
+
+        <Button variant="secondary" onClick={logout}>
+          Cerrar Sesión
+        </Button>
       </Container>
     </Navbar>
   );
