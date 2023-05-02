@@ -46,10 +46,11 @@ function PerfilEvento() {
       <td>{el.titulo}</td>
       <td>{el.descripcion}</td>
       <td>{el.fecha}</td>
-      <td>{el.ubicacion}</td>
+      <td>{el.direccion}</td>
       <td>{el.nivel}</td>
       <td>{el.participantes}</td>
       <td>{el.Participacions[0].valoracion}</td>
+      <td>{el.Participacions[0].puntuacion}</td>
     </tr>
   ));
   return (
@@ -61,10 +62,11 @@ function PerfilEvento() {
             <th>Titulo</th>
             <th>Descripcion</th>
             <th>Fecha</th>
-            <th>Ubicacion</th>
+            <th>Direccion</th>
             <th>Nivel</th>
             <th>Participantes</th>
             <th>Valoracion</th>
+            <th>Puntuacion</th>
             <th>Creador</th>
           </tr>
         </thead>
