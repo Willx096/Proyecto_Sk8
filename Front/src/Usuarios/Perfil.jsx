@@ -4,6 +4,7 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import Eliminar from "./Eliminar";
 import GlobalContext from "../GlobalContext";
 import Editar from "./EditarPerfil";
+import Valoraciones from "./Valoraciones";
 
 function Perfil() {
   const { userid, token } = useContext(GlobalContext);
@@ -68,6 +69,7 @@ function Perfil() {
       <td>{el.Evento.ubicacion}</td>
       <td>{el.Usuario.nombre}</td>
       <td>{el.valoracion}</td>
+      <td><Valoraciones eventoid={el.Evento.id}/></td>
     </tr>
   ));
 

@@ -37,8 +37,10 @@ router.get("/", function (req, res, next) {
     );
 });
 
-//Para el apuntarse? el valorar?
-router.post("/", function (req, res, next) {
+//Para valorar
+router.post("/usuario/:id_usuario/evento/:id_evento", function (req, res, next) {
+  console.log("Por aqui llega")
+  console.log("body", req.body)
   sequelize
     .sync()
     .then(() => {
