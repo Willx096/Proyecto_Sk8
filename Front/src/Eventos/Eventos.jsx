@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Card, Button, Container, Row, Col, } from "react-bootstrap";
-import { Marker, Tooltip } from 'react-leaflet';
+import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Marker } from "react-leaflet";
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
+import GlobalContext from "../GlobalContext";
 
 function Eventos(props) {
   const [direccion, setDireccion] = useState("");
+  const [eventoDetalle, setEventoDetalle] = useState({});
   const [evento, setEvento] = useState([
     {
       titulo: "",
@@ -31,49 +33,44 @@ function Eventos(props) {
       .catch((error) => console.log("error", error));
   }, []);
 
-  console.log(llistaEventos);
-  const llistaEventos = evento.map((e, idx) => {
-    return (
-      <Col key={idx} md={4} xs={12} sm={6} lg={3} className="mb-3 ">
-        <Card>
-          <Card.Body>
-            <Card.Title>{e.titulo}</Card.Title>
-            <Card.Text>{e.descripcion}</Card.Text>
-            <Card.Text>{e.fecha}</Card.Text>
-            <Card.Text>{e.hora}</Card.Text>
-            <Card.Text>{e.direccion}</Card.Text>
-            <Card.Text>{e.participantes}</Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
-      </Col>
-    );
-  });
+ 
 
-  // 
+ 
+ 
+ 
 
   const marcadores = evento.map((e, idx) => (
-    <Marker key={idx} position={[e.latitude, e.longitude]}>
-      <Tooltip>
-        <p>Titulo:{e.titulo}</p>
-        <p>Descripcon:{e.descripcion}</p>
-        <p>Fecha:{e.fecha}</p>
-        <p>Hora:{e.hora}</p>
-        <p>Latitud:{e.latitud}</p>
-        <p>Longitud:{e.longitud}</p>
-      </Tooltip>
-    </Marker>
+    <Marker className="marcador"
+      eventHandlers={{ click: () => setEventoDetalle(e) }}
+      key={idx}
+      position={[e.latitud * 1, e.longitud * 1]}
+      
+    ></Marker>
   ));
 
   return (
     <>
       <Container fluid="lg">
-        <MapView direccion={direccion} setDireccion={setDireccion} />
-        {marcadores}
+        <MapView
+          direccion={direccion}
+          setDireccion={setDireccion}
+          marcadores={marcadores}
+        />
       </Container>
       <br />
       <Container fluid="lg">
-        <Row>{llistaEventos}</Row>
+        <Row>
+          <Col>
+            <Card style={{ width: "18rem" }}>
+              <p className="text-center">{eventoDetalle.titulo}</p>
+              <p className="text-center">{eventoDetalle.descripcion}</p>
+              <p className="text-center">{eventoDetalle.fecha}</p>
+              <p className="text-center">{eventoDetalle.hora}</p>
+              <p className="text-center">{eventoDetalle.direccion}</p>
+              <p className="text-center">{eventoDetalle.participantes}</p>
+            </Card>
+          </Col>
+        </Row>
       </Container>
     </>
   );
