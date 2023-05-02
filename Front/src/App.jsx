@@ -16,6 +16,7 @@ import Login from "./Login";
 import GlobalContext from "./GlobalContext";
 import jwt_decode from "jwt-decode";
 import { Container } from "react-bootstrap";
+import PerfilEvento from "./Eventos/PerfilEvento";
 function App() {
 
   //prueba 1 version login
@@ -90,6 +91,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/eventos" element={<Eventos />} />
+        <Route path="/perfil-evento" element={<PerfilEvento />} />
         <Route path="/nuevo-evento" element={<NuevoEvento />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/lista-usuarios" element={<ListaUsuarios />} />
