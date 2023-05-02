@@ -106,7 +106,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Inicio />} />
             <Route path="/perfil-evento" element={<PerfilEvento />} />
-
+            <Route path="/perfil-evento/:id" element={<PerfilEvento />} />
             <Route path="/eventos" element={<Eventos />} />
             <Route path="/nuevo-evento" element={<NuevoEvento />} />
             <Route path="/perfil" element={<Perfil />} />

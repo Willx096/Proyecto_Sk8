@@ -1,39 +1,38 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { Table } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
+import { useParams } from "react-router-dom";
 
 function PerfilEvento() {
   const { userid, token } = useContext(GlobalContext);
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
+  const [apuntado, setApuntado] = useState(false);
+  let { eventoId } = useParams();
   //para que cuando se actualizan los datos se vuelva a ejecutar el cargarPerfil
   const [refresh, setRefresh] = useState(0);
+  console.log(userid);
 
   //funcion que llama a los datos de la base de datos
-  function CargarEvento() {
-    
+  useEffect(() => {
     const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json", authorization: token },
     };
-    
+
     //cuando tengamos el login podremos poner con el context {id} en vez de poner directamente el 1
-    fetch(`http://localhost:5000/api/eventos/`, requestOptions)
-    .then((resultado) => resultado.json())
-    .then((resultado2) => {
-      if (resultado2.ok === true) {
-        setDatos(resultado2.data);
-        console.log(datos)
+    fetch(`http://localhost:5000/api/eventos/6`, requestOptions)
+      .then((resultado) => resultado.json())
+      .then((resultado2) => {
+        if (resultado2.ok === true) {
+          setDatos([resultado2.data]);
+          console.log(datos);
         } else {
           setError(resultado2.error);
         }
       })
       .catch((error) => setError(error));
-  }
-
-  useEffect(() => {
-    CargarEvento();
   }, [refresh]);
   //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
@@ -42,36 +41,56 @@ function PerfilEvento() {
 
   //tabla de eventos creados
   const filas = datos.map((el, index) => (
-    <tr key={index}>
-      <td>{el.titulo}</td>
-      <td>{el.descripcion}</td>
-      <td>{el.fecha}</td>
-      <td>{el.direccion}</td>
-      <td>{el.nivel}</td>
-      <td>{el.participantes}</td>
-      <td>{el.Participacions[0].valoracion}</td>
-      <td>{el.Participacions[0].puntuacion}</td>
-    </tr>
+    <Card.Body key={index}>
+      <Card.Title>{el.titulo}</Card.Title>
+      <Card.Subtitle className="mb-2 text-muted">
+        {el.descripcion}
+      </Card.Subtitle>
+      <Card.Text>Fecha: {el.fecha}</Card.Text>
+      <Card.Text>Dirección: {el.direccion}</Card.Text>
+      <Card.Text>Nivel: {el.nivel}</Card.Text>
+      <Card.Text>Participantes: {el.participantes}</Card.Text>
+      <Card.Text>
+        Valoraciones: {el.Participacions.map((e) => e.valoracion).join("\n")}
+      </Card.Text>
+      <Card.Text>
+        Puntuacion: {el.Participacions.map((e) => e.puntuacion).join("\n")}
+      </Card.Text>
+    </Card.Body>
   ));
+
+  function Apuntarse() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      id_evento: 6,
+      id_usuario: userid,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/participacion/apuntarse", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .then(() => setApuntado(true))
+      .catch((error) => console.log("error", error));
+  }
+
   return (
     <div>
       <h3>Informacion del evento</h3>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Titulo</th>
-            <th>Descripcion</th>
-            <th>Fecha</th>
-            <th>Direccion</th>
-            <th>Nivel</th>
-            <th>Participantes</th>
-            <th>Valoracion</th>
-            <th>Puntuacion</th>
-            <th>Creador</th>
-          </tr>
-        </thead>
-        <tbody>{filas}</tbody>
-      </Table>
+      <Card border="dark">
+        {filas}
+        <Button onClick={Apuntarse} variant="primary">
+          Apuntarse
+        </Button>
+      </Card>
     </div>
   );
 }
