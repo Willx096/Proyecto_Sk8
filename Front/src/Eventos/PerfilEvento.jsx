@@ -22,7 +22,7 @@ function PerfilEvento() {
     };
 
     //cuando tengamos el login podremos poner con el context {id} en vez de poner directamente el 1
-    fetch(`http://localhost:5000/api/eventos/6`, requestOptions)
+    fetch(`http://localhost:5000/api/eventos/1`, requestOptions)
       .then((resultado) => resultado.json())
       .then((resultado2) => {
         if (resultado2.ok === true) {
@@ -64,12 +64,12 @@ function PerfilEvento() {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      id_evento: 6,
+      id_evento: 1,
       id_usuario: userid,
     });
 
     var requestOptions = {
-      method: "POST",
+      method: apuntado ? "DELETE" : "POST",
       headers: myHeaders,
       body: raw,
       redirect: "follow",
@@ -78,7 +78,7 @@ function PerfilEvento() {
     fetch("http://localhost:5000/api/participacion/apuntarse", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
-      .then(() => setApuntado(true))
+      .then(() => setApuntado(!apuntado))
       .catch((error) => console.log("error", error));
   }
 
@@ -88,7 +88,7 @@ function PerfilEvento() {
       <Card border="dark">
         {filas}
         <Button onClick={Apuntarse} variant="primary">
-          Apuntarse
+          {apuntado ? "Desapuntarse" : "Apuntarse"}
         </Button>
       </Card>
     </div>
