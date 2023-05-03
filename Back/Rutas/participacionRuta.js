@@ -113,6 +113,42 @@ router.post("/subir-fotos", function (req, res, next) {
   });
 });
 
+//Para el apuntarse el valorar?
+router.post("/apuntarse",
+  function (req, res, next) {
+    sequelize
+      .sync()
+      .then(() => {
+        Participacion.create(req.body)
+          .then((el) => res.json({ ok: true, data: el }))
+          .catch((error) => res.json({ ok: false, error: error.message }));
+      })
+      .catch((error) => {
+        res.json({
+          ok: false,
+          error: error.message,
+        });
+      });
+  }
+  );
+
+  //Para que el usuario pueda desapuntarse
+  router.delete("/apuntarse", function (req, res, next) {
+    const {id_evento,id_usuario} = req.body
+    sequelize
+      .sync()
+      .then(() => {
+        Participacion.destroy({ where: {id_evento, id_usuario } })
+          .then((data) => res.json({ ok: true, data }))
+          .catch((error) => res.json({ ok: false, error }));
+      })
+      .catch((error) => {
+        res.json({
+          ok: false,
+          error: error,
+        });
+      });
+  });
 //Para que el admin pueda eliminar una participacion
 router.delete("/:id", function (req, res, next) {
   sequelize

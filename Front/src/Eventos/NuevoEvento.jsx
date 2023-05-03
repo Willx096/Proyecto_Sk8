@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Form, Col, Row, Button, Container, FormGroup } from "react-bootstrap";
 import MapView from "../mapa/MapView";
 import "leaflet/dist/leaflet.css";
 import "../mapa/leaflet.css";
+import GlobalContext from "../GlobalContext";
+
 
 function NuevoEvento(props) {
+  const { userid, token } = useContext(GlobalContext);
   const [direccion, setDireccion] = useState("");
   const [evento, setEvento] = useState({
     titulo: "",
@@ -41,7 +44,8 @@ function NuevoEvento(props) {
       direccion: evento.direccion,
       nivel: evento.nivel,
       participantes: evento.participantes,
-      id_usuario: 2,
+      id_usuario: userid
+      // foto: evento.foto,
     });
 
     var requestOptions = {
@@ -84,9 +88,9 @@ function NuevoEvento(props) {
               <Form.Group className="mb-3" controlId="formBasicEmail" as={Col}>
                 <Form.Label>Titulo</Form.Label>
                 <Form.Control
-                  value={evento.titulo}
-                  onInput={(e) =>
-                    setEvento({ ...evento, titulo: e.target.value })
+                    value={evento.titulo}
+                    onInput={(e) =>
+                      setEvento({ ...evento, titulo: e.target.value })
                   }
                   type="text"
                   placeholder="Inserta un titulo"

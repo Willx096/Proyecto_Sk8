@@ -43,6 +43,12 @@ const NavUsuario = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="navbar-dark-example">
           <Nav className="me-auto">
+            <Nav.Link as={Link} to="/eventos" className="nav-link">
+              Eventos
+            </Nav.Link>
+            <Nav.Link as={Link} to="/perfil-evento" className="nav-link">
+              Perfil Evento
+            </Nav.Link>
             <NavDropdown
               id="nav-dropdown-dark-example"
               menuVariant="dark"

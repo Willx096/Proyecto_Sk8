@@ -13,6 +13,7 @@ import "./App.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
+import PerfilEvento from "./Eventos/PerfilEvento";
 //Para el login
 import jwt_decode from "jwt-decode";
 import GlobalContext from "./GlobalContext";
@@ -28,15 +29,15 @@ function App() {
   const [nombreNav, setNombreNav] = useState("");
 
   //Navegación
- const navigateTo = useNavigate();
- 
- const goHome = () => {
-   navigateTo("/");
- };
+  const navigateTo = useNavigate();
 
- const goEventos = () => {
-  navigateTo("/eventos");
- }
+  const goHome = () => {
+    navigateTo("/");
+  };
+
+  const goEventos = () => {
+    navigateTo("/eventos");
+  };
 
   //token
   useEffect(() => {
@@ -50,14 +51,12 @@ function App() {
     } else {
       setUsername("");
       setAdmin(0);
-      goHome()
+      goHome();
     }
-    
   }, [token]);
 
   //Funcion para iniciar sesion
   function iniciaSesion(email, pswd) {
-    
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -73,14 +72,12 @@ function App() {
         if (resp.ok === true) {
           setToken(resp.token);
           setShowLogin(false);
-          
         } else {
           console.log("resp", resp);
           setError(resp.msg);
         }
       })
       .catch((e) => setError(e));
-      
   }
 
   //Funcion para cerrar sesion
@@ -89,7 +86,6 @@ function App() {
     goHome();
   }
 
-  
   return (
     <>
       <GlobalContext.Provider
@@ -102,13 +98,15 @@ function App() {
           token,
           nombreNav,
           logout,
-          goHome
+          goHome,
         }}
       >
         <NavUsuario />
         <Container>
           <Routes>
             <Route path="/" element={<Inicio />} />
+            <Route path="/perfil-evento" element={<PerfilEvento />} />
+            <Route path="/perfil-evento/:eventoId" element={<PerfilEvento />} />
             <Route path="/eventos" element={<Eventos />} />
             <Route path="/nuevo-evento" element={<NuevoEvento />} />
             <Route path="/perfil" element={<Perfil />} />

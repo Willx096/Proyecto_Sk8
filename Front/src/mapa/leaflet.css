@@ -46,3 +46,7 @@
     align-items: center;
 
   }
+
+  .marcador{
+    background-color: red;
+  }
