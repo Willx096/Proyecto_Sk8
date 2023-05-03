@@ -1,23 +1,12 @@
-/* .box{
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    width: 250px;
-    height: 500px;
+.separa {
+    margin-right: 20px;
 }
 
-
-
-.highlighted-date {
-    background-color: rgb(200,200,200);
-  }
-  
-  
-  .el-puto-mapa {
-    height: 500px;
-    pointer-events: auto !important;
-  }
-  
-  .map-container .leaflet-container {
-    z-index: 1;
-  } */
+/* estilos en un mismo archivo o en diferentes */
+/* Estilo barra navegación */
+button {
+    background-color: transparent;
+    outline: transparent;
+    border-color: transparent;
+    padding: 0;
+}

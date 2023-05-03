@@ -1,21 +1,30 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import {Table} from "react-bootstrap"
+import GlobalContext from "../GlobalContext.js";
+
 
 function ListaUsuarios() {
 
+  const { token } = useContext(GlobalContext);
   const [datos, setDatos] = useState([]);
   const [error, setError] = useState(false);
 
+
   function cargarPerfil() {
 
-    fetch("http://localhost:5000/api/usuarios")
-      .then((resultado) => resultado.json())
-      .then((resultado2) => {
-        if (resultado2.ok === true) {
-          setDatos(resultado2.data);
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json", authorization: token },
+    };
+
+    fetch("http://localhost:5000/api/usuarios", requestOptions)
+      .then((data) => data.json())
+      .then((data) => {
+        if (data.ok === true) {
+          setDatos(data.data);
         } else {
-          setError(resultado2.error);
+          setError(data.error);
         }
       })
       .catch((error) => setError(error));
@@ -37,7 +46,7 @@ const Perfil = datos.map((e, idx) => {
 
 
   return <>
-  <div>Perfil</div>
+  <div><h3>Lista de usuarios de Sk8tea</h3></div>
   <Table>
   <thead>
    <tr> 

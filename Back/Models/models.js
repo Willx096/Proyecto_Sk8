@@ -11,7 +11,8 @@ export const Usuario = sequelize.define('Usuario', {
     foto: dataType.STRING,
     descripcion: dataType.STRING,
     nickname: dataType.STRING,
-    contacto: dataType.STRING
+    contacto: dataType.STRING,
+    admin: dataType.INTEGER
 
 } , {tableName: 'usuarios', timestamps: false})
 
@@ -31,6 +32,14 @@ export const Evento = sequelize.define('Evento', {
 export const Participacion = sequelize.define('Participacion', {
     id_evento: dataType.INTEGER,
     id_usuario: dataType.INTEGER,
-    valoracion: dataType.INTEGER
+    valoracion: dataType.STRING,
+    puntuacion: dataType.INTEGER
 
 } , {tableName: 'participaciones', timestamps: false})
+
+export const FotosEvento = sequelize.define('FotosEvento', {
+    id_evento: dataType.INTEGER,
+    id_usuario: dataType.INTEGER,
+    fotos: dataType.STRING
+
+} , {tableName: 'fotoseventos', timestamps: false})

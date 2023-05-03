@@ -1,24 +1,24 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { Container, Row, Col, Table } from "react-bootstrap";
-
 import Eliminar from "./Eliminar";
-
-//demomento solo lo usamos para el id
 import GlobalContext from "../GlobalContext";
 import Editar from "./EditarPerfil";
 
 function Perfil() {
-  const { id } = useContext(GlobalContext);
+  const { userid, token } = useContext(GlobalContext);
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
-  //para que cuando se actualizan los datos se vuelva a ejecutar el cargarPerfil
   const [refresh, setRefresh] = useState(0);
 
-  //funcion que llama a los datos de la base de datos
+  //Funcion para datos del perfil
   function cargarPerfil() {
-    //cuando tengamos el login podremos poner con el context {id} en vez de poner directamente el 1
-    fetch(`http://localhost:5000/api/usuarios/${id}`)
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json", authorization: token },
+    };
+
+    fetch(`http://localhost:5000/api/usuarios/${userid}`, requestOptions)
       .then((resultado) => resultado.json())
       .then((resultado2) => {
         if (resultado2.ok === true) {
@@ -35,10 +35,9 @@ function Perfil() {
   }, [refresh]);
   //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
-  //para que antes de leer lo q sigue cargue los datos
-  if (!datos) return <>...</>;
+    if (!datos) return <>...</>;
 
-  //constante que contiene la foto
+  //Constante que contiene la foto
   const foto = (
     <img
       src={"http://localhost:5000/" + datos.foto}
@@ -47,7 +46,7 @@ function Perfil() {
     />
   );
 
-  //tabla de eventos creados
+  //Tabla de eventos creados
   const filas = datos.Eventos.map((el, index) => (
     <tr key={index}>
       <td>{el.titulo}</td>
@@ -56,12 +55,10 @@ function Perfil() {
       <td>{el.participantes}</td>
       <td>{el.ubicacion}</td>
       <td>{el.Participacions[0].valoracion}</td>
-      {/* <td>{el.descripcion}</td> */}
-      
     </tr>
   ));
 
-  //tabla de eventos en los que se ha participado
+  //Tabla de eventos en los que se ha participado
   const filitas = datos.Participacions.map((el, index) => (
     <tr key={index}>
       <td>{el.Evento.titulo}</td>
@@ -82,10 +79,7 @@ function Perfil() {
           {datos.nombre} {datos.apellido}
         </Row>
         <Row>{datos.nickname}</Row>
-        <Row lg={3}>
-          {datos.descripcion}
-          {/* <Col>{datos.fecha_nacimiento}</Col> */}
-        </Row>
+        <Row lg={3}>{datos.descripcion}</Row>
         <Row>Nivel: {datos.nivel}</Row>
         <Row>Experiencia: {datos.experiencia} años</Row>
         <Row lg={3}>{datos.contacto}</Row>
@@ -109,7 +103,6 @@ function Perfil() {
               <thead>
                 <tr>
                   <th>Titulo</th>
-                  {/* <th>Descripcion</th> */}
                   <th>Fecha</th>
                   <th>Nivel</th>
                   <th>Participantes</th>
@@ -126,7 +119,6 @@ function Perfil() {
               <thead>
                 <tr>
                   <th>Titulo</th>
-                  {/* <th>Descripcion</th> */}
                   <th>Fecha</th>
                   <th>Nivel</th>
                   <th>Participantes</th>

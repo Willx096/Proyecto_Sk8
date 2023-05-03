@@ -1,23 +1,15 @@
 import React, { useState, useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-
-//demomento solo lo usamos para el id
 import GlobalContext from "../GlobalContext";
 
 function Eliminar() {
-  const { id } = useContext(GlobalContext);
+  const { userid, logout } = useContext(GlobalContext);
 
-  //nos permite tener una funcion que al ejecutarse nos envie a la pagina de inicio
-  const navigateTo = useNavigate();
-  const goHome = () => {
-    navigateTo("/");
-  };
-//funcion que elimina el usuario de la base de datos
+  //funcion que elimina el usuario de la base de datos
   function eliminarUsuario(e) {
     e.preventDefault();
 
-    const URL = `http://localhost:5000/api/usuarios/${id}`;
+    const URL = `http://localhost:5000/api/usuarios/${userid}`;
 
     var requestOptions = {
       method: "DELETE",
@@ -32,9 +24,7 @@ function Eliminar() {
         console.log("Respuesta del servidor:", data);
       })
       .catch((error) => console.log("error", error));
-
-    //nos lleva al inicio despues de eliminar la cuenta
-    goHome();
+    logout()
   }
 
   //para mostrar o no el mensaje que confirma que se quiere eliminar
@@ -51,15 +41,18 @@ function Eliminar() {
 
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Eliminar perfil</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          Atención! Si eliminas el perfil, se eliminará la cuenta
+          permanentemente.
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            no quiero
+            No quiero eliminar la cuenta.
           </Button>
           <Button variant="primary" onClick={eliminarUsuario}>
-            si, quiero Eliminar cuenta permanentemente
+            Si, quiero eliminar la cuenta permanentemente.
           </Button>
         </Modal.Footer>
       </Modal>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button, Row, Container, InputGroup } from "react-bootstrap";
+import React, { useState} from "react";
+import { Form, Button, Row, Container} from "react-bootstrap";
 
-function Registro(props) {
+function Registro() {
   //Validate para validar que los campos se han rellenado
   const [validated, setValidated] = useState(false);
   //Creamos este state clave refrescar el valor de la foto
@@ -18,7 +18,7 @@ function Registro(props) {
     foto: null,
     descripcion: "",
     nickname: "",
-    contacto: null,
+    contacto: "",
   });
 
   function CrearUsuario(e) {
@@ -65,7 +65,7 @@ function Registro(props) {
           foto: null,
           descripcion: "",
           nickname: "",
-          contacto: null,
+          contacto: "",
         });
         //cambiamos el valor de clave a 1
         setClave(clave + 1);
@@ -75,14 +75,19 @@ function Registro(props) {
   }
 
   return (
-    <Container className="d-grid h-100">
+    <Container>
       <Form
+        id="registro-id"
         noValidate
         validated={validated}
         className="text-center"
         onSubmit={CrearUsuario}
       >
-        <Row md={3}>
+        <Row>
+          <Form.Label><h3>Registrate y empieza a Skatear!</h3></Form.Label>
+          {/* la idea aqui es poner algo que anime a unirse pero que no de cringe como lo que hay puesto ahora */}
+        </Row>
+        <Row xs={1} sm={2} md={3}>
           <Form.Group className="mb-3" controlId="validationCustom01">
             <Form.Label>Nombre</Form.Label>
             <Form.Control
@@ -146,7 +151,7 @@ function Registro(props) {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="validationCustomUsername">
+          <Form.Group className="mb-3" controlId="validationCustomContact">
             <Form.Label>Contacto</Form.Label>
             <Form.Control
               value={usuario.contacto}
@@ -199,7 +204,7 @@ function Registro(props) {
               type="text"
             >
               <option>Menos de un mes</option>
-              <option>Unos mese</option>
+              <option>Unos meses</option>
               <option>1 año</option>
               <option>Más de 1 año</option>
               <option>Muchos años</option>
@@ -245,7 +250,7 @@ function Registro(props) {
           </Form.Group>
           <Form.Group className="mb-3">
             <Button variant="primary" type="submit">
-              Registrar-se
+              Registrarse
             </Button>
           </Form.Group>
         </Row>

@@ -4,30 +4,28 @@ import { Evento, Participacion, Usuario } from "../Models/models.js";
 
 const router = express.Router();
 
-//conexiones entre tablas necesarias
+//Conexiones entre tablas
 Evento.hasMany(Participacion, { foreignKey: "id_evento" });
-Evento.belongsTo(Usuario, { foreignKey: "id_usuario" })
+Evento.belongsTo(Usuario, { foreignKey: "id_usuario" });
 
-//conexiones no necesarias por ahora
-// Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
-// Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
-
+//Para la lista de eventos
 router.get("/", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
-      Evento.findAll({ include: [
-        {model: Participacion,
-           include: {
-            model: Usuario
-           } },
-        { model: Usuario },
-        
-      ] } )
-        .then((eventos) =>
+      Evento.findAll({
+        include: [
+          {
+            model: Participacion,
+            include: { model: Usuario },
+          },
+          { model: Usuario },
+        ],
+      })
+        .then((data) =>
           res.json({
             ok: true,
-            data: eventos,
+            data: data,
           })
         )
         .catch((error) =>
@@ -45,7 +43,7 @@ router.get("/", function (req, res, next) {
     );
 });
 
-// GET DE UN SOLO EVENTO
+//Para el perfil de los eventos
 router.get("/:id", function (req, res, next) {
   sequelize
     .sync()
@@ -54,10 +52,10 @@ router.get("/:id", function (req, res, next) {
         where: { id: req.params.id },
         include: { model: Participacion },
       })
-        .then((al) =>
+        .then((data) =>
           res.json({
             ok: true,
-            data: al,
+            data: data,
           })
         )
         .catch((error) =>
@@ -75,13 +73,13 @@ router.get("/:id", function (req, res, next) {
     });
 });
 
-// POST
+//Crear evento
 router.post("/", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
       Evento.create(req.body)
-        .then((el) => res.json({ ok: true, data: el }))
+        .then((data) => res.json({ ok: true, data: data }))
         .catch((error) => res.json({ ok: false, error: error.message }));
     })
     .catch((error) => {
@@ -92,17 +90,17 @@ router.post("/", function (req, res, next) {
     });
 });
 
-//PUT DE UN SOLO EVENTO
+//Editar evento
 router.put("/:id", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
       Evento.findOne({ where: { id: req.params.id } })
-        .then((evento) => evento.update(req.body))
-        .then((eventoMod) =>
+        .then((data) => data.update(req.body))
+        .then((data) =>
           res.json({
             ok: true,
-            data: eventoMod,
+            data: data,
           })
         )
         .catch((error) =>
@@ -120,7 +118,7 @@ router.put("/:id", function (req, res, next) {
     });
 });
 
-//ELIMINAR
+//Eliminar evento
 router.delete("/:id", function (req, res, next) {
   sequelize
     .sync()

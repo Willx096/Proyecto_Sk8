@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Form, Col, Row, Button, Container, FormGroup, FormLabel } from "react-bootstrap";
+import React, { useState, useEffect,useContext } from "react";
+import { Form, Col, Row, Button, Container, FormGroup } from "react-bootstrap";
 import MapView from "../mapa/MapView";
 import "leaflet/dist/leaflet.css";
 import "../mapa/leaflet.css";
+import GlobalContext from "../GlobalContext";
+
 
 function NuevoEvento(props) {
+  const { userid, token } = useContext(GlobalContext);
   const [direccion, setDireccion] = useState("");
   const [evento, setEvento] = useState({
     titulo: "",
@@ -16,7 +19,6 @@ function NuevoEvento(props) {
     longitud: 0,
     nivel: "",
     participantes: "",
-    // foto: "",
   });
 
   useEffect(() => {
@@ -42,7 +44,7 @@ function NuevoEvento(props) {
       direccion: evento.direccion,
       nivel: evento.nivel,
       participantes: evento.participantes,
-      id_usuario: 2
+      id_usuario: userid
       // foto: evento.foto,
     });
 
@@ -67,14 +69,18 @@ function NuevoEvento(props) {
           longitud: 0,
           nivel: "",
           participantes: "",
-          // foto: "",
         });
       })
       .catch((error) => console.log("error", error));
   }
 
   return (
-    <Container fluid="lg" className="image">
+    <Container fluid="lg">
+      {/* className="image" demomento */}
+      <Row>
+        <h3>Crear un nuevo evento</h3>
+        {/*deberiamos pensar un titulo o dejar este que indica que esta pantalla  */}
+      </Row>
       <Row>
         <Col>
           <Form>
