@@ -6,6 +6,8 @@ import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
 import { Icona1, Icona2, Icona3, Icona4 } from "./Icona";
 
+import GlobalContext from "../GlobalContext";
+import { useNavigate } from "react-router";
 function Eventos(props) {
   const [direccion, setDireccion] = useState("");
   const [eventoDetalle, setEventoDetalle] = useState({});
@@ -22,6 +24,11 @@ function Eventos(props) {
       participantes: "",
     },
   ]);
+  const goTo = useNavigate();
+  function goToEvento(id) {
+    console.log("id de evento:"+id)
+    goTo("/perfil-evento/" + id);
+  }
 
   useEffect(() => {
     fetch("http://localhost:5000/api/eventos")
@@ -66,6 +73,9 @@ function Eventos(props) {
               <p className="text-center">{eventoDetalle.hora}</p>
               <p className="text-center">{eventoDetalle.direccion}</p>
               <p className="text-center">{eventoDetalle.participantes}</p>
+              <Button onClick={() => goToEvento(eventoDetalle.id)}>
+                Mas Informacion
+              </Button>
             </Card>
           </Col>
         </Row>
