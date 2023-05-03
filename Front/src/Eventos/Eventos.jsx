@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
-import { Marker } from "react-leaflet";
+import { Marker, useMap } from "react-leaflet";
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
-import GlobalContext from "../GlobalContext";
+import { Icona1, Icona2, Icona3, Icona4 } from "./Icona";
 
 function Eventos(props) {
   const [direccion, setDireccion] = useState("");
@@ -33,18 +33,16 @@ function Eventos(props) {
       .catch((error) => console.log("error", error));
   }, []);
 
- 
+  
 
- 
- 
- 
 
   const marcadores = evento.map((e, idx) => (
-    <Marker className="marcador"
+    <Marker
+      className="marcador"
       eventHandlers={{ click: () => setEventoDetalle(e) }}
       key={idx}
       position={[e.latitud * 1, e.longitud * 1]}
-      
+      icon={Icona4}
     ></Marker>
   ));
 
