@@ -4,92 +4,57 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import GlobalContext from "../GlobalContext";
 
-function Valoraciones({ eventoid }) {
+function Valoraciones({ eventoid, recargar }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { userid, token } = useContext(GlobalContext);
-
-  const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
-  // const [refresh, setRefresh] = useState(0);
   const [valoracion, setValoracion] = useState("");
   const [puntuacion, setPuntuacion] = useState("");
-  const [lafoto, setLafoto] = useState();
+  const [refresh, setRefresh] = useState(0);
+  const [valorado, setValorado] = useState(false);
+
   //Funcion para guardar valoracion
-  // function Valorar() {
-  //   var raw = JSON.stringify({
-
-  //     puntuacion: puntuacion,
-  //     valoracion: valoracion,
-  //     id_evento: eventoid,
-  //     id_usuario: userid
-  //   })
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json", authorization: token },
-  //     body: raw,
-  //   };
-
-  //     fetch(`http://localhost:5000/api/participacion/usuario/${userid}/evento/${eventoid}`, requestOptions)
-  //     .then((data) => data.json())
-  //     .then((data) => {
-  //       if (data.ok === true) {
-  //         setDatos(data.data);
-  //       } else {
-  //         setError(data.error);
-  //       }
-  //     })
-  //     .catch((error) => setError(error));
-  // }
-
-  
-
   function Valorar(e) {
-
     e.preventDefault();
 
-    const usuario = {
-      puntuacion,
-      valoracion,
-      id_usuario: userid,
+    var raw = JSON.stringify({
+      puntuacion: puntuacion,
+      valoracion: valoracion,
       id_evento: eventoid,
-      lafoto,
-    };
-    
-    var formData = new FormData();
-    formData.append("puntuacion", usuario.puntuacion);
-    formData.append("valoracion", usuario.valoracion);
-    formData.append("id_usuario", usuario.id_usuario);
-    formData.append("id_evento", usuario.id_evento);
-    formData.append("file", usuario.lafoto);
-
-    var requestOptions = {
+      id_usuario: userid,
+    });
+    const requestOptions = {
       method: "POST",
-      body: formData,
-      redirect: "follow",
+      headers: { "Content-Type": "application/json", authorization: token },
+      body: raw,
     };
-console.log(requestOptions.body)
+
     fetch(
-      `http://localhost:5000/api/participacion/usuario/${userid}/evento/${eventoid}`,
+      `http://localhost:5000/api/participacion/usuario/${userid}/evento/${eventoid}/valoracion`,
       requestOptions
     )
-      .then((response) => response.json())
+      .then((data) => data.json())
       .then((data) => {
-        console.log("Respuesta del servidor:", data);
-        // setRefresh(refresh + 1);
-
-        setShow(false);
+        if (data.ok === true) {
+          console.log("Respuesta del servidor:", data);
+          setRefresh(refresh + 1);
+          setShow(false);
+          setValorado(true);
+        } else {
+          setError(data.error);
+        }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => setError(error));
   }
+  useEffect(() => {
+    recargar();
+  }, [refresh]);
 
-  // useEffect(() => {
-  //   Valorar();
-  // }, [refresh]);
-
-  return (
-    <>
+  if(!valorado) {
+    return (
+      <>
       <Button variant="primary" onClick={handleShow}>
         Valorar
       </Button>
@@ -122,18 +87,6 @@ console.log(requestOptions.body)
                 value={valoracion}
                 onInput={(e) => setValoracion(e.target.value)}
               />
-              {/* <Form.Label>Imagen</Form.Label>
-              <Form.Control
-                type="file"
-                onInput={(e) => setLafoto(e.target.files[0])}
-              /> */}
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Imagen</Form.Label>
-              <Form.Control
-                type="file"
-                onInput={(e) => setLafoto(e.target.files[0])}
-              />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -147,6 +100,14 @@ console.log(requestOptions.body)
         </Modal.Footer>
       </Modal>
     </>
+    )
+  }
+  return (
+    <>
+      <p >
+        Valorado
+      </p>
+          </>
   );
 }
 

@@ -1,11 +1,25 @@
 import express from "express";
 import { sequelize } from "../loadSequelize.js";
-import { Usuario, Evento, Participacion } from "../Models/models.js";
+import { Usuario, Evento, Participacion, FotosEvento } from "../Models/models.js";
+
+import multer from "multer";
 
 //Conexiones entre tablas
 Participacion.belongsTo(Usuario, { foreignKey: "id_usuario" });
 
 const router = express.Router();
+
+//Lo que indica donde y como se guarda la foto
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "fotos");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage }).single("file");
 
 //Para la lista de participantes
 router.get("/", function (req, res, next) {
@@ -38,9 +52,8 @@ router.get("/", function (req, res, next) {
 });
 
 //Para valorar
-router.post("/usuario/:id_usuario/evento/:id_evento", function (req, res, next) {
-  console.log("Por aqui llega")
-  console.log("body", req.body)
+router.post("/usuario/:id_usuario/evento/:id_evento/valoracion", function (req, res, next) {
+  console.log(req.body)
   sequelize
     .sync()
     .then(() => {
@@ -54,6 +67,29 @@ router.post("/usuario/:id_usuario/evento/:id_evento", function (req, res, next) 
         error: error.message,
       });
     });
+});
+
+//Para subir foto
+router.post("/usuario/:id_usuario/evento/:id_evento/fotos", function (req, res, next) {
+  upload(req, res, function (err) {
+    if (err) {
+      return res.status(500).json(err);
+    }
+  sequelize
+    .sync()
+    .then(() => {
+      req.body.foto = req.file.path.split("\\")[1] 
+      FotosEvento.create(req.body)
+        .then((el) => res.json({ ok: true, data: el }))
+        .catch((error) => res.json({ ok: false, error: error.message }));
+    })
+    .catch((error) => {
+      res.json({
+        ok: false,
+        error: error.message,
+      });
+    });
+  });
 });
 
 //Para que el admin pueda eliminar una participacion
