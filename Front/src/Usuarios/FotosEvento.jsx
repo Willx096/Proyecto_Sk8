@@ -10,31 +10,31 @@ function FotosEvento({ eventoid }) {
   const handleShow = () => setShow(true);
   const { userid, token } = useContext(GlobalContext);
 
-  const [lafoto, setLafoto] = useState();
+  const [foto, setFoto] = useState();
 
   function SubirFoto(e) {
 
     e.preventDefault();
 
     const usuario = {
-      // id_usuario: userid,
-      // id_evento: eventoid,
-      lafoto,
+      id_usuario: userid,
+      id_evento: eventoid,
+      foto,
     };
     
     var formData = new FormData();
-    // formData.append("id_usuario", usuario.id_usuario);
-    // formData.append("id_evento", usuario.id_evento);
-    formData.append("file", usuario.lafoto);
+    formData.append("id_usuario", usuario.id_usuario);
+    formData.append("id_evento", usuario.id_evento);
+    formData.append("file", usuario.foto);
 
     var requestOptions = {
       method: "POST",
       body: formData,
       redirect: "follow",
     };
-console.log(requestOptions.body)
+
     fetch(
-      `http://localhost:5000/api/participacion/usuario/${userid}/evento/${eventoid}/fotos`,
+      "http://localhost:5000/api/participacion/subir-fotos",
       requestOptions
     )
       .then((response) => response.json())
@@ -61,7 +61,7 @@ console.log(requestOptions.body)
               <Form.Label>Imagen</Form.Label>
               <Form.Control
                 type="file"
-                onInput={(e) => setLafoto(e.target.files[0])}
+                onInput={(e) => setFoto(e.target.files[0])}
               />
             </Form.Group>
           </Form>

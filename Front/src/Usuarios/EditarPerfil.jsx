@@ -17,7 +17,7 @@ function Editar({ perfil, refresh, setRefresh }) {
   const [email, setEmail] = useState(perfil.email);
   const [fecha, setFecha] = useState(perfil.fecha_nacimiento);
   const [nivel, setNivel] = useState(perfil.nivel);
-  const [pswd, setPswd] = useState(perfil.pswd);
+  
   const [experiencia, setExperiencia] = useState(perfil.experiencia);
   const [lafoto, setLafoto] = useState();
   const [descripcion, setDescripcion] = useState(perfil.descripcion);
@@ -34,7 +34,7 @@ function Editar({ perfil, refresh, setRefresh }) {
       email,
       fecha,
       nivel,
-      pswd,
+      
       experiencia,
       lafoto,
       descripcion,
@@ -50,7 +50,7 @@ function Editar({ perfil, refresh, setRefresh }) {
     formData.append("email", usuario.email);
     formData.append("fecha", usuario.fecha);
     formData.append("nivel", usuario.nivel);
-    formData.append("pswd", usuario.pswd);
+    
     formData.append("experiencia", usuario.experiencia);
     formData.append("file", usuario.lafoto);
     formData.append("descripcion", usuario.descripcion);
@@ -160,18 +160,7 @@ function Editar({ perfil, refresh, setRefresh }) {
                 <option>Muchos años</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                value={pswd}
-                onInput={(e) => setPswd(e.target.value)}
-                type="password"
-              />
-              <Form.Control.Feedback type="invalid">
-                Introduce una contraseña.
-              </Form.Control.Feedback>
-            </Form.Group>
+            
             <Form.Group>
               <Form.Label>Contacto</Form.Label>
               <Form.Control

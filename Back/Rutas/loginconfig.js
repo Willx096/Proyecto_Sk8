@@ -1,2 +1,2 @@
 export const secretKey = 'hacer-skate-mola-mucho';
-export const expiredAfter = 60 * 10 * 1000; //milisegundos
+export const expiredAfter = 24 * 60 * 60 * 1000; //milisegundos

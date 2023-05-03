@@ -57,6 +57,8 @@ function Perfil() {
       <td>{el.participantes}</td>
       <td>{el.ubicacion}</td>
       <td>{el.Participacions[0].valoracion}</td>
+      {/* <td>{calculaMedia(el.Participacions)}</td> */}
+      {/* falta mostrr con un filter su valoracion */}
     </tr>
   ));
 
@@ -70,8 +72,8 @@ function Perfil() {
       <td>{el.Evento.ubicacion}</td>
       <td>{el.Usuario.nombre}</td>
       <td>{el.valoracion}</td>
-      <td><Valoraciones recargar={cargarPerfil} eventoid={el.Evento.id}/></td>
-      <td><FotosEvento recargar={cargarPerfil} eventoid={el.Evento.id}/></td>
+      <td><Valoraciones cargarPerfil={cargarPerfil} eventoid={el.Evento.id}/></td>
+
     </tr>
   ));
 

@@ -1,6 +1,11 @@
 import express from "express";
 import { sequelize } from "../loadSequelize.js";
-import { Usuario, Evento, Participacion, FotosEvento } from "../Models/models.js";
+import {
+  Usuario,
+  Evento,
+  Participacion,
+  FotosEvento,
+} from "../Models/models.js";
 
 import multer from "multer";
 
@@ -12,7 +17,7 @@ const router = express.Router();
 //Lo que indica donde y como se guarda la foto
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "fotos");
+    cb(null, "fotosEvento");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);
@@ -26,10 +31,14 @@ router.get("/", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
-      Participacion.findAll({ include: [{ model: Usuario },
-        {
-          model: Evento,
-        }] })
+      Participacion.findAll({
+        include: [
+          { model: Usuario },
+          {
+            model: Evento,
+          },
+        ],
+      })
         .then((data) =>
           res.json({
             ok: true,
@@ -52,43 +61,55 @@ router.get("/", function (req, res, next) {
 });
 
 //Para valorar
-router.post("/usuario/:id_usuario/evento/:id_evento/valoracion", function (req, res, next) {
-  console.log(req.body)
-  sequelize
-    .sync()
-    .then(() => {
-      Participacion.create(req.body)
-        .then((el) => res.json({ ok: true, data: el }))
-        .catch((error) => res.json({ ok: false, error: error.message }));
-    })
-    .catch((error) => {
-      res.json({
-        ok: false,
-        error: error.message,
+router.put(
+  "/usuario/:id_usuario/evento/:id_evento/valoracion",
+  function (req, res, next) {
+    
+    sequelize
+      .sync()
+      .then(() => {
+        Participacion.findOne({
+          where: {
+            id_evento: req.params.id_evento,
+            id_usuario: req.params.id_usuario,
+            
+          },
+        })
+        .then((data) => data.update(req.body))
+          .then((el) => console.log(res.json({ ok: true, data: el })))
+          .catch((error) => res.json({ ok: false, error: error.message }));
+      })
+      .catch((error) => {
+        res.json({
+          ok: false,
+          error: error.message,
+        });
       });
-    });
-});
+  }
+);
 
 //Para subir foto
-router.post("/usuario/:id_usuario/evento/:id_evento/fotos", function (req, res, next) {
+router.post("/subir-fotos", function (req, res, next) {
   upload(req, res, function (err) {
     if (err) {
       return res.status(500).json(err);
     }
-  sequelize
-    .sync()
-    .then(() => {
-      req.body.foto = req.file.path.split("\\")[1] 
-      FotosEvento.create(req.body)
-        .then((el) => res.json({ ok: true, data: el }))
-        .catch((error) => res.json({ ok: false, error: error.message }));
-    })
-    .catch((error) => {
-      res.json({
-        ok: false,
-        error: error.message,
+
+    sequelize
+      .sync()
+      .then(() => {
+        req.body.foto = req.file.filename;
+        FotosEvento.create(req.body)
+
+          .then((el) => res.json({ ok: true, data: el }))
+          .catch((error) => res.json({ ok: false, error: error.message }));
+      })
+      .catch((error) => {
+        res.json({
+          ok: false,
+          error: error.message,
+        });
       });
-    });
   });
 });
 
@@ -108,7 +129,6 @@ router.delete("/:id", function (req, res, next) {
       });
     });
 });
-
 
 //demomento sin uso
 // router.get("/:id", function (req, res, next) {

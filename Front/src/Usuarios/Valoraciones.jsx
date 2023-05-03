@@ -3,15 +3,16 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import GlobalContext from "../GlobalContext";
+import FotosEvento from "../Usuarios/FotosEvento"
 
-function Valoraciones({ eventoid, recargar }) {
+function Valoraciones({ eventoid, cargarPerfil }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { userid, token } = useContext(GlobalContext);
-  const [error, setError] = useState(false);
-  const [valoracion, setValoracion] = useState("");
-  const [puntuacion, setPuntuacion] = useState("");
+  
+  const [valoracion, setValoracion] = useState("eidur");
+  const [puntuacion, setPuntuacion] = useState(3);
   const [refresh, setRefresh] = useState(0);
   const [valorado, setValorado] = useState(false);
 
@@ -22,11 +23,11 @@ function Valoraciones({ eventoid, recargar }) {
     var raw = JSON.stringify({
       puntuacion: puntuacion,
       valoracion: valoracion,
-      id_evento: eventoid,
-      id_usuario: userid,
+          
     });
+
     const requestOptions = {
-      method: "POST",
+      method: "PUT",
       headers: { "Content-Type": "application/json", authorization: token },
       body: raw,
     };
@@ -47,9 +48,11 @@ function Valoraciones({ eventoid, recargar }) {
         }
       })
       .catch((error) => setError(error));
+
+      
   }
   useEffect(() => {
-    recargar();
+    cargarPerfil();
   }, [refresh]);
 
   if(!valorado) {
@@ -58,7 +61,7 @@ function Valoraciones({ eventoid, recargar }) {
       <Button variant="primary" onClick={handleShow}>
         Valorar
       </Button>
-
+      
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Valoración del evento</Modal.Title>
@@ -88,9 +91,11 @@ function Valoraciones({ eventoid, recargar }) {
                 onInput={(e) => setValoracion(e.target.value)}
               />
             </Form.Group>
+            <FotosEvento  eventoid={eventoid} />
           </Form>
         </Modal.Body>
         <Modal.Footer>
+          
           <Button variant="secondary" onClick={handleClose}>
             Cerrar
           </Button>
