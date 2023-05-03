@@ -12,7 +12,6 @@ function PerfilEvento() {
   let { eventoId } = useParams();
   //para que cuando se actualizan los datos se vuelva a ejecutar el cargarPerfil
   const [refresh, setRefresh] = useState(0);
-  console.log(userid);
 
   //funcion que llama a los datos de la base de datos
   useEffect(() => {
@@ -22,7 +21,7 @@ function PerfilEvento() {
     };
 
     //cuando tengamos el login podremos poner con el context {id} en vez de poner directamente el 1
-    fetch(`http://localhost:5000/api/eventos/1`, requestOptions)
+    fetch(`http://localhost:5000/api/eventos/2`, requestOptions)
       .then((resultado) => resultado.json())
       .then((resultado2) => {
         if (resultado2.ok === true) {
@@ -64,7 +63,7 @@ function PerfilEvento() {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      id_evento: 1,
+      id_evento: 2,
       id_usuario: userid,
     });
 
@@ -87,7 +86,7 @@ function PerfilEvento() {
       <h3>Informacion del evento</h3>
       <Card border="dark">
         {filas}
-        <Button onClick={Apuntarse} variant="primary">
+        <Button onClick={Apuntarse} variant={apuntado ? "danger" : "primary"}>
           {apuntado ? "Desapuntarse" : "Apuntarse"}
         </Button>
       </Card>

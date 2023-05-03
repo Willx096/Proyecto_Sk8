@@ -51,7 +51,7 @@ router.post("/", function (req, res, next) {
     });
 });
 
-//Para el apuntarse? el valorar?
+//Para el apuntarse el valorar?
 router.post("/apuntarse",
   function (req, res, next) {
     sequelize
@@ -68,7 +68,25 @@ router.post("/apuntarse",
         });
       });
   }
-);
+  );
+
+  //Para que el usuario pueda desapuntarse
+  router.delete("/apuntarse", function (req, res, next) {
+    const {id_evento,id_usuario} = req.body
+    sequelize
+      .sync()
+      .then(() => {
+        Participacion.destroy({ where: {id_evento, id_usuario } })
+          .then((data) => res.json({ ok: true, data }))
+          .catch((error) => res.json({ ok: false, error }));
+      })
+      .catch((error) => {
+        res.json({
+          ok: false,
+          error: error,
+        });
+      });
+  });
 //Para que el admin pueda eliminar una participacion
 router.delete("/:id", function (req, res, next) {
   sequelize
@@ -86,22 +104,6 @@ router.delete("/:id", function (req, res, next) {
     });
 });
 
-//Para que el usuario pueda desapuntarse
-router.delete("/apuntarse", function (req, res, next) {
-  sequelize
-    .sync()
-    .then(() => {
-      Participacion.destroy({ where: { id: req.params.id } })
-        .then((data) => res.json({ ok: true, data }))
-        .catch((error) => res.json({ ok: false, error }));
-    })
-    .catch((error) => {
-      res.json({
-        ok: false,
-        error: error,
-      });
-    });
-});
 //demomento sin uso
 // router.get("/:id", function (req, res, next) {
 //   sequelize
