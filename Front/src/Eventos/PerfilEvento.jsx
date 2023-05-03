@@ -3,13 +3,14 @@ import { useState, useEffect, useContext } from "react";
 import { Button, Card } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
 import { useParams } from "react-router-dom";
+import Eventos from "./Eventos";
 
-function PerfilEvento() {
+function PerfilEvento(props) {
   const { userid, token } = useContext(GlobalContext);
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
   const [apuntado, setApuntado] = useState(false);
-  let { eventoId } = useParams();
+  const { eventoId } = useParams();
   //para que cuando se actualizan los datos se vuelva a ejecutar el cargarPerfil
   const [refresh, setRefresh] = useState(0);
 
@@ -21,7 +22,7 @@ function PerfilEvento() {
     };
 
     //cuando tengamos el login podremos poner con el context {id} en vez de poner directamente el 1
-    fetch(`http://localhost:5000/api/eventos/2`, requestOptions)
+    fetch(`http://localhost:5000/api/eventos/${eventoId}`, requestOptions)
       .then((resultado) => resultado.json())
       .then((resultado2) => {
         if (resultado2.ok === true) {
@@ -63,7 +64,7 @@ function PerfilEvento() {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      id_evento: 2,
+      id_evento: eventoId,
       id_usuario: userid,
     });
 

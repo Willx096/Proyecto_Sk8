@@ -5,7 +5,7 @@ import { Marker } from "react-leaflet";
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
 import GlobalContext from "../GlobalContext";
-
+import { useNavigate } from "react-router";
 function Eventos(props) {
   const [direccion, setDireccion] = useState("");
   const [eventoDetalle, setEventoDetalle] = useState({});
@@ -22,6 +22,11 @@ function Eventos(props) {
       participantes: "",
     },
   ]);
+  const goTo = useNavigate();
+  function goToEvento(id) {
+    console.log("id de evento:"+id)
+    goTo("/perfil-evento/" + id);
+  }
 
   useEffect(() => {
     fetch("http://localhost:5000/api/eventos")
@@ -33,18 +38,12 @@ function Eventos(props) {
       .catch((error) => console.log("error", error));
   }, []);
 
- 
-
- 
- 
- 
-
   const marcadores = evento.map((e, idx) => (
-    <Marker className="marcador"
+    <Marker
+      className="marcador"
       eventHandlers={{ click: () => setEventoDetalle(e) }}
       key={idx}
       position={[e.latitud * 1, e.longitud * 1]}
-      
     ></Marker>
   ));
 
@@ -68,6 +67,9 @@ function Eventos(props) {
               <p className="text-center">{eventoDetalle.hora}</p>
               <p className="text-center">{eventoDetalle.direccion}</p>
               <p className="text-center">{eventoDetalle.participantes}</p>
+              <Button onClick={() => goToEvento(eventoDetalle.id)}>
+                Mas Informacion
+              </Button>
             </Card>
           </Col>
         </Row>
