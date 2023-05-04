@@ -1,17 +1,17 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import Eliminar from "./Eliminar";
 import GlobalContext from "../GlobalContext";
 import Editar from "./EditarPerfil";
 import Valoraciones from "./Valoraciones";
-import FotosEvento from "./FotosEvento";
 
 function Perfil() {
   const { userid, token } = useContext(GlobalContext);
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
+ 
 
   //Funcion para datos del perfil
   function cargarPerfil() {
@@ -25,10 +25,12 @@ function Perfil() {
       .then((resultado2) => {
         if (resultado2.ok === true) {
           setDatos(resultado2.data);
+          
+          
         } else {
           setError(resultado2.error);
         }
-      })
+                })
       .catch((error) => setError(error));
   }
 
@@ -37,7 +39,7 @@ function Perfil() {
   }, [refresh]);
   //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
-  if (!datos) return <>...</>;
+  if (!datos) return <>...</>; 
 
   //Constante que contiene la foto
   const foto = (
@@ -56,14 +58,15 @@ function Perfil() {
       <td>{el.nivel}</td>
       <td>{el.participantes}</td>
       <td>{el.ubicacion}</td>
-      {/* <td>{el.Participacions[0].valoracion}</td> */}
+      <td>{el.Participacions[0].valoracion}</td>
       {/* <td>{calculaMedia(el.Participacions)}</td> */}
       {/* falta mostrr con un filter su valoracion */}
     </tr>
   ));
+  
 
   //Tabla de eventos en los que se ha participado
-  const filitas = datos.Participacions.map((el, index) => (
+  const filitas = datos.Participacions.map((el, index) =>   (
     <tr key={index}>
       <td>{el.Evento.titulo}</td>
       <td>{el.Evento.fecha}</td>
@@ -71,13 +74,17 @@ function Perfil() {
       <td>{el.Evento.participantes}</td>
       <td>{el.Evento.ubicacion}</td>
       <td>{el.Usuario.nombre}</td>
-      {/* <td>{el.valoracion}</td> */}
+      <td>{el.puntuacion}</td>
       <td>
-        <Valoraciones cargarPerfil={cargarPerfil}  eventoid={el.Evento.id}/>
+      {!el.puntuacion ? <Valoraciones cargarPerfil={cargarPerfil} puntu={el.puntuacion} eventoid={el.Evento.id}/> :  <>
+      <p >
+        Valorado
+      </p>
+          </>}
+        
       </td>
-
-    </tr>
-  ));
+    </tr>),
+  );
 
   return (
     <>
@@ -135,7 +142,9 @@ function Perfil() {
                   <th>Valoracion</th>
                 </tr>
               </thead>
-              <tbody>{filitas}</tbody>
+              <tbody>{filitas}
+              
+      </tbody>
             </Table>
           </Col>
         </Row>

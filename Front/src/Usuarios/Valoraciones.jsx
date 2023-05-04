@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import GlobalContext from "../GlobalContext";
 import FotosEvento from "../Usuarios/FotosEvento"
 
-function Valoraciones({ eventoid, cargarPerfil }) {
+function Valoraciones({ eventoid, cargarPerfil, puntu }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -15,7 +15,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
   const [valoracion, setValoracion] = useState("eidur");
   const [puntuacion, setPuntuacion] = useState(3);
   const [refresh, setRefresh] = useState(0);
-  const [valorado, setValorado] = useState();
+
 
   //Funcion para guardar valoracion
   function Valorar(e) {
@@ -43,27 +43,26 @@ function Valoraciones({ eventoid, cargarPerfil }) {
           console.log("Respuesta del servidor:", data);
           setRefresh(refresh + 1);
           setShow(false);
-          setValorado(true);
+        
         } else {
           setError(data.error);
         }
       })
       .catch((error) => setError(error));
-
-      
   }
+
   useEffect(() => {
-    cargarPerfil();
-    
+    cargarPerfil()
   }, [refresh]);
 
-  if(!valorado) {
+  
     return (
       <>
+      
+      
       <Button variant="primary" onClick={handleShow}>
         Valorar
       </Button>
-      
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Valoración del evento</Modal.Title>
@@ -106,16 +105,10 @@ function Valoraciones({ eventoid, cargarPerfil }) {
           </Button>
         </Modal.Footer>
       </Modal>
+      
     </>
     )
   }
-  return (
-    <>
-      <p >
-        Valorado
-      </p>
-          </>
-  );
-}
+
 
 export default Valoraciones;
