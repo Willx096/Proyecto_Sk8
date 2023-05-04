@@ -27,7 +27,11 @@ function PerfilEvento(props) {
       .then((resultado2) => {
         if (resultado2.ok === true) {
           setDatos([resultado2.data]);
-          console.log(datos);
+          console.log("xxx", resultado2.data);
+          const participantes = resultado2.data.Participacions.map(
+            (e) => e.id_usuario
+          );
+          setApuntado(participantes.includes(userid));
         } else {
           setError(resultado2.error);
         }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { Marker } from "react-leaflet";
@@ -7,6 +7,7 @@ import "../mapa/leaflet.css";
 import GlobalContext from "../GlobalContext";
 import { useNavigate } from "react-router";
 function Eventos(props) {
+  const { userid } = useContext(GlobalContext);
   const [direccion, setDireccion] = useState("");
   const [eventoDetalle, setEventoDetalle] = useState({});
   const [evento, setEvento] = useState([
@@ -24,7 +25,7 @@ function Eventos(props) {
   ]);
   const goTo = useNavigate();
   function goToEvento(id) {
-    console.log("id de evento:"+id)
+    console.log("id de evento:" + id);
     goTo("/perfil-evento/" + id);
   }
 
