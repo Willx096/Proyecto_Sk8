@@ -50,7 +50,7 @@ router.get("/:id", function (req, res, next) {
     .then(() => {
       Evento.findOne({
         where: { id: req.params.id },
-        include: { model: Participacion },
+        include: { model: Participacion, include: { model: Usuario } },
       })
         .then((data) =>
           res.json({

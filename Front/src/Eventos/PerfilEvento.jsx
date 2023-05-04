@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { Button, Card } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Eventos from "./Eventos";
 
 function PerfilEvento(props) {
@@ -43,6 +44,13 @@ function PerfilEvento(props) {
   //para que antes de leer lo q sigue cargue los datos
   if (!datos) return <>...</>;
 
+  console.log("provando", datos);
+  // const goTo = useNavigate();
+  // function goToPerfil(id) {
+  //   console.log("id de usuario:" + id);
+  //   goTo("/perfil-usuario/" + id);
+  // }
+
   //tabla de eventos creados
   const filas = datos.map((el, index) => (
     <Card.Body key={index}>
@@ -53,7 +61,10 @@ function PerfilEvento(props) {
       <Card.Text>Fecha: {el.fecha}</Card.Text>
       <Card.Text>Dirección: {el.direccion}</Card.Text>
       <Card.Text>Nivel: {el.nivel}</Card.Text>
-      <Card.Text>Participantes: {el.participantes}</Card.Text>
+      <Card.Text>Participantes: {el.Participacions.length}/{el.participantes}:</Card.Text>
+      <Card.Text>
+        Participantes: <span>{el.Participacions.map((e) => e.Usuario.nickname).join(",")}</span>
+      </Card.Text>
       <Card.Text>
         Valoraciones: {el.Participacions.map((e) => e.valoracion).join("\n")}
       </Card.Text>
@@ -91,9 +102,10 @@ function PerfilEvento(props) {
       <h3>Informacion del evento</h3>
       <Card border="dark">
         {filas}
+        {datos[0].participantes > datos[0].Participacions.length ? 
         <Button onClick={Apuntarse} variant={apuntado ? "danger" : "primary"}>
           {apuntado ? "Desapuntarse" : "Apuntarse"}
-        </Button>
+        </Button> : <h3>El evento esta completo</h3>} 
       </Card>
     </div>
   );
