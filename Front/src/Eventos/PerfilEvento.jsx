@@ -38,7 +38,7 @@ function PerfilEvento(props) {
       })
       .catch((error) => setError(error));
   }, [refresh]);
-  //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
+  //cada vez que cambia el valor de refresh se ejecuta el useEffect
 
   //para que antes de leer lo q sigue cargue los datos
   if (!datos) return <>...</>;
