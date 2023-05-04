@@ -37,7 +37,7 @@ function Perfil() {
   }, [refresh]);
   //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
-    if (!datos) return <>...</>;
+  if (!datos) return <>...</>;
 
   //Constante que contiene la foto
   const foto = (
@@ -56,7 +56,7 @@ function Perfil() {
       <td>{el.nivel}</td>
       <td>{el.participantes}</td>
       <td>{el.ubicacion}</td>
-      <td>{el.Participacions[0].valoracion}</td>
+      {/* <td>{el.Participacions[0].valoracion}</td> */}
       {/* <td>{calculaMedia(el.Participacions)}</td> */}
       {/* falta mostrr con un filter su valoracion */}
     </tr>
@@ -71,8 +71,10 @@ function Perfil() {
       <td>{el.Evento.participantes}</td>
       <td>{el.Evento.ubicacion}</td>
       <td>{el.Usuario.nombre}</td>
-      <td>{el.valoracion}</td>
-      <td><Valoraciones cargarPerfil={cargarPerfil} eventoid={el.Evento.id}/></td>
+      {/* <td>{el.valoracion}</td> */}
+      <td>
+        <Valoraciones cargarPerfil={cargarPerfil}  eventoid={el.Evento.id}/>
+      </td>
 
     </tr>
   ));

@@ -11,15 +11,16 @@ function Valoraciones({ eventoid, cargarPerfil }) {
   const handleShow = () => setShow(true);
   const { userid, token } = useContext(GlobalContext);
   
+  const [error, setError] = useState(false);
   const [valoracion, setValoracion] = useState("eidur");
   const [puntuacion, setPuntuacion] = useState(3);
   const [refresh, setRefresh] = useState(0);
-  const [valorado, setValorado] = useState(false);
+  const [valorado, setValorado] = useState();
 
   //Funcion para guardar valoracion
   function Valorar(e) {
-    e.preventDefault();
 
+    e.preventDefault();
     var raw = JSON.stringify({
       puntuacion: puntuacion,
       valoracion: valoracion,
@@ -53,6 +54,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
   }
   useEffect(() => {
     cargarPerfil();
+    
   }, [refresh]);
 
   if(!valorado) {
