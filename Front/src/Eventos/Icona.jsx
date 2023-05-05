@@ -2,6 +2,7 @@ import * as L from 'leaflet';
 import Ic from './marker-icon-2x-green.png';
 import Ic2 from './marker-icon-2x-gold.png'
 import Ic3 from './marker-icon-2x-red.png'
+import Ic4 from './marker-icon-2x-grey.png'
 
 
 
@@ -36,6 +37,18 @@ import Ic3 from './marker-icon-2x-red.png'
 const redIcona = new L.Icon({
     iconUrl: Ic3,
     iconRetinaUrl: Ic3,
+    iconAnchor: null,
+    popupAnchor: null,
+    shadowUrl: null,
+    shadowSize: 0,
+    shadowAnchor:0,
+    iconSize: new L.Point(24,41),
+    
+});
+
+const greyIcona = new L.Icon({
+    iconUrl: Ic4,
+    iconRetinaUrl: Ic4,
     iconAnchor: null,
     popupAnchor: null,
     shadowUrl: null,
@@ -92,5 +105,5 @@ const redIcona = new L.Icon({
 
 
 
-export { greenIcona, goldIcona, redIcona };
+export { greenIcona, goldIcona, redIcona, greyIcona };
 

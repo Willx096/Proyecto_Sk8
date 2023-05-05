@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
-import { Marker, useMap } from "react-leaflet";
+import { Marker, useMap, Popup } from "react-leaflet";
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
-import { goldIcona, greenIcona, redIcona } from "./Icona";
+import { goldIcona, greenIcona, redIcona, greyIcona } from "./Icona";
 
 import GlobalContext from "../GlobalContext";
 import { useNavigate } from "react-router";
+import { icon } from "leaflet";
 function Eventos(props) {
   const [direccion, setDireccion] = useState("");
   const [eventoSeleccionado, setEventoSeleccionado] = useState(null);
@@ -64,13 +65,9 @@ function Eventos(props) {
     (e) => new Date(e.fecha).getTime() > new Date().getTime()
   );
 
-  
-
-  
-
   const marcadores = eventosDisponibles.map((e, idx) => (
     <Marker
-      className="marcador"
+      className="button"
       eventHandlers={{ click: () => handleMarcadorClick(e) }}
       key={idx}
       position={[e.latitud * 1, e.longitud * 1]}
@@ -80,12 +77,10 @@ function Eventos(props) {
           : e.nivel === "intermedio"
           ? goldIcona
           : greenIcona
+          
       }
     ></Marker>
   ));
-
-  // const eventoDetalle =
-  //   eventoSeleccionado !== -1 ? evento[eventoSeleccionado] : {};
 
   return (
     <>
@@ -108,7 +103,9 @@ function Eventos(props) {
                 <p className="text-center">{eventoSeleccionado.fecha}</p>
                 <p className="text-center">{eventoSeleccionado.hora}</p>
                 <p className="text-center">{eventoSeleccionado.direccion}</p>
-                <p className="text-center">{eventoSeleccionado.participantes}</p>
+                <p className="text-center">
+                  {eventoSeleccionado.participantes}
+                </p>
                 <Button onClick={() => goToEvento(eventoSeleccionado.id)}>
                   Mas Informacion
                 </Button>

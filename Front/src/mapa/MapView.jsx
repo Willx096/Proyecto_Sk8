@@ -11,6 +11,7 @@ import { Row, Col } from "react-bootstrap";
 import "leaflet/dist/leaflet.css";
 import GlobalContext from "../GlobalContext";
 
+
 const primers = [
   {
     adr: "figueres",
