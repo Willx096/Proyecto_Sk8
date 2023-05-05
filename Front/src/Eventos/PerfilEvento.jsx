@@ -12,16 +12,15 @@ function PerfilEvento(props) {
   const [error, setError] = useState(false);
   const [apuntado, setApuntado] = useState(false);
   const { eventoId } = useParams();
-  //para que cuando se actualizan los datos se vuelva a ejecutar el cargarPerfil
   const [refresh, setRefresh] = useState(0);
 
   const goTo = useNavigate();
   function goToPerfil(id_usuario) {
     console.log("id de usuario:" + id_usuario);
-    goTo("/perfil/" + id_usuario);
+    goTo("/perfil/" + id_usuario); // Redirige a la página de perfil del usuario
   }
 
-  //funcion que llama a los datos de la base de datos
+  // Define un efecto que se ejecutará cada vez que cambie el valor de refresh
   useEffect(() => {
     const requestOptions = {
       method: "GET",
@@ -33,26 +32,26 @@ function PerfilEvento(props) {
       .then((resultado) => resultado.json())
       .then((resultado2) => {
         if (resultado2.ok === true) {
+          // Si la respuesta indica que todo está bien, actualiza el estado "datos" con los datos del evento
           setDatos([resultado2.data]);
           console.log("xxx", resultado2.data);
           const participantes = resultado2.data.Participacions.map(
             (e) => e.id_usuario
           );
-          setApuntado(participantes.includes(userid));
+          setApuntado(participantes.includes(userid)); // Actualiza el estado "apuntado" en función de si el usuario está apuntado al evento o no
         } else {
+          // Si la respuesta indica que hay un error, actualiza el estado "error"
           setError(resultado2.error);
         }
       })
       .catch((error) => setError(error));
   }, [refresh]);
-  //cada vez que cambia el valor de refresh se ejecuta el useEffect
 
-  //para que antes de leer lo q sigue cargue los datos
-  if (!datos) return <>...</>;
+  if (!datos) return <>...</>; // Si "datos" es null, muestra puntos suspensivos mientras se carga
 
   console.log("provando", datos);
-  //tabla de eventos creados
-  const filas = datos.map((el, index) => (
+  //Tabla de eventos
+  const filas = datos.map((el, index) => ( // Crea una fila para cada evento encontrado
     <Card.Body key={index}>
       <Card.Title>{el.titulo}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted">
@@ -61,12 +60,27 @@ function PerfilEvento(props) {
       <Card.Text>Fecha: {el.fecha}</Card.Text>
       <Card.Text>Dirección: {el.direccion}</Card.Text>
       <Card.Text>Nivel: {el.nivel}</Card.Text>
-      <Card.Text>Participantes: {el.Participacions.length}/{el.participantes}:</Card.Text>
+      <Card.Text>
+        Participantes: {el.Participacions.length}/{el.participantes}:
+      </Card.Text>
       <Card.Text>
         {/* Muestra los nkckames separados por comoas */}
-        Participantes1: <span>{el.Participacions.map((e) => e.Usuario?.nickname).join(", ")}</span><br />
+        {/* Participantes1:{" "}
+        <span>
+          {el.Participacions.map((e) => e.Usuario?.nickname).join(", ")}
+        </span>
+        <br /> */}
         {/* Muestra los nkckames sin separar por comoas y coje el id del usuario y te manda a perfi/id pero solo muestra tu usuario */}
-        Participantes2: <span>{el.Participacions.map((e,i) => <span key={i} onClick={()=>goToPerfil(e.Usuario.id)}> {e.Usuario.nickname}</span>)}</span><br />
+        Participantes:{" "}
+        <span>
+          {el.Participacions.map((e, i) => (
+            <Button key={i} onClick={() => goToPerfil(e.Usuario.id)}>
+              {" "}
+              {e.Usuario.nickname}
+            </Button>
+          ))}
+        </span>
+        <br />
       </Card.Text>
       <Card.Text>
         Valoraciones: {el.Participacions.map((e) => e.valoracion).join("\n")}
@@ -81,13 +95,14 @@ function PerfilEvento(props) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
+    // Crea un objeto JSON que contiene el ID del evento y el ID del usuario
     var raw = JSON.stringify({
       id_evento: eventoId,
       id_usuario: userid,
     });
 
     var requestOptions = {
-      method: apuntado ? "DELETE" : "POST",
+      method: apuntado ? "DELETE" : "POST", // si ya se ha apuntado, el método será DELETE, de lo contrario POST
       headers: myHeaders,
       body: raw,
       redirect: "follow",
@@ -96,7 +111,7 @@ function PerfilEvento(props) {
     fetch("http://localhost:5000/api/participacion/apuntarse", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
-      .then(() => setApuntado(!apuntado))
+      .then(() => setApuntado(!apuntado))  // actualiza el estado de apuntado/desapuntado
       .catch((error) => console.log("error", error));
   }
 
@@ -105,10 +120,15 @@ function PerfilEvento(props) {
       <h3>Informacion del evento</h3>
       <Card border="dark">
         {filas}
-        {datos[0].participantes > datos[0].Participacions.length ? 
-        <Button onClick={Apuntarse} variant={apuntado ? "danger" : "primary"}>
-          {apuntado ? "Desapuntarse" : "Apuntarse"}
-        </Button> : <h3>El evento esta completo</h3>} 
+        {datos[0].participantes > datos[0].Participacions.length ? (
+          // Si hay plazas disponibles, muestra un botón para apuntarse o desapuntarse llamando a la función Apuntarse
+          <Button onClick={Apuntarse} variant={apuntado ? "danger" : "primary"}>
+            {apuntado ? "Desapuntarse" : "Apuntarse"}
+          </Button>
+        ) : (
+          // Si el evento está completo, muestra un mensaje
+          <h3>El evento esta completo</h3>
+        )}
       </Card>
     </div>
   );
