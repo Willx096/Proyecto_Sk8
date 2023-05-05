@@ -109,6 +109,7 @@ function App() {
             <Route path="/eventos" element={<Eventos />} />
             <Route path="/nuevo-evento" element={<NuevoEvento />} />
             <Route path="/perfil" element={<Perfil />} />
+            <Route path="/perfil/:usuarioId" element={<Perfil />} />
             <Route path="/lista-usuarios" element={<ListaUsuarios />} />
             <Route path="/registro" element={<Registro />} />
           </Routes>

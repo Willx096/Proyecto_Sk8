@@ -15,6 +15,12 @@ function PerfilEvento(props) {
   //para que cuando se actualizan los datos se vuelva a ejecutar el cargarPerfil
   const [refresh, setRefresh] = useState(0);
 
+  const goTo = useNavigate();
+  function goToPerfil(id_usuario) {
+    console.log("id de usuario:" + id_usuario);
+    goTo("/perfil/" + id_usuario);
+  }
+
   //funcion que llama a los datos de la base de datos
   useEffect(() => {
     const requestOptions = {
@@ -45,12 +51,6 @@ function PerfilEvento(props) {
   if (!datos) return <>...</>;
 
   console.log("provando", datos);
-  // const goTo = useNavigate();
-  // function goToPerfil(id) {
-  //   console.log("id de usuario:" + id);
-  //   goTo("/perfil-usuario/" + id);
-  // }
-
   //tabla de eventos creados
   const filas = datos.map((el, index) => (
     <Card.Body key={index}>
@@ -63,7 +63,13 @@ function PerfilEvento(props) {
       <Card.Text>Nivel: {el.nivel}</Card.Text>
       <Card.Text>Participantes: {el.Participacions.length}/{el.participantes}:</Card.Text>
       <Card.Text>
-        Participantes: <span>{el.Participacions.map((e) => e.Usuario.nickname).join(",")}</span>
+        {/* Muestra los nkckames separados por comoas */}
+        Participantes1: <span>{el.Participacions.map((e) => e.Usuario.nickname).join(", ")}</span><br />
+        Participantes2: <span>{el.Participacions.map((e) => e.Usuario?.nickname).join(", ")}</span><br />
+        {/* Muestra los nkckames sin separar por comoas y coje el id del usuario y te manda a perfi/id pero solo muestra tu usuario */}
+        Participantes3: <span>{el.Participacions.map((e,i) => <span key={i} onClick={()=>goToPerfil(e.Usuario.id)}> {e.Usuario.nickname}</span>)}</span><br />
+        Participantes4: <span>{el.Participacions.map((e, index) => <a key={index} onClick={() => goToPerfil(e.Usuario.id)}>{e.Usuario?.nickname}</a>)}</span><br />
+        Participantes5:  <span>{el.Participacions.map((e,i) => (<span key={i}onClick={() => goToPerfil(e.Usuario.id)}>{e.Usuario.nickname}</span>))}</span>
       </Card.Text>
       <Card.Text>
         Valoraciones: {el.Participacions.map((e) => e.valoracion).join("\n")}
