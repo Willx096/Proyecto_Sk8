@@ -5,11 +5,14 @@ import Eliminar from "./Eliminar";
 import GlobalContext from "../GlobalContext";
 import Editar from "./EditarPerfil";
 
+import { useParams } from "react-router-dom";
+
 function Perfil() {
   const { userid, token } = useContext(GlobalContext);
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
+  let { usuarioId } = useParams();
 
   //Funcion para datos del perfil
   function cargarPerfil() {
@@ -18,7 +21,10 @@ function Perfil() {
       headers: { "Content-Type": "application/json", authorization: token },
     };
 
-    fetch(`http://localhost:5000/api/usuarios/${userid}`, requestOptions)
+    fetch(
+      `http://localhost:5000/api/usuarios/${usuarioId || userid}`,
+      requestOptions
+    )
       .then((resultado) => resultado.json())
       .then((resultado2) => {
         if (resultado2.ok === true) {
@@ -32,10 +38,10 @@ function Perfil() {
 
   useEffect(() => {
     cargarPerfil();
-  }, [refresh]);
+  }, [refresh,usuarioId]);
   //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
-    if (!datos) return <>...</>;
+  if (!datos) return <>...</>;
 
   //Constante que contiene la foto
   const foto = (

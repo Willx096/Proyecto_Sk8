@@ -12,7 +12,11 @@ router.get("/", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
-      Participacion.findAll()
+      Participacion.findAll({
+        include: [
+          { model: Usuario },
+        ],
+      })
         .then((data) =>
           res.json({
             ok: true,

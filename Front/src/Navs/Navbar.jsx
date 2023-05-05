@@ -46,9 +46,6 @@ const NavUsuario = () => {
             <Nav.Link as={Link} to="/eventos" className="nav-link">
               Eventos
             </Nav.Link>
-            <Nav.Link as={Link} to="/perfil-evento" className="nav-link">
-              Perfil Evento
-            </Nav.Link>
             <NavDropdown
               id="nav-dropdown-dark-example"
               menuVariant="dark"
@@ -61,9 +58,6 @@ const NavUsuario = () => {
                 Crear Evento
               </Link>
             </NavDropdown>
-            <Nav.Link as={Link} to="/eventos" className="nav-link">
-              Eventos
-            </Nav.Link>
             {/* Si el usuario es un administrador, mostrar links adicionales (alomejor habria que añadir mas funcionalidades al admin?¿) */}
             {admin ? (
               <>

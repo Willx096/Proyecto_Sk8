@@ -105,11 +105,11 @@ function App() {
         <Container>
           <Routes>
             <Route path="/" element={<Inicio />} />
-            <Route path="/perfil-evento" element={<PerfilEvento />} />
             <Route path="/perfil-evento/:eventoId" element={<PerfilEvento />} />
             <Route path="/eventos" element={<Eventos />} />
             <Route path="/nuevo-evento" element={<NuevoEvento />} />
             <Route path="/perfil" element={<Perfil />} />
+            <Route path="/perfil/:usuarioId" element={<Perfil />} />
             <Route path="/lista-usuarios" element={<ListaUsuarios />} />
             <Route path="/registro" element={<Registro />} />
           </Routes>

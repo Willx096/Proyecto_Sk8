@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { Marker, useMap, Popup } from "react-leaflet";
@@ -10,6 +10,7 @@ import GlobalContext from "../GlobalContext";
 import { useNavigate } from "react-router";
 import { icon } from "leaflet";
 function Eventos(props) {
+  const { userid } = useContext(GlobalContext);
   const [direccion, setDireccion] = useState("");
   const [eventoSeleccionado, setEventoSeleccionado] = useState(null);
   // const [eventoDetalle, setEventoDetalle] = useState({});
