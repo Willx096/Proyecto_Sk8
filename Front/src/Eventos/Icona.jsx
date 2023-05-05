@@ -1,14 +1,15 @@
 import * as L from 'leaflet';
-import Ic from './4598615.png';
-import Ic2 from './marker-icon-2x-green.png';
-import Ic3 from './marker-icon-2x-gold.png'
-import Ic4 from './marker-icon-2x-red.png'
+import Ic from './marker-icon-2x-green.png';
+import Ic2 from './marker-icon-2x-gold.png'
+import Ic3 from './marker-icon-2x-red.png'
+
+
 
 
  
 
 
- const Icona = new L.Icon({
+ const greenIcona = new L.Icon({
      iconUrl: Ic,
      iconRetinaUrl: Ic,
      iconAnchor: null,
@@ -16,11 +17,11 @@ import Ic4 from './marker-icon-2x-red.png'
      shadowUrl: null,
      shadowSize: 0,
      shadowAnchor:0,
-     iconSize: new L.Point(50,60),
+     iconSize: new L.Point(24,41),
      
  });
 
- const Icona2 = new L.Icon({
+ const goldIcona = new L.Icon({
     iconUrl: Ic2,
     iconRetinaUrl: Ic2,
     iconAnchor: null,
@@ -32,7 +33,7 @@ import Ic4 from './marker-icon-2x-red.png'
     
 });
 
-const Icona3 = new L.Icon({
+const redIcona = new L.Icon({
     iconUrl: Ic3,
     iconRetinaUrl: Ic3,
     iconAnchor: null,
@@ -44,17 +45,24 @@ const Icona3 = new L.Icon({
     
 });
 
-const Icona4 = new L.Icon({
-    iconUrl: Ic4,
-    iconRetinaUrl: Ic4,
-    iconAnchor: null,
-    popupAnchor: null,
-    shadowUrl: null,
-    shadowSize: 0,
-    shadowAnchor:0,
-    iconSize: new L.Point(24,41),
+
+
+
+
+
+
+
+// const Icona4 = new L.Icon({
+//     iconUrl: Ic4,
+//     iconRetinaUrl: Ic4,
+//     iconAnchor: null,
+//     popupAnchor: null,
+//     shadowUrl: null,
+//     shadowSize: 0,
+//     shadowAnchor:0,
+//     iconSize: new L.Point(24,41),
     
-});
+// });
 
 // const marcadoresPersonalizado = evento.map((e, idx) => {
 //     let icono;
@@ -84,5 +92,5 @@ const Icona4 = new L.Icon({
 
 
 
-export { Icona, Icona2, Icona3, Icona4 };
+export { greenIcona, goldIcona, redIcona };
 

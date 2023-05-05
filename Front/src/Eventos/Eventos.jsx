@@ -4,14 +4,14 @@ import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { Marker, useMap } from "react-leaflet";
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
-import { Icona4 } from "./Icona";
+import { goldIcona, greenIcona, redIcona } from "./Icona";
 
 import GlobalContext from "../GlobalContext";
 import { useNavigate } from "react-router";
 function Eventos(props) {
   const [direccion, setDireccion] = useState("");
   const [eventoSeleccionado, setEventoSeleccionado] = useState(null);
- // const [eventoDetalle, setEventoDetalle] = useState({});
+  // const [eventoDetalle, setEventoDetalle] = useState({});
   const [evento, setEvento] = useState([
     {
       titulo: "",
@@ -27,7 +27,7 @@ function Eventos(props) {
   ]);
 
   const [mostrarTarjeta, setMostrarTarjeta] = useState(false);
- 
+
   const goTo = useNavigate();
   function goToEvento(id) {
     console.log("id de evento:" + id);
@@ -43,38 +43,44 @@ function Eventos(props) {
       })
       .catch((error) => console.log("error", error));
   }, []);
-  
 
   function handleMarcadorClick(evento) {
-  if (new Date(evento.fecha + " " + evento.hora) > new Date()) {
-    setEventoSeleccionado(evento);
-    setMostrarTarjeta(true) 
-  } else {
-    setEventoSeleccionado(null);
+    if (new Date(evento.fecha + " " + evento.hora) > new Date()) {
+      setEventoSeleccionado(evento);
+      setMostrarTarjeta(true);
+    } else {
+      setEventoSeleccionado(null);
+    }
   }
-}
 
-function handleMapClick(){
-  setMostrarTarjeta(false);
-}
+  function handleMapClick() {
+    setMostrarTarjeta(false);
+  }
 
   /**
-   * En este codigo se usa el método filter para filtrar la lista de eventos antes de ser creados 
+   * En este codigo se usa el método filter para filtrar la lista de eventos antes de ser creados
    */
-  const eventoDisponibles = evento.filter((e)=> new Date (e.fecha + " " + e.hora  ) > new Date());
+  const eventosDisponibles = evento.filter(
+    (e) => new Date(e.fecha).getTime() > new Date().getTime()
+  );
 
-  //const eventoDetalle = eventoSeleccionado && new Date(eventoSeleccionado.fecha + " " + eventoSeleccionado.hora) > new Date() ? eventoSeleccionado : {};
+  
 
-  const eventoDetalle =
-    eventoSeleccionado !== -1 ? evento[eventoSeleccionado] : {};
+  
 
-  const marcadores = eventoDisponibles.map((e, idx) => (
+  const marcadores = eventosDisponibles.map((e, idx) => (
     <Marker
       className="marcador"
       eventHandlers={{ click: () => handleMarcadorClick(e) }}
       key={idx}
       position={[e.latitud * 1, e.longitud * 1]}
-      icon={Icona4}
+      icon={
+        e.nivel === "avanzado"
+          ? redIcona
+          : e.nivel === "intermedio"
+          ? goldIcona
+          : greenIcona
+      }
     ></Marker>
   ));
 
@@ -97,19 +103,19 @@ function handleMapClick(){
           <Row>
             <Col>
               <Card style={{ width: "18rem" }}>
-                <p className="text-center">{evento.titulo}</p>
-                <p className="text-center">{evento.descripcion}</p>
-                <p className="text-center">{evento.fecha}</p>
-                <p className="text-center">{evento.hora}</p>
-                <p className="text-center">{evento.direccion}</p>
-                <p className="text-center">{evento.participantes}</p>
-                <Button onClick={() => goToEvento(evento.id)}>
+                <p className="text-center">{eventoSeleccionado.titulo}</p>
+                <p className="text-center">{eventoSeleccionado.descripcion}</p>
+                <p className="text-center">{eventoSeleccionado.fecha}</p>
+                <p className="text-center">{eventoSeleccionado.hora}</p>
+                <p className="text-center">{eventoSeleccionado.direccion}</p>
+                <p className="text-center">{eventoSeleccionado.participantes}</p>
+                <Button onClick={() => goToEvento(eventoSeleccionado.id)}>
                   Mas Informacion
                 </Button>
               </Card>
             </Col>
           </Row>
-         )} 
+        )}
       </Container>
     </>
   );
