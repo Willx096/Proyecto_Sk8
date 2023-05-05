@@ -3,7 +3,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import GlobalContext from "../GlobalContext";
-import FotosEvento from "../Usuarios/FotosEvento";
+// import FotosEvento from "../Usuarios/FotosEvento";
+import DropArea from "../Usuarios/DropArea"
 
 function Valoraciones({ eventoid, cargarPerfil }) {
   const [show, setShow] = useState(false);
@@ -15,7 +16,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
   const [valoracion, setValoracion] = useState("eidur");
   const [puntuacion, setPuntuacion] = useState(3);
   const [refresh, setRefresh] = useState(0);
-  const [fotos, setFotos] = useState([]);
+  
 
   //Funcion para guardar valoracion
   function Valorar(e) {
@@ -52,43 +53,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
     cargarPerfil();
   }, [refresh]);
 
-  function showFotos() {
-    const requestOptions = {
-      method: "GET",
-      headers: { "Content-Type": "application/json", authorization: token },
-    };
-
-    fetch(`http://localhost:5000/api/fotos-eventos`, requestOptions)
-      .then((resultado) => resultado.json())
-      .then((resultado2) => {
-        if (resultado2.ok === true) {
-          setFotos(resultado2.data);
-          
-        } else {
-          setError(resultado2.error);
-        }
-      })
-      .catch((error) => setError(error));
-  }
-
-  const foto = fotos.map((el, index) => (
-    <tr key={index}>
-      <td>
-        {
-          <img
-            src={"http://localhost:5000/" + el.fotos}
-            style={{ width: 100 }}
-            alt=""
-          />
-        }
-      </td>
-    </tr>
-  ));
-  console.log(foto);
-
-  useEffect(() => {
-    showFotos();
-  }, [refresh]);
+  
 
   return (
     <>
@@ -124,9 +89,9 @@ function Valoraciones({ eventoid, cargarPerfil }) {
                 onInput={(e) => setValoracion(e.target.value)}
               />
             </Form.Group>
-            <FotosEvento showFotos={showFotos} eventoid={eventoid} />
+            
             <Form.Group>
-              <Form.Label>{foto}</Form.Label>
+            <DropArea eventoid={eventoid}/>
             </Form.Group>
           </Form>
         </Modal.Body>
