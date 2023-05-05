@@ -64,12 +64,9 @@ function PerfilEvento(props) {
       <Card.Text>Participantes: {el.Participacions.length}/{el.participantes}:</Card.Text>
       <Card.Text>
         {/* Muestra los nkckames separados por comoas */}
-        Participantes1: <span>{el.Participacions.map((e) => e.Usuario.nickname).join(", ")}</span><br />
-        Participantes2: <span>{el.Participacions.map((e) => e.Usuario?.nickname).join(", ")}</span><br />
+        Participantes1: <span>{el.Participacions.map((e) => e.Usuario?.nickname).join(", ")}</span><br />
         {/* Muestra los nkckames sin separar por comoas y coje el id del usuario y te manda a perfi/id pero solo muestra tu usuario */}
-        Participantes3: <span>{el.Participacions.map((e,i) => <span key={i} onClick={()=>goToPerfil(e.Usuario.id)}> {e.Usuario.nickname}</span>)}</span><br />
-        Participantes4: <span>{el.Participacions.map((e, index) => <a key={index} onClick={() => goToPerfil(e.Usuario.id)}>{e.Usuario?.nickname}</a>)}</span><br />
-        Participantes5:  <span>{el.Participacions.map((e,i) => (<span key={i}onClick={() => goToPerfil(e.Usuario.id)}>{e.Usuario.nickname}</span>))}</span>
+        Participantes2: <span>{el.Participacions.map((e,i) => <span key={i} onClick={()=>goToPerfil(e.Usuario.id)}> {e.Usuario.nickname}</span>)}</span><br />
       </Card.Text>
       <Card.Text>
         Valoraciones: {el.Participacions.map((e) => e.valoracion).join("\n")}

@@ -38,7 +38,7 @@ function Perfil() {
 
   useEffect(() => {
     cargarPerfil();
-  }, [refresh]);
+  }, [refresh,usuarioId]);
   //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
   if (!datos) return <>...</>;
