@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage }).single("file");
+const upload = multer({ storage: storage }).single("files");
 
 //Para la lista de participantes
 router.get("/", function (req, res, next) {
@@ -98,7 +98,7 @@ router.post("/subir-fotos", function (req, res, next) {
     sequelize
       .sync()
       .then(() => {
-        req.body.foto = req.file.filename;
+        req.body.fotos = req.file.filename;
         FotosEvento.create(req.body)
 
           .then((el) => res.json({ ok: true, data: el }))

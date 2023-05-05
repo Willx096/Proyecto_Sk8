@@ -7,13 +7,17 @@ import eventoRuta from "./Rutas/eventoRuta.js"
 import participacionRuta from "./Rutas/participacionRuta.js"
 import fotosEventoRuta from "./Rutas/fotosEventoRuta.js"
 
+
 const app = express();
+
 
 app.use(cors())
 
 app.use(express.json());
 
 app.use(express.static("fotos"))
+
+app.use(express.static("fotosEvento"))
 
 app.use('/', indexRutas);
 

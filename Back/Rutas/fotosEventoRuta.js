@@ -27,19 +27,15 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage }).single("file");
+const upload = multer({ storage: storage }).array("file",3);
 
 //Para mostrar las fotos de las valoraciones
 router.get("/", function (req, res, next) {
-  upload(req, res, function (err) {
-    if (err) {
-      return res.status(500).json(err);
-    }
+  
     sequelize
       .sync()
       .then(() => {
-        console.log("body", req.body);
-        req.body.foto = req.file.path.split("\\")[1];
+        
         FotosEvento.findAll()
           .then((usuarios) =>
             res.json({
@@ -61,7 +57,7 @@ router.get("/", function (req, res, next) {
         })
       );
   });
-});
+
 
 //Aqui ira el que muestre las fotos de un usuario y evento concreto
 router.get("/:id", function (req, res, next) {
@@ -69,7 +65,7 @@ router.get("/:id", function (req, res, next) {
     .sync()
     .then(() => {
       FotosEvento.findOne({
-        where: { id: req.params.id },
+        where: { id: req.params.id},
       })
         .then((el) =>
           res.json({
