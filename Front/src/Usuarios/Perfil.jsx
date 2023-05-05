@@ -11,7 +11,6 @@ function Perfil() {
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
- 
 
   //Funcion para datos del perfil
   function cargarPerfil() {
@@ -25,12 +24,10 @@ function Perfil() {
       .then((resultado2) => {
         if (resultado2.ok === true) {
           setDatos(resultado2.data);
-          
-          
         } else {
           setError(resultado2.error);
         }
-                })
+      })
       .catch((error) => setError(error));
   }
 
@@ -39,7 +36,7 @@ function Perfil() {
   }, [refresh]);
   //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
-  if (!datos) return <>...</>; 
+  if (!datos) return <>...</>;
 
   //Constante que contiene la foto
   const foto = (
@@ -49,42 +46,55 @@ function Perfil() {
       alt=""
     />
   );
+  // const hoy = fecha.getDate();
+  const tiempoTranscurrido = Date.now();
+  const hoy = new Date(tiempoTranscurrido);
+  var date = hoy.toISOString().split("T")[0];
+  console.log(date);
 
-  //Tabla de eventos creados
-  const filas = datos.Eventos.map((el, index) => (
-    <tr key={index}>
-      <td>{el.titulo}</td>
-      <td>{el.fecha}</td>
-      <td>{el.nivel}</td>
-      <td>{el.participantes}</td>
-      <td>{el.ubicacion}</td>
-      <td>{el.Participacions[0].valoracion}</td>
-      {/* <td>{calculaMedia(el.Participacions)}</td> */}
-      {/* falta mostrr con un filter su valoracion */}
-    </tr>
-  ));
+  const fechaEvento = datos.Eventos.map((el) => el.fecha);
   
+  
+  const fechi = new Date(fechaEvento)
+  console.log(fechi);
+const fechita = new Date()
+console.log(fechita)
+  // Tabla de eventos creados
+  const filas = datos.Eventos.filter(el => (new Date(el.fecha)).getTime() > fechita.getTime()).map((el, index) => (
+      <tr key={index}>
+        <td>{el.titulo}</td>
+        <td>{el.fecha}</td>
+        <td>{el.nivel}</td>
+        <td>{el.participantes}</td>
+        <td>{el.ubicacion}</td>
+        {/* <td>{el.Participacions[0].valoracion}</td> */}
+        {/* <td>{calculaMedia(el.Participacions)}</td> */}
+        {/* falta mostrr con un filter su valoracion */}
+      </tr>
+  ));
 
   //Tabla de eventos en los que se ha participado
-  const filitas = datos.Participacions.map((el, index) =>   (
-    <tr key={index}>
-      <td>{el.Evento.titulo}</td>
-      <td>{el.Evento.fecha}</td>
-      <td>{el.Evento.nivel}</td>
-      <td>{el.Evento.participantes}</td>
-      <td>{el.Evento.ubicacion}</td>
-      <td>{el.Usuario.nombre}</td>
-      <td>{el.puntuacion}</td>
-      <td>
-      {!el.puntuacion ? <Valoraciones cargarPerfil={cargarPerfil} puntu={el.puntuacion} eventoid={el.Evento.id}/> :  <>
-      <p >
-        Valorado
-      </p>
-          </>}
-        
-      </td>
-    </tr>),
-  );
+  //   const filitas = datos.Participacions.map((el, index) =>   {
+  //     if (el.fecha >= date) {
+  //     <tr key={index}>
+  //       <td>{el.Evento.titulo}</td>
+  //       <td>{el.Evento.fecha}</td>
+  //       <td>{el.Evento.nivel}</td>
+  //       <td>{el.Evento.participantes}</td>
+  //       <td>{el.Evento.ubicacion}</td>
+  //       <td>{el.Usuario.nombre}</td>
+  //       <td>{el.puntuacion}</td>
+  //       <td>
+  //       {!el.puntuacion ? <Valoraciones cargarPerfil={cargarPerfil} puntu={el.puntuacion} eventoid={el.Evento.id}/> :  <>
+  //       <p >
+  //         Valorado
+  //       </p>
+  //           </>}
+
+  //       </td>
+  //     </tr>}
+  //   return ( <></>)
+  // });
 
   return (
     <>
@@ -142,9 +152,9 @@ function Perfil() {
                   <th>Valoracion</th>
                 </tr>
               </thead>
-              <tbody>{filitas}
+              {/* <tbody>{filitas}
               
-      </tbody>
+      </tbody> */}
             </Table>
           </Col>
         </Row>
