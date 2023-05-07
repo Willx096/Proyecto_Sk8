@@ -145,7 +145,7 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
             </Form.Group>
             <Form.Group>
               <Form.Label>Nivel</Form.Label>
-              <FormControl
+              <Form.Select
                 type="text"
                 value={evento.nivel}
                 onInput={(e) => setEvento({ ...evento, nivel: e.target.value })}
@@ -154,9 +154,9 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
                 <option>Principante</option>
                 <option>Intermedio</option>
                 <option>Avanzado</option>
-              </FormControl>
+              </Form.Select>
             </Form.Group>
-            {/* <Form.Group>
+            <Form.Group>
               <Form.Label>Participantes</Form.Label>
               <Form.Select
                 type="number"
@@ -177,7 +177,7 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
                 <option>9</option>
                 <option>10</option>
               </Form.Select>
-            </Form.Group> */}
+            </Form.Group>
           </Form>
         </ModalBody>
         <ModalFooter>
