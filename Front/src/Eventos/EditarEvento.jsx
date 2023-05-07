@@ -1,22 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import {
-  Button,
-  Form,
-  FormControl,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  ModalTitle,
-} from "react-bootstrap";
+import {Button,Form,FormControl,Modal,ModalBody,ModalFooter,ModalHeader,ModalTitle,} from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
 import { useParams } from "react-router-dom";
 
-
 function EditarEvento({ datosE, refresh, setRefresh }) {
-  const {  userid } = useContext(GlobalContext);
+  const { userid } = useContext(GlobalContext);
   const { eventoId } = useParams();
-
 
   //Parametros para mostar o no el modal
   const [show, setShow] = useState(false);
@@ -24,6 +13,7 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
   const handleOpen = () => setShow(true);
 
   console.log("comprovando datosE", datosE);
+  //Array de objetos con los datos que se le pasa de perfil evento
   const [evento, setEvento] = useState({
     titulo: datosE ? datosE[0].titulo : "",
     descripcion: datosE ? datosE[0].descripcion : "",
@@ -39,7 +29,7 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
   function editarEvento(e) {
     e.preventDefault();
 
-    const nuevoEvento = {
+    const eventoEditado = {
       titulo: evento.titulo,
       descripcion: evento.descripcion,
       fecha: evento.fecha,
@@ -49,7 +39,7 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
       participantes: evento.participantes,
     };
 
-    console.log("nuevo evento", nuevoEvento);
+    console.log("Evento editado", eventoEditado);
 
     const URL = `http://localhost:5000/api/eventos/${eventoId}`;
 
@@ -57,16 +47,15 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      titulo: nuevoEvento.titulo,
-      descripcion: nuevoEvento.descripcion,
-      fecha: nuevoEvento.fecha,
-      hora: nuevoEvento.hora,
-      latitud: nuevoEvento.latitud,
-      longitud: nuevoEvento.longitud,
-      direccion: nuevoEvento.direccion,
-      nivel: nuevoEvento.nivel,
-      participantes: nuevoEvento.participantes,
-    //   id_usuario: userid,
+      titulo: eventoEditado.titulo,
+      descripcion: eventoEditado.descripcion,
+      fecha: eventoEditado.fecha,
+      hora: eventoEditado.hora,
+      latitud: eventoEditado.latitud,
+      longitud: eventoEditado.longitud,
+      direccion: eventoEditado.direccion,
+      nivel: eventoEditado.nivel,
+      participantes: eventoEditado.participantes,
     });
 
     var requestOptions = {
