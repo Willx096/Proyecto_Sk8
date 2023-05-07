@@ -136,7 +136,7 @@ function PerfilEvento(props) {
           </Button>
         ) : (
           // Si el evento está completo, muestra un mensaje
-          <h3>evento esta completo</h3>
+          <h3>Evento esta completo</h3>
         )}
       </Card>
     </div>
