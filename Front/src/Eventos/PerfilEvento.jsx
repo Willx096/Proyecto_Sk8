@@ -97,8 +97,6 @@ function PerfilEvento(props) {
     )
     
   );
-  console.log("provando filas", filas);
-  
   
   function Apuntarse() {
     var myHeaders = new Headers();
@@ -124,7 +122,6 @@ function PerfilEvento(props) {
     .catch((error) => console.log("error", error));
   }
   
-  console.log("provando datos2", datos);
   return (
     <div>
       <h3>Informacion del evento</h3>

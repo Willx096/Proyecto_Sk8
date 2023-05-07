@@ -71,6 +71,7 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
 
     var requestOptions = {
       method: "PUT",
+      headers: myHeaders,
       body: raw,
       redirect: "follow",
     };
@@ -129,7 +130,7 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
               <FormControl
                 type="time"
                 value={evento.hora}
-                onInput={(e) => setEvento({ ...evento, fecha: e.target.value })}
+                onInput={(e) => setEvento({ ...evento, hora: e.target.value })}
               />
             </Form.Group>
             <Form.Group>
@@ -142,7 +143,7 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
                 }
               />
             </Form.Group>
-            {/* <Form.Group>
+            <Form.Group>
               <Form.Label>Nivel</Form.Label>
               <FormControl
                 type="text"
@@ -155,7 +156,7 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
                 <option>Avanzado</option>
               </FormControl>
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
               <Form.Label>Participantes</Form.Label>
               <Form.Select
                 type="number"
