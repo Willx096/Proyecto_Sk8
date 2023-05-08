@@ -71,8 +71,7 @@ function PerfilEvento(props) {
         {/* Participantes1:{" "}
         <span>
           {datos.Participacions.map((e) => e.Usuario?.nickname).join(", ")}
-        </span>
-        <br /> */}
+        </span> */}
         {/* Muestra los nkckames sin separar por comoas y coje el id del usuario y te manda a perfi/id pero solo muestra tu usuario */}
         Participantes:{" "}
         <span>
