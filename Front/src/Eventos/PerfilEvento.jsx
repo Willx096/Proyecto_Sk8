@@ -124,11 +124,14 @@ function PerfilEvento(props) {
       <Card border="dark">
         {filas}
         {userid === datos.id_usuario ? ( //Si el usuario logeado coincide con el id_usuario del evento le mostrara para editar
-          <EditarEvento
-            useEvento={[datos, setDatos]}
-            refresh={refresh}
-            setRefresh={setRefresh}
-          />
+          <>
+            <EditarEvento
+              useEvento={[datos, setDatos]}
+              refresh={refresh}
+              setRefresh={setRefresh}
+            />
+            <Button variant="danger">Eliminar</Button>
+          </>
         ) : datos.participantes > datos.Participacions.length ? (
           // Si hay plazas disponibles, muestra un botón para apuntarse o desapuntarse llamando a la función Apuntarse
           <Button onClick={Apuntarse} variant={apuntado ? "danger" : "primary"}>
