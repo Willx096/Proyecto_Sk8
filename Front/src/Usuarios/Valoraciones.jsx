@@ -67,7 +67,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Puntuacion</Form.Label>
+              <Form.Label>Puntuación</Form.Label>
               <Form.Select
                 required
                 value={puntuacion}
@@ -82,7 +82,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
               </Form.Select>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Valoracion</Form.Label>
+              <Form.Label>Valoración</Form.Label>
               <Form.Control
                 type="textarea"
                 value={valoracion}
@@ -91,7 +91,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
             </Form.Group>
             
             <Form.Group>
-            <DropArea eventoid={eventoid}/>
+            <DropArea  eventoid={eventoid}/>
             </Form.Group>
           </Form>
         </Modal.Body>

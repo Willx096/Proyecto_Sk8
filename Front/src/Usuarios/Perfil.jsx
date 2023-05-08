@@ -46,55 +46,101 @@ function Perfil() {
       alt=""
     />
   );
-  // const hoy = fecha.getDate();
-  const tiempoTranscurrido = Date.now();
-  const hoy = new Date(tiempoTranscurrido);
-  var date = hoy.toISOString().split("T")[0];
-  console.log(date);
 
-  const fechaEvento = datos.Eventos.map((el) => el.fecha);
-  
-  
-  const fechi = new Date(fechaEvento)
-  console.log(fechi);
-const fechita = new Date()
-console.log(fechita)
+  //valoracion media
+  function valoMedia(puntuaciones) {
+    if (!Array.isArray(puntuaciones) || puntuaciones.length === 0) {
+      return null;
+    }
+    const sumaTotal = puntuaciones.reduce((total, valor) => total + valor, 0);
+    const media = sumaTotal / puntuaciones.length;
+    return media;
+  }
+
+  const fechaHoy = new Date();
+
   // Tabla de eventos creados
-  const filas = datos.Eventos.filter(el => (new Date(el.fecha)).getTime() > fechita.getTime()).map((el, index) => (
+  //Eventos futuros
+  const creadoFuture = datos.Eventos.filter(
+    (el) => new Date(el.fecha).getTime() > fechaHoy.getTime()
+  ).map((el, index) => {
+    return (
       <tr key={index}>
         <td>{el.titulo}</td>
         <td>{el.fecha}</td>
         <td>{el.nivel}</td>
         <td>{el.participantes}</td>
-        <td>{el.ubicacion}</td>
-        {/* <td>{el.Participacions[0].valoracion}</td> */}
-        {/* <td>{calculaMedia(el.Participacions)}</td> */}
-        {/* falta mostrr con un filter su valoracion */}
+        <td>{el.direccion}</td>
       </tr>
+    );
+  });
+
+  //Eventos pasados
+  const creadoPasado = datos.Eventos.filter(
+    (el) => new Date(el.fecha).getTime() < fechaHoy.getTime()
+  ).map((el, index) => {
+    //obtengo los valores de las puntuaciones
+    const puntuaciones2 = el.Participacions.map((e) => e.puntuacion);
+    //llamo a la funcion que calcula la media
+    const media = valoMedia(puntuaciones2);
+
+    return (
+      <tr key={index}>
+        <td>{el.titulo}</td>
+        <td>{el.fecha}</td>
+        <td>{el.nivel}</td>
+        <td>{el.participantes}</td>
+        <td>{el.direccion}</td>
+        <td>{media}</td>
+      </tr>
+    );
+  });
+
+  // Tabla de eventos en los que se ha participado
+  //Eventos futuros
+  const participadoFuture = datos.Participacions.filter(
+    (el) => new Date(el.Evento.fecha).getTime() > fechaHoy.getTime()
+  ).map((el, index) => (
+    <tr key={index}>
+      <td>{el.Evento.titulo}</td>
+      <td>{el.Evento.fecha}</td>
+      <td>{el.Evento.nivel}</td>
+      <td>{el.Evento.participantes}</td>
+      <td>{el.Evento.direccion}</td>
+      <td>{el.Usuario.nombre}</td>
+      <td>{el.puntuacion}</td>
+      <td></td>
+    </tr>
   ));
 
-  //Tabla de eventos en los que se ha participado
-  //   const filitas = datos.Participacions.map((el, index) =>   {
-  //     if (el.fecha >= date) {
-  //     <tr key={index}>
-  //       <td>{el.Evento.titulo}</td>
-  //       <td>{el.Evento.fecha}</td>
-  //       <td>{el.Evento.nivel}</td>
-  //       <td>{el.Evento.participantes}</td>
-  //       <td>{el.Evento.ubicacion}</td>
-  //       <td>{el.Usuario.nombre}</td>
-  //       <td>{el.puntuacion}</td>
-  //       <td>
-  //       {!el.puntuacion ? <Valoraciones cargarPerfil={cargarPerfil} puntu={el.puntuacion} eventoid={el.Evento.id}/> :  <>
-  //       <p >
-  //         Valorado
-  //       </p>
-  //           </>}
-
-  //       </td>
-  //     </tr>}
-  //   return ( <></>)
-  // });
+  //Eventos pasados
+  const participadoPasado = datos.Participacions.filter(
+    (el) => new Date(el.Evento.fecha).getTime() < fechaHoy.getTime()
+  ).map((el, index) => (
+    <tr key={index}>
+      <td>{el.Evento.titulo}</td>
+      <td>{el.Evento.fecha}</td>
+      <td>{el.Evento.nivel}</td>
+      <td>{el.Evento.participantes}</td>
+      <td>{el.Evento.direccion}</td>
+      <td>{el.Usuario.nombre}</td>
+      <td>{el.puntuacion}</td>
+      {/* Esto mostrara o no la opcion de validar si no se ha valorado */}
+      <td>
+        {!el.puntuacion ? (
+          <Valoraciones
+            cargarPerfil={cargarPerfil}
+            puntu={el.puntuacion}
+            eventoid={el.Evento.id}
+          />
+        ) : (
+          <>
+            <p>Valorado</p>
+          </>
+        )}
+      </td>
+    </tr>
+  ));
 
   return (
     <>
@@ -132,10 +178,13 @@ console.log(fechita)
                   <th>Nivel</th>
                   <th>Participantes</th>
                   <th>Ubicacion</th>
-                  <th>Valoracion</th>
+                  <th>Valoracion media</th>
                 </tr>
               </thead>
-              <tbody>{filas}</tbody>
+              <tbody>
+                {creadoFuture}
+                {creadoPasado}
+              </tbody>
             </Table>
           </Col>
           <Col>
@@ -150,11 +199,13 @@ console.log(fechita)
                   <th>Ubicacion</th>
                   <th>Creador</th>
                   <th>Valoracion</th>
+                  <th></th>
                 </tr>
               </thead>
-              {/* <tbody>{filitas}
-              
-      </tbody> */}
+              <tbody>
+                {participadoFuture}
+                {participadoPasado}
+              </tbody>
             </Table>
           </Col>
         </Row>
