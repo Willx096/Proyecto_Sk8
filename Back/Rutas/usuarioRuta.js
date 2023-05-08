@@ -118,6 +118,7 @@ router.put("/:id", function (req, res, next) {
     sequelize
       .sync()
       .then(() => {
+        delete req.body.pswd
         req.body.foto = req.file ? req.file.path.split("\\")[1] : "noFoto.jpg";
         Usuario.findOne({ where: { id: req.params.id } })
           .then((data) => data.update(req.body))

@@ -1,6 +1,11 @@
 import express from "express";
 import { sequelize } from "../loadSequelize.js";
-import { FotosEvento, Usuario, Evento, Participacion } from "../Models/models.js";
+import {
+  FotosEvento,
+  Usuario,
+  Evento,
+  Participacion,
+} from "../Models/models.js";
 
 import multer from "multer";
 
@@ -10,7 +15,6 @@ Usuario.hasMany(FotosEvento, { foreignKey: "id_usuario" });
 
 FotosEvento.belongsTo(Evento, { foreignKey: "id_evento" });
 FotosEvento.belongsTo(Usuario, { foreignKey: "id_usuario" });
-
 
 const router = express.Router();
 
@@ -23,34 +27,37 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage }).single("file");
+const upload = multer({ storage: storage }).array("file",3);
 
 //Para mostrar las fotos de las valoraciones
-router.get("/",  function (req, res, next) {
-  sequelize
-    .sync()
-    .then(() => {
-      FotosEvento.findAll()
-        .then((usuarios) =>
-          res.json({
-            ok: true,
-            data: usuarios,
-          })
-        )
-        .catch((error) =>
-          res.json({
-            ok: false,
-            false: error,
-          })
-        );
-    })
-    .catch((error) =>
-      res.json({
-        ok: false,
-        false: error,
+router.get("/", function (req, res, next) {
+  
+    sequelize
+      .sync()
+      .then(() => {
+        
+        FotosEvento.findAll()
+          .then((usuarios) =>
+            res.json({
+              ok: true,
+              data: usuarios,
+            })
+          )
+          .catch((error) =>
+            res.json({
+              ok: false,
+              false: error,
+            })
+          );
       })
-    );
-});
+      .catch((error) =>
+        res.json({
+          ok: false,
+          false: error,
+        })
+      );
+  });
+
 
 //Aqui ira el que muestre las fotos de un usuario y evento concreto
 router.get("/:id", function (req, res, next) {
@@ -58,7 +65,7 @@ router.get("/:id", function (req, res, next) {
     .sync()
     .then(() => {
       FotosEvento.findOne({
-        where: { id: req.params.id },
+        where: { id: req.params.id},
       })
         .then((el) =>
           res.json({
@@ -80,6 +87,27 @@ router.get("/:id", function (req, res, next) {
       });
     });
 });
+
+//Para valorar
+router.post(
+  "/usuario/:id_usuario/evento/:id_evento",
+  function (req, res, next) {
+    console.log("Por aqui llega");
+    sequelize
+      .sync()
+      .then(() => {
+        FotosEvento.create(req.body)
+          .then((el) => res.json({ ok: true, data: el }))
+          .catch((error) => res.json({ ok: false, error: error.message }));
+      })
+      .catch((error) => {
+        res.json({
+          ok: false,
+          error: error.message,
+        });
+      });
+  }
+);
 
 //Para modificar las fotos colgadas
 router.put("/:id", function (req, res, next) {

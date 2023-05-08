@@ -1,11 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal, Row } from "react-bootstrap";
 
 //solo id
 import GlobalContext from "../GlobalContext";
 
 function Editar({ perfil, refresh, setRefresh }) {
   const { userid } = useContext(GlobalContext);
+
+//validaciones
+const [validated, setValidated] = useState(false);
 
   //para mostrar o no el modal
   const [show, setShow] = useState(false);
@@ -23,22 +26,32 @@ function Editar({ perfil, refresh, setRefresh }) {
   const [nickname, setNickname] = useState(perfil.nickname);
   const [contacto, setContacto] = useState(perfil.contacto);
 
+
+  const usuario = {
+    nombre,
+    apellido,
+    email,
+    fecha,
+    nivel,
+    experiencia,
+    lafoto,
+    descripcion,
+    nickname,
+    contacto,
+  };
+
   //funcion que modifica los datos de la base de datos
   function editarUsuario(e) {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
 
-    const usuario = {
-      nombre,
-      apellido,
-      email,
-      fecha,
-      nivel,
-      experiencia,
-      lafoto,
-      descripcion,
-      nickname,
-      contacto,
-    };
+    
 
     const URL = `http://localhost:5000/api/usuarios/${userid}`;
 
@@ -48,6 +61,7 @@ function Editar({ perfil, refresh, setRefresh }) {
     formData.append("email", usuario.email);
     formData.append("fecha", usuario.fecha);
     formData.append("nivel", usuario.nivel);
+    
     formData.append("experiencia", usuario.experiencia);
     formData.append("file", usuario.lafoto);
     formData.append("descripcion", usuario.descripcion);
@@ -66,129 +80,165 @@ function Editar({ perfil, refresh, setRefresh }) {
         console.log("Respuesta del servidor:", data);
         setRefresh(refresh + 1);
         setShow(false);
+        setValidated(false);
       })
       .catch((error) => console.log("error", error));
+
+      
   }
 
   return (
-    <>
+  <>
       <Button variant="primary" onClick={handleShow}>
         Editar
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} >
+      <Form noValidate validated={validated} onSubmit={editarUsuario} >
         <Modal.Header closeButton>
           <Modal.Title>Editar perfil</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Form>
-            <Form.Group>
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control
-                type="text"
-                value={nombre}
-                onInput={(e) => setNombre(e.target.value)}
-                autoFocus
-              />
+          
+          <Row xs={1} sm={2} md={2}>
+          <Form.Group className="mb-3" controlId="validationCustom01">
+            <Form.Label>Nombre</Form.Label>
+            <Form.Control
+              required
+              value={nombre}
+              onInput={(e) => setNombre(e.target.value)}
+              type="text"
+              
+            />
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Introduce un nombre.
+            </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Apellido</Form.Label>
-              <Form.Control
-                type="text"
-                value={apellido}
-                onInput={(e) => setApellido(e.target.value)}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                required
-                value={email}
-                onInput={(e) => setEmail(e.target.value)}
-                type="email"
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Nickname</Form.Label>
-              <Form.Control
-                type="text"
-                value={nickname}
-                onInput={(e) => setNickname(e.target.value)}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Fecha</Form.Label>
-              <Form.Control
-                value={fecha}
-                onInput={(e) => setFecha(e.target.value)}
-                type="date"
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Nivel</Form.Label>
-              <Form.Select
+          <Form.Group className="mb-3" controlId="validationCustom02">
+            <Form.Label>Apellidos</Form.Label>
+            <Form.Control
+              required
+              value={apellido}
+              onInput={(e) => setApellido(e.target.value)}
+              type="text"
+              
+            />
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Introduce un Apellido.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="validationCustomUsername">
+            <Form.Label>Nombre de usuario</Form.Label>
+            <Form.Control
+              type="text"
+              value={nickname}
+              onInput={(e) => setNickname(e.target.value)}
+                            required
+            />
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Elige un nombre de usuario.
+            </Form.Control.Feedback>
+          
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              required
+              value={email}
+              onInput={(e) => setEmail(e.target.value)}
+              type="email"
+            />
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Introduce un email.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="validationCustomContact">
+            <Form.Label>Contacto</Form.Label>
+            <Form.Control
+             value={contacto}
+             onInput={(e) => setContacto(e.target.value)}
+             type="text"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Fecha de nacimiento</Form.Label>
+            <Form.Control
+              required
+              value={fecha}
+              onInput={(e) => setFecha(e.target.value)}
+              type="date"
+            />
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Introduce fecha de nacimiento.
+            </Form.Control.Feedback>
+          </Form.Group>                
+          <Form.Group className="mb-3">
+            <Form.Label>Nivel</Form.Label>
+            <Form.Select
                 required
                 value={nivel}
                 onInput={(e) => setNivel(e.target.value)}
                 type="text"
-              >
-                <option>Empezando</option>
-                <option>Principiante</option>
-                <option>Casual</option>
-                <option>Pro</option>
-                <option>Tony Hawk</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Tiempo patinando</Form.Label>
-              <Form.Select
-                required
-                value={experiencia}
-                onInput={(e) => setExperiencia(e.target.value)}
-                type="text"
-              >
-                <option>Menos de un mes</option>
-                <option>Unos meses</option>
-                <option>1 año</option>
-                <option>Más de 1 año</option>
-                <option>Muchos años</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Contacto</Form.Label>
-              <Form.Control
-                value={contacto}
-                onInput={(e) => setContacto(e.target.value)}
-                type="txt"
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Descripcion</Form.Label>
-              <Form.Control
-                type="textarea"
-                value={descripcion}
-                onInput={(e) => setDescripcion(e.target.value)}
-              />
-              <Form.Label>Imagen</Form.Label>
-              <Form.Control
-                type="file"
-                onInput={(e) => setLafoto(e.target.files[0])}
-              />
-            </Form.Group>
-          </Form>
+            >
+              <option>Empezando</option>
+              <option>Principiante</option>
+              <option>Casual</option>
+              <option>Pro</option>
+              <option>Tony Hawk</option>
+            </Form.Select>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Tiempo patinando</Form.Label>
+            <Form.Select
+             required
+             value={experiencia}
+             onInput={(e) => setExperiencia(e.target.value)}
+             type="text"
+            >
+              <option>Menos de un mes</option>
+              <option>Unos meses</option>
+              <option>1 año</option>
+              <option>Más de 1 año</option>
+              <option>Muchos años</option>
+            </Form.Select>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Descripción</Form.Label>
+            <Form.Control
+              type="textarea"
+              value={descripcion}
+              onInput={(e) => setDescripcion(e.target.value)}
+            />
+          </Form.Group>
+         
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Foto de perfil</Form.Label>
+            <Form.Control
+              type="file"
+              onInput={(e) => setLafoto(e.target.files[0])}
+            />
+          </Form.Group>
+                      </Row>
+          
         </Modal.Body>
 
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={editarUsuario}>
+          <Button variant="primary" type="submit" >
             Guardar cambios
           </Button>
         </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );
