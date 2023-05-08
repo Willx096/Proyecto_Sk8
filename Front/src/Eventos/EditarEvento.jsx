@@ -89,7 +89,7 @@ function EditarEvento({ refresh, setRefresh, useEvento }) {
                 onInput={(e) => setEvento({ ...evento, hora: e.target.value })}
               />
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
               <Form.Label>Dirección</Form.Label>
               <FormControl
                 type="text"
@@ -98,7 +98,7 @@ function EditarEvento({ refresh, setRefresh, useEvento }) {
                   setEvento({ ...evento, direccion: e.target.value })
                 }
               />
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group>
               <Form.Label>Nivel</Form.Label>
               <Form.Select
