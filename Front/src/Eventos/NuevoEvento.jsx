@@ -1,10 +1,9 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Form, Col, Row, Button, Container, FormGroup } from "react-bootstrap";
 import MapView from "../mapa/MapView";
 import "leaflet/dist/leaflet.css";
 import "../mapa/leaflet.css";
 import GlobalContext from "../GlobalContext";
-
 
 function NuevoEvento(props) {
   const { userid, token } = useContext(GlobalContext);
@@ -44,7 +43,7 @@ function NuevoEvento(props) {
       direccion: evento.direccion,
       nivel: evento.nivel,
       participantes: evento.participantes,
-      id_usuario: userid
+      id_usuario: userid,
       // foto: evento.foto,
     });
 
@@ -88,9 +87,9 @@ function NuevoEvento(props) {
               <Form.Group className="mb-3" controlId="formBasicEmail" as={Col}>
                 <Form.Label>Titulo</Form.Label>
                 <Form.Control
-                    value={evento.titulo}
-                    onInput={(e) =>
-                      setEvento({ ...evento, titulo: e.target.value })
+                  value={evento.titulo}
+                  onInput={(e) =>
+                    setEvento({ ...evento, titulo: e.target.value })
                   }
                   type="text"
                   placeholder="Inserta un titulo"
@@ -105,16 +104,16 @@ function NuevoEvento(props) {
                   aria-label="Default select example"
                 >
                   <option>Selecciona el número de participantes</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="3">4</option>
-                  <option value="3">5</option>
-                  <option value="3">6</option>
-                  <option value="3">7</option>
-                  <option value="3">8</option>
-                  <option value="3">9</option>
-                  <option value="3">10</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                  <option>10</option>
                 </Form.Select>
                 <Form.Label>Nivel</Form.Label>
                 <Form.Select
@@ -126,9 +125,9 @@ function NuevoEvento(props) {
                   aria-label="Default select example"
                 >
                   <option>Selecciona el Nivel</option>
-                  <option value="principante">Principante</option>
-                  <option value="intermedio">Intermedio</option>
-                  <option value="avanzado">Avanzado</option>
+                  <option>Principante</option>
+                  <option>Intermedio</option>
+                  <option>Avanzado</option>
                 </Form.Select>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label>Fecha</Form.Label>
