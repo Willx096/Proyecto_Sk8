@@ -37,7 +37,7 @@ export default ({ direccion, setDireccion, marcadores }) => {
    */
 
   const [llocs, setLlocs] = useState(primers);
-  const [center, setCenter] = useState([42.3427392, 1.9562059]);
+  const [center, setCenter] = useState([41.3879,  2.16992]);
 
   /**
    *  Llama la función getLocation y comprueba si el navegador es compatible con la API,
