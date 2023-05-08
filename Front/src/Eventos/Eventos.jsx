@@ -4,9 +4,8 @@ import { Marker, useMap, Popup } from "react-leaflet";
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
 import { goldIcona, greenIcona, redIcona, greyIcona } from "./Icona";
-
 import GlobalContext from "../GlobalContext";
-import { useNavigate } from "react-router";
+import PerfilEvento from "./PerfilEvento";
 
 function Eventos(props) {
   const { userid } = useContext(GlobalContext);
@@ -14,14 +13,9 @@ function Eventos(props) {
   const [eventoSeleccionado, setEventoSeleccionado] = useState({});
   // const [eventoDetalle, setEventoDetalle] = useState({});
   const [eventos, setEventos] = useState([]);
+  const [refresh, setRefresh] = useState(0);
 
   const [mostrarTarjeta, setMostrarTarjeta] = useState(false);
-
-  const goTo = useNavigate();
-  function goToEvento(id) {
-    console.log("id de evento:" + id);
-    goTo("/perfil-evento/" + id);
-  }
 
   useEffect(() => {
     fetch("http://localhost:5000/api/eventos")
@@ -29,9 +23,13 @@ function Eventos(props) {
       .then((x) => {
         console.log(x);
         setEventos(x.data);
+        if (eventoSeleccionado.id) {
+          const z = x.data.find((e) => e.id === eventoSeleccionado.id);
+          setEventoSeleccionado(z);
+        }
       })
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [refresh]);
 
   function handleMarcadorClick(ev) {
     if (new Date(ev.fecha + " " + ev.hora) > new Date()) {
@@ -74,36 +72,25 @@ function Eventos(props) {
   return (
     <>
       <Container fluid="lg">
-        <MapView
-          direccion={direccion}
-          setDireccion={setDireccion}
-          marcadores={marcadores}
-          onClick={handleMapClick}
-        />
-      </Container>
-      <br />
-      <Container fluid="lg">
-        {mostrarTarjeta && (
-          <Row>
-            <Col>
-              <Card style={{ width: "18rem" }}>
-                <p className="text-center">
-                  Titulo: {eventoSeleccionado.titulo}
-                </p>
-                <p className="text-center">{eventoSeleccionado.descripcion}</p>
-                <p className="text-center">
-                  Fecha: {eventoSeleccionado.fecha} Hora: {eventoSeleccionado.hora}
-                </p>
-                <p className="text-center">{eventoSeleccionado.direccion}</p>
-                <p className="text-center">Nº Participantes: {eventoSeleccionado.participantes}
-                </p>
-                <Button onClick={() => goToEvento(eventoSeleccionado.id)}>
-                  Mas Informacion
-                </Button>
-              </Card>
-            </Col>
-          </Row>
-        )}
+        <Row>
+          <Col>
+            <MapView
+              direccion={direccion}
+              setDireccion={setDireccion}
+              marcadores={marcadores}
+              onClick={handleMapClick}
+            />
+          </Col>
+          <Col>
+            {mostrarTarjeta && (
+              <PerfilEvento
+                refresh={refresh}
+                setRefresh={setRefresh}
+                evento={eventoSeleccionado}
+              />
+            )}
+          </Col>
+        </Row>
       </Container>
     </>
   );
