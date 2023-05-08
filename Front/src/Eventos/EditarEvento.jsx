@@ -1,62 +1,29 @@
 import React, { useContext, useState, useEffect } from "react";
 import {Button,Form,FormControl,Modal,ModalBody,ModalFooter,ModalHeader,ModalTitle,} from "react-bootstrap";
-import GlobalContext from "../GlobalContext";
 import { useParams } from "react-router-dom";
 
-function EditarEvento({ datosE, refresh, setRefresh }) {
-  const { userid } = useContext(GlobalContext);
+function EditarEvento({ refresh, setRefresh, useEvento }) {
   const { eventoId } = useParams();
 
   //Parametros para mostar o no el modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleOpen = () => setShow(true);
-
-  console.log("comprovando datosE", datosE);
-  //Array de objetos con los datos que se le pasa de perfil evento
-  const [evento, setEvento] = useState({
-    titulo: datosE ? datosE[0].titulo : "",
-    descripcion: datosE ? datosE[0].descripcion : "",
-    fecha: datosE ? datosE[0].fecha : "",
-    hora: datosE ? datosE[0].hora : "",
-    direccion: datosE ? datosE[0].direccion : "",
-    nivel: datosE ? datosE[0].nivel : "",
-    participantes: datosE ? datosE[0].participantes : "",
-  });
+  const [evento, setEvento] = useEvento;
 
   console.log(evento.titulo);
 
   function editarEvento(e) {
     e.preventDefault();
 
-    const eventoEditado = {
-      titulo: evento.titulo,
-      descripcion: evento.descripcion,
-      fecha: evento.fecha,
-      hora: evento.hora,
-      direccion: evento.direccion,
-      nivel: evento.nivel,
-      participantes: evento.participantes,
-    };
-
-    console.log("Evento editado", eventoEditado);
+    console.log("Evento editado", evento);
 
     const URL = `http://localhost:5000/api/eventos/${eventoId}`;
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({
-      titulo: eventoEditado.titulo,
-      descripcion: eventoEditado.descripcion,
-      fecha: eventoEditado.fecha,
-      hora: eventoEditado.hora,
-      latitud: eventoEditado.latitud,
-      longitud: eventoEditado.longitud,
-      direccion: eventoEditado.direccion,
-      nivel: eventoEditado.nivel,
-      participantes: eventoEditado.participantes,
-    });
+    var raw = JSON.stringify(evento);
 
     var requestOptions = {
       method: "PUT",
@@ -86,7 +53,7 @@ function EditarEvento({ datosE, refresh, setRefresh }) {
         <ModalBody>
           <Form>
             <Form.Group>
-              <Form.Label>Tiutulo</Form.Label>
+              <Form.Label>Titulo</Form.Label>
               <FormControl
                 type="text"
                 value={evento.titulo}
