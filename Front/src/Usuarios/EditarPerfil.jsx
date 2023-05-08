@@ -10,16 +10,6 @@ function Editar({ perfil, refresh, setRefresh }) {
 //validaciones
 const [validated, setValidated] = useState(false);
 
-const handleSubmit = (event) => {
-  const form = event.currentTarget;
-  if (form.checkValidity() === false) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
-  setValidated(true);
-};
-
   //para mostrar o no el modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -53,6 +43,13 @@ const handleSubmit = (event) => {
   //funcion que modifica los datos de la base de datos
   function editarUsuario(e) {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
 
     
 
@@ -96,13 +93,14 @@ const handleSubmit = (event) => {
         Editar
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} >
+      <Form noValidate validated={validated} onSubmit={editarUsuario} >
         <Modal.Header closeButton>
           <Modal.Title>Editar perfil</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Form noValidate validated={validated} onSubmit={handleSubmit} >
+          
           <Row xs={1} sm={2} md={2}>
           <Form.Group className="mb-3" controlId="validationCustom01">
             <Form.Label>Nombre</Form.Label>
@@ -229,17 +227,18 @@ const handleSubmit = (event) => {
             />
           </Form.Group>
                       </Row>
-          </Form>
+          
         </Modal.Body>
 
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={editarUsuario} type="submit">
+          <Button variant="primary" type="submit" >
             Guardar cambios
           </Button>
         </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );
