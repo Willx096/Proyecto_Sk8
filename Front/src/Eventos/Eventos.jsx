@@ -17,6 +17,7 @@ function Eventos(props) {
   const [refresh, setRefresh] = useState(0);
   const [mostrarTarjeta, setMostrarTarjeta] = useState(false);
   const [nivelSelect, setNivelSelect] = useState("Todos los Niveles");
+  const [fechaSelect, setFechalSelect] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:5000/api/eventos")
@@ -44,14 +45,16 @@ function Eventos(props) {
   function handleMapClick() {
     setMostrarTarjeta(false);
   }
-
+  console.log("fecha selecionada", fechaSelect);
   /**
    * En este codigo se usa el método filter para filtrar la lista de eventos antes de ser creados
    */
-  const eventosDisponibles = eventos.filter(
+  const eventosDisponibles = eventos.filter( // Filtra la lista de eventos para mostrar solo los que cumplen con los criterios de búsqueda
     (e) =>
-      new Date(e.fecha).getTime() > new Date().getTime() &&
-      (nivelSelect === "Todos los Niveles" || nivelSelect === e.nivel)
+      new Date(e.fecha).getTime() >= new Date().getTime() && //Fecha actual hacia adelante para no mostrar eventos pasados
+      (nivelSelect === "Todos los Niveles" || nivelSelect === e.nivel) && //En funcion del nivel selecionado muestra los eventos con ese nivel
+      (fechaSelect === "" ||
+        new Date(e.fecha).getDate() <= new Date(fechaSelect).getDate()) //Muestra los eventos de la fecha actual a la fecha selecionada
   );
   console.log("eventos disponibles", eventosDisponibles);
   const marcadores = eventosDisponibles.map((e, idx) => (
@@ -75,11 +78,10 @@ function Eventos(props) {
   return (
     <>
       <Container>
+        <h3>Mapa de eventos</h3>
         <Row xs={1} sm={1} lg={2}>
           <Col>
-            <h3>Mapa de eventos</h3>
             <h5>Filtros:</h5>
-            <Form></Form>
             <Form.Group>
               <Form.Label>Nivel</Form.Label>
               <Form.Select
@@ -92,6 +94,14 @@ function Eventos(props) {
                 <option>Intermedio</option>
                 <option>Avanzado</option>
               </Form.Select>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Fecha</Form.Label>
+              <Form.Control
+                type="date"
+                value={fechaSelect}
+                onChange={(e) => setFechalSelect(e.target.value)}
+              ></Form.Control>
             </Form.Group>
             <MapView
               direccion={direccion}
