@@ -13,16 +13,16 @@ function Eventos(props) {
   const [eventoSeleccionado, setEventoSeleccionado] = useState({});
   // const [eventoDetalle, setEventoDetalle] = useState({});
   const [eventos, setEventos] = useState([]);
-  console.log(eventos)
+  console.log(eventos);
   const [refresh, setRefresh] = useState(0);
   const [mostrarTarjeta, setMostrarTarjeta] = useState(false);
-  // const [nivel, setNivel] = useState(null);
+  const [nivelSelect, setNivelSelect] = useState("Todos los Niveles");
 
   useEffect(() => {
     fetch("http://localhost:5000/api/eventos")
       .then((response) => response.json())
       .then((x) => {
-        console.log("Eventos recibidos",x);
+        console.log("Eventos recibidos", x);
         setEventos(x.data);
         if (eventoSeleccionado.id) {
           const z = x.data.find((e) => e.id === eventoSeleccionado.id);
@@ -49,9 +49,11 @@ function Eventos(props) {
    * En este codigo se usa el método filter para filtrar la lista de eventos antes de ser creados
    */
   const eventosDisponibles = eventos.filter(
-    (e) => new Date(e.fecha).getTime() > new Date().getTime()
+    (e) =>
+      new Date(e.fecha).getTime() > new Date().getTime() &&
+      (nivelSelect === "Todos los Niveles" || nivelSelect === e.nivel)
   );
-
+  console.log("eventos disponibles", eventosDisponibles);
   const marcadores = eventosDisponibles.map((e, idx) => (
     <Marker
       className="button"
@@ -82,10 +84,10 @@ function Eventos(props) {
               <Form.Label>Nivel</Form.Label>
               <Form.Select
                 type="text"
-                // value={eventos.nivel}
-                // onInput={(e) => setEventos({ ...eventos, nivel: e.target.value })}
+                value={nivelSelect}
+                onChange={(e) => setNivelSelect(e.target.value)}
               >
-                <option>Selecciona el Nivel</option>
+                <option>Todos los Niveles</option>
                 <option>Principante</option>
                 <option>Intermedio</option>
                 <option>Avanzado</option>
