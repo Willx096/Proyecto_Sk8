@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Marker, useMap, Popup } from "react-leaflet";
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
@@ -13,15 +13,16 @@ function Eventos(props) {
   const [eventoSeleccionado, setEventoSeleccionado] = useState({});
   // const [eventoDetalle, setEventoDetalle] = useState({});
   const [eventos, setEventos] = useState([]);
+  console.log(eventos)
   const [refresh, setRefresh] = useState(0);
-
   const [mostrarTarjeta, setMostrarTarjeta] = useState(false);
+  // const [nivel, setNivel] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/eventos")
       .then((response) => response.json())
       .then((x) => {
-        console.log(x);
+        console.log("Eventos recibidos",x);
         setEventos(x.data);
         if (eventoSeleccionado.id) {
           const z = x.data.find((e) => e.id === eventoSeleccionado.id);
@@ -60,9 +61,9 @@ function Eventos(props) {
       icon={
         eventoSeleccionado.id === e.id
           ? greyIcona
-          : e.nivel === "avanzado"
+          : e.nivel === "Avanzado"
           ? redIcona
-          : e.nivel === "intermedio"
+          : e.nivel === "Intermedio"
           ? goldIcona
           : greenIcona
       }
@@ -71,9 +72,25 @@ function Eventos(props) {
 
   return (
     <>
-      <Container fluid="lg">
-        <Row>
+      <Container>
+        <Row xs={1} sm={1} lg={2}>
           <Col>
+            <h3>Mapa de eventos</h3>
+            <h5>Filtros:</h5>
+            <Form></Form>
+            <Form.Group>
+              <Form.Label>Nivel</Form.Label>
+              <Form.Select
+                type="text"
+                // value={eventos.nivel}
+                // onInput={(e) => setEventos({ ...eventos, nivel: e.target.value })}
+              >
+                <option>Selecciona el Nivel</option>
+                <option>Principante</option>
+                <option>Intermedio</option>
+                <option>Avanzado</option>
+              </Form.Select>
+            </Form.Group>
             <MapView
               direccion={direccion}
               setDireccion={setDireccion}
