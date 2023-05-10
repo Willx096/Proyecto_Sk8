@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import { Container, Row, Col, Table, Button, Card } from "react-bootstrap";
 import Eliminar from "./Eliminar";
 import GlobalContext from "../GlobalContext";
 import Editar from "./EditarPerfil";
@@ -39,7 +39,7 @@ function Perfil() {
 
   useEffect(() => {
     cargarPerfil();
-  }, [refresh,usuarioId]);
+  }, [refresh, usuarioId]);
   //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
   if (!datos) return <>...</>;
@@ -47,8 +47,8 @@ function Perfil() {
   //Constante que contiene la foto
   const foto = (
     <img
+      className="fotoPerfil"
       src={"http://localhost:5000/" + datos.foto}
-      style={{ width: 100 }}
       alt=""
     />
   );
@@ -71,13 +71,17 @@ function Perfil() {
     (el) => new Date(el.fecha).getTime() > fechaHoy.getTime()
   ).map((el, index) => {
     return (
-      <tr key={index}>
-        <td>{el.titulo}</td>
-        <td>{el.fecha}</td>
-        <td>{el.nivel}</td>
-        <td>{el.participantes}</td>
-        <td>{el.direccion}</td>
-      </tr>
+      <Card  key={index}>
+      <div className="cardsEventos">
+      <Card.Body>
+        <div className="datosEventos" ><b>{el.titulo}</b></div>
+        <div className="datosEventos">Nivel: <i>{el.nivel}</i></div>
+        <div className="datosEventos">Participantes: {el.participantes}</div>
+        <div className="datosEventos">Calle de mi madre,45, Barcelona 08888</div>
+        <div className="datosEventos"><i>{el.fecha}</i></div>
+      </Card.Body>
+      </div>
+    </Card>
     );
   });
 
@@ -91,14 +95,16 @@ function Perfil() {
     const media = valoMedia(puntuaciones2);
 
     return (
-      <tr key={index}>
-        <td>{el.titulo}</td>
-        <td>{el.fecha}</td>
-        <td>{el.nivel}</td>
-        <td>{el.participantes}</td>
-        <td>{el.direccion}</td>
-        <td>{media}</td>
-      </tr>
+      <Card  bg={'secondary'} text={'white'} className="cardsEventos" key={index}>
+        <Card.Body>
+          <div className="datosEventos" ><b>{el.titulo}</b></div>
+          <div className="datosEventos">Nivel: <i>{el.nivel}</i></div>
+          <div className="datosEventos">Participantes: {el.participantes}</div>
+          <div className="datosEventos">Calle de mi madre,45, Barcelona 08888</div>
+          <div className="datosEventos"><i>{el.fecha}</i></div>
+          <div className="datosEventos">Val. Media: <b>{media}</b></div>
+        </Card.Body>
+      </Card>
     );
   });
 
@@ -107,116 +113,115 @@ function Perfil() {
   const participadoFuture = datos.Participacions.filter(
     (el) => new Date(el.Evento.fecha).getTime() > fechaHoy.getTime()
   ).map((el, index) => (
-    <tr key={index}>
-      <td>{el.Evento.titulo}</td>
-      <td>{el.Evento.fecha}</td>
-      <td>{el.Evento.nivel}</td>
-      <td>{el.Evento.participantes}</td>
-      <td>{el.Evento.direccion}</td>
-      <td>{el.Usuario.nombre}</td>
-      <td>{el.puntuacion}</td>
-      <td></td>
-    </tr>
+    <Card key={index}>
+      <Card.Body>
+        <div>{el.Evento.titulo}</div>
+        <div>{el.Evento.fecha}</div>
+        <div>{el.Evento.nivel}</div>
+        <div>{el.Evento.participantes}</div>
+        <div>{el.Evento.direccion}</div>
+        <div>{el.Usuario.nombre}</div>
+        <div>{el.puntuacion}</div>
+        <div></div>
+      </Card.Body>
+    </Card>
   ));
 
   //Eventos pasados
   const participadoPasado = datos.Participacions.filter(
     (el) => new Date(el.Evento.fecha).getTime() < fechaHoy.getTime()
   ).map((el, index) => (
-    <tr key={index}>
-      <td>{el.Evento.titulo}</td>
-      <td>{el.Evento.fecha}</td>
-      <td>{el.Evento.nivel}</td>
-      <td>{el.Evento.participantes}</td>
-      <td>{el.Evento.direccion}</td>
-      <td>{el.Usuario.nombre}</td>
-      <td>{el.puntuacion}</td>
-      {/* Esto mostrara o no la opcion de validar si no se ha valorado */}
-      <td>
-        {!el.puntuacion ? (
-          <Valoraciones
-            cargarPerfil={cargarPerfil}
-            puntu={el.puntuacion}
-            eventoid={el.Evento.id}
-          />
-        ) : (
-          <>
-            <p>Valorado</p>
-          </>
-        )}
-      </td>
-    </tr>
+    <Card key={index}>
+      <Card.Body>
+        <div>{el.Evento.titulo}</div>
+        <div>{el.Evento.fecha}</div>
+        <div>{el.Evento.nivel}</div>
+        <div>{el.Evento.participantes}</div>
+        <div>{el.Evento.direccion}</div>
+        <div>{el.Usuario.nombre}</div>
+        <div>
+          {" "}
+          {!el.puntuacion ? (
+            <Valoraciones
+              cargarPerfil={cargarPerfil}
+              puntu={el.puntuacion}
+              eventoid={el.Evento.id}
+            />
+          ) : (
+            <>
+              <p>Valorado</p>
+            </>
+          )}
+        </div>
+        <div></div>
+      </Card.Body>
+    </Card>
   ));
 
   return (
-    <>
-      <Container fluid>
-        <Row lg={3}>{foto}</Row>
-        <Row lg={3}>
-          {datos.nombre} {datos.apellido}
-        </Row>
-        <Row>{datos.nickname}</Row>
-        <Row lg={3}>{datos.descripcion}</Row>
-        <Row>Nivel: {datos.nivel}</Row>
-        <Row>Experiencia: {datos.experiencia} años</Row>
-        <Row lg={3}>{datos.contacto}</Row>
-        <br />
-        <Row lg={3}>
-          <Col>
-            <Editar perfil={datos} refresh={refresh} setRefresh={setRefresh} />
-          </Col>
-        </Row>
-        <br />
-        <Row lg={3}>
-          <Col>
-            <Eliminar />
-          </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col>
-            <h3>Eventos creados</h3>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Titulo</th>
-                  <th>Fecha</th>
-                  <th>Nivel</th>
-                  <th>Participantes</th>
-                  <th>Ubicacion</th>
-                  <th>Valoracion media</th>
-                </tr>
-              </thead>
-              <tbody>
-                {creadoFuture}
-                {creadoPasado}
-              </tbody>
-            </Table>
-          </Col>
-          <Col>
-            <h3>Eventos en los que se ha participado</h3>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Titulo</th>
-                  <th>Fecha</th>
-                  <th>Nivel</th>
-                  <th>Participantes</th>
-                  <th>Ubicacion</th>
-                  <th>Creador</th>
-                  <th>Valoracion</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {participadoFuture}
-                {participadoPasado}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container fluid className="containerDatos">
+      <Row>
+        <Col xs={12} md={4} lg={3} className="columnasDatos">
+          <div className="fotoPerfil">{foto}</div>
+        </Col>
+
+        <Col xs={12} md={6} lg={3} className="columnasDatos">
+          <div className="titulos">
+            {datos.nombre} {datos.apellido}
+          </div>
+          <div className="nickname">@{datos.nickname}</div>
+          <hr />
+          <div className="nivel">
+            Nivel - <b>{datos.nivel}</b>
+          </div>
+          <div className="nivel">
+            Experiencia - <b>{datos.experiencia}</b>
+          </div>
+          <hr />
+         { !datos.contacto ? (<div></div>):( <div className="contacto">
+            Contacto - <i>{datos.contacto}</i>
+          </div>)}
+        </Col>
+
+        <Col xs={12} lg={6} className="columnasDatos">
+          <div className="descripcion">{datos.descripcion}</div>
+          <div className="botones">
+            <div>
+              <Editar
+                perfil={datos}
+                setRefresh={setRefresh}
+                refresh={refresh}
+              />{" "}
+              <Eliminar />
+            </div>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div className="eventos">
+            <div>
+              <h3>Eventos creados</h3>
+            </div>
+            <div>
+              {creadoFuture}
+              {creadoPasado}
+            </div>
+          </div>
+        </Col>
+        <Col>
+          <div className="eventos">
+            <div>
+              <h3>Participaciones</h3>
+            </div>
+            <div>
+              {participadoPasado}
+              {participadoFuture}
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

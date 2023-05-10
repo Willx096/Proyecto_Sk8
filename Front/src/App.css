@@ -17,3 +17,85 @@ button {
     border: solid gray
    
 }
+
+/* Perfil Usuario */
+
+.containerDatos {
+    margin-top: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.eventos {
+    background-color: rgba(151, 151, 151, 0.267);
+    margin: 1%;
+    /* border-radius: 15px; */
+    padding: 20px;
+}
+
+.fotoPerfil {
+    width: 200px;
+    height: 200px;
+   border-radius: 200px;
+   object-fit: cover;
+   
+   /* object-fit: contain; */
+}
+
+.columnasDatos {
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+    padding: 30px;
+    text-align: left;
+}
+
+.titulos {
+    font-weight: bold;
+    font-size: 25px;
+    
+}
+
+.nickname {
+    font-style: italic;
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+.nivel {
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+.descripcion {
+    background-color: rgba(151, 151, 151, 0.267);
+    padding: 20px;
+    font-size: 16px;
+    /* border-radius: 15px; */
+
+}
+
+.botones {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    padding-top: 20px;
+    font-size: 16px;
+    text-align: right;
+
+}
+
+.contacto {
+    
+    font-size: 16px;
+}
+
+.cardsEventos {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(77, 77, 77); 
+}
+
+.datosEventos {
+    padding: 5px;
+}
