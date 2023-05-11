@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Form, Col, Row, Button, Container, FormGroup } from "react-bootstrap";
+import { Form, Col, Row, Button, Container } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 import MapView from "../mapa/MapView";
 import "leaflet/dist/leaflet.css";
 import "../mapa/leaflet.css";
@@ -7,11 +8,28 @@ import GlobalContext from "../GlobalContext";
 
 function NuevoEvento(props) {
   const { userid, token } = useContext(GlobalContext);
+
+  const formularioOk = () => toast.success("Evetno creado");
+  const formularioBad = () => toast.error("Evetno no creado");
+
   const [direccion, setDireccion] = useState("");
+  //Validate para validar que los campos se han rellenado
+  const [validated, setValidated] = useState(false);
+  const fechaActual = new Date().toISOString().split("T")[0];
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
   const [evento, setEvento] = useState({
     titulo: "",
     descripcion: "",
-    fecha: "",
+    fecha: fechaActual,
     hora: "",
     direccion: "",
     latitud: 0,
@@ -21,6 +39,7 @@ function NuevoEvento(props) {
   });
 
   useEffect(() => {
+    console.log("direccion completa", direccion);
     setEvento({
       ...evento,
       direccion: direccion.display_name,
@@ -30,9 +49,21 @@ function NuevoEvento(props) {
   }, [direccion]);
 
   function CrearEvento(e) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
+    if (evento.fecha < fechaActual) {
+      console.log("fecha esta mal");
+      formularioBad();
+      return;
+    }
     var raw = JSON.stringify({
       titulo: evento.titulo,
       descripcion: evento.descripcion,
@@ -61,7 +92,7 @@ function NuevoEvento(props) {
         setEvento({
           titulo: "",
           descripcion: "",
-          fecha: "",
+          fecha: fechaActual,
           hora: "",
           direccion: "",
           latitud: 0,
@@ -71,6 +102,8 @@ function NuevoEvento(props) {
         });
       })
       .catch((error) => console.log("error", error));
+    formularioOk();
+    setValidated(true);
   }
 
   return (
@@ -82,7 +115,7 @@ function NuevoEvento(props) {
       </Row>
       <Row>
         <Col>
-          <Form>
+          <Form noValidate validated={validated} onSubmit={CrearEvento}>
             <Row md={2}>
               <Form.Group className="mb-3" controlId="formBasicEmail" as={Col}>
                 <Form.Label>Titulo</Form.Label>
@@ -129,30 +162,35 @@ function NuevoEvento(props) {
                   <option>Intermedio</option>
                   <option>Avanzado</option>
                 </Form.Select>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3" controlId="validationCustom02">
                   <Form.Label>Fecha</Form.Label>
                   <Form.Control
                     value={evento.fecha}
+                    min={fechaActual}
                     onInput={(e) =>
                       setEvento({ ...evento, fecha: e.target.value })
                     }
                     type="date"
                     placeholder="Contraseña"
                   />
-                  <Form.Group
-                    className="mb-3"
-                    controlId="exampleForm.ControlTextarea1"
-                  >
-                    <Form.Label>Hora</Form.Label>
-                    <Form.Control
-                      value={evento.hora}
-                      onInput={(e) =>
-                        setEvento({ ...evento, hora: e.target.value })
-                      }
-                      type="time"
-                      rows={3}
-                    />
-                  </Form.Group>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    No puedes crear un evento con fechas que ya han pasado!
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlTextarea1"
+                >
+                  <Form.Label>Hora</Form.Label>
+                  <Form.Control
+                    value={evento.hora}
+                    onInput={(e) =>
+                      setEvento({ ...evento, hora: e.target.value })
+                    }
+                    type="time"
+                    rows={3}
+                  />
                 </Form.Group>
               </Form.Group>
               <Row size={2}>
@@ -193,13 +231,14 @@ function NuevoEvento(props) {
               </Form.Group>
             </Row>
             <div className="d-flex justify-content-center">
-              <Button variant="primary" type="button" onClick={CrearEvento}>
+              <Button variant="primary" type="submit">
                 Crear
               </Button>
             </div>
           </Form>
         </Col>
       </Row>
+      <ToastContainer />
     </Container>
   );
 }

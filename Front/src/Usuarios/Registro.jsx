@@ -1,11 +1,18 @@
-import React, { useState} from "react";
-import { Form, Button, Row, Container} from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button, Row, Container } from "react-bootstrap";
 
 function Registro() {
   //Validate para validar que los campos se han rellenado
   const [validated, setValidated] = useState(false);
   //Creamos este state clave refrescar el valor de la foto
   const [clave, setClave] = useState(0);
+  //Fecha actual para verificar si es mayor de 18 años
+  const fa18anys = new Date(
+    new Date().getTime() - 18 * 365 * 24 * 60 * 60 * 1000
+  )
+    .toISOString()
+    .split("T")[0];
+  console.log("xxxxxxx", fa18anys);
   //State con array de objetos de usuario para no hacer muchos states
   const [usuario, setUsuario] = useState({
     nombre: "",
@@ -84,7 +91,9 @@ function Registro() {
         onSubmit={CrearUsuario}
       >
         <Row>
-          <Form.Label><h3>Registrate y empieza a Skatear!</h3></Form.Label>
+          <Form.Label>
+            <h3>Registrate y empieza a Skatear!</h3>
+          </Form.Label>
           {/* la idea aqui es poner algo que anime a unirse pero que no de cringe como lo que hay puesto ahora */}
         </Row>
         <Row xs={1} sm={2} md={3}>
@@ -167,6 +176,7 @@ function Registro() {
             <Form.Control
               required
               value={usuario.fecha_nacimiento}
+              max={fa18anys}
               onInput={(e) =>
                 setUsuario({ ...usuario, fecha_nacimiento: e.target.value })
               }
