@@ -5,7 +5,7 @@ import Eliminar from "./Eliminar";
 import GlobalContext from "../GlobalContext";
 import Editar from "./EditarPerfil";
 import Valoraciones from "./Valoraciones";
-
+import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import EditarEvento from "../Eventos/EditarEvento";
 import EliminarEvento from "../Eventos/Eliminar";
@@ -15,6 +15,16 @@ function Perfil() {
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
+
+  const goTo = useNavigate();
+  function goToPerfil(id_usuario) {
+    goTo("/perfil/" + id_usuario); // Redirige a la página de perfil del usuario
+  }
+
+  function goToEvento(id_evento) {
+    goTo("/eventos/" + id_evento); // Redirige a la página de perfil del usuario
+  }
+
   let { usuarioId } = useParams();
 
   //Funcion para datos del perfil
@@ -40,7 +50,8 @@ function Perfil() {
   }
 
   useEffect(() => {
-    cargarPerfil();
+    console.log("usuari", usuarioId)
+     cargarPerfil();
   }, [refresh, usuarioId]);
   //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
@@ -69,27 +80,59 @@ function Perfil() {
 
   // Tabla de eventos creados
   //Eventos futuros
-  const creadoFuture = datos.Eventos.filter(
-    (el) => new Date(el.fecha).getTime() > fechaHoy.getTime()
-  ).map((el, index) => {
-
-    
-    return (
-      <Card  key={index}>
-      <div className="cardsEventos">
-      <Card.Body>
-        <div className="datosEventos" ><b>{el.titulo}</b></div>
-        <div className="datosEventos">Nivel: <i>{el.nivel}</i></div>
-        <div className="datosEventos">Participantes: {el.participantes}</div>
-        <div className="datosEventos">Calle de mi madre,45, Barcelona 08888</div>
-        <div className="datosEventos"><i>{el.fecha}</i></div>
-        <div><EditarEvento eventoId={el.id} eventos={el} refresh={refresh} setRefresh={setRefresh}/></div>
-        <div><EliminarEvento  eventoId={el.id} refresh={refresh} setRefresh={setRefresh}/></div>
-      </Card.Body>
-      </div>
-    </Card>
-    );
-  });
+ 
+    const creadoFuture = datos.Eventos.filter(
+      (el) => new Date(el.fecha).getTime() > fechaHoy.getTime()
+    ).map((el, index) => {
+      return (
+        <Card key={index}>
+          <div className="cardsEventos">
+            <Card.Body>
+              <div className="datosEventos">
+                <b>{el.titulo}</b>
+              </div>
+              <div className="datosEventos">
+                Nivel: <i>{el.nivel}</i>
+              </div>
+              <div className="datosEventos">
+                Participantes: {el.participantes}
+              </div>
+              <div className="datosEventos">
+                Calle de mi madre,45, Barcelona 08888
+              </div>
+              <div className="datosEventos">
+                <i>{el.fecha}</i>
+              </div>
+              { usuarioId !== undefined ? (
+              <div></div>
+            ) : (
+              
+              <div>
+                
+            <div>
+              <EditarEvento
+                eventoId={el.id}
+                eventos={el}
+                refresh={refresh}
+                setRefresh={setRefresh}
+              />
+            </div>
+            <div>
+              <EliminarEvento
+                eventoId={el.id}
+                refresh={refresh}
+                setRefresh={setRefresh}
+              />
+            </div>
+              </div>
+  
+            )}
+            </Card.Body>
+          </div>
+        </Card>
+      );
+    });
+  
 
   //Eventos pasados
   const creadoPasado = datos.Eventos.filter(
@@ -99,23 +142,64 @@ function Perfil() {
     const puntuaciones2 = el.Participacions.map((e) => e.puntuacion);
     //llamo a la funcion que calcula la media
     const media = valoMedia(puntuaciones2).toFixed(1);
-    
+
     return (
-      <Card  bg={'secondary'} text={'white'} className="cardsEventos" key={index}>
+      <Card
+        bg={"secondary"}
+        text={"white"}
+        className="cardsEventos"
+        key={index}
+      >
         <Card.Body>
-          <div className="datosEventos" ><b>{el.titulo}</b></div>
-          <div className="datosEventos">Nivel: <i>{el.nivel}</i></div>
+          <div className="datosEventos">
+            <b>{el.titulo}</b>
+          </div>
+          <div className="datosEventos">
+            Nivel: <i>{el.nivel}</i>
+          </div>
           <div className="datosEventos">Participantes: {el.participantes}</div>
-          <div className="datosEventos">Calle de mi madre,45, Barcelona 08888</div>
-          <div className="datosEventos"><i>{el.fecha}</i></div>
-          <div className="datosEventos">Val. Media: <b>{media}</b></div>
-          <div><EditarEvento eventoId={el.id} eventos={el} refresh={refresh} setRefresh={setRefresh}/></div>
-        <div><EliminarEvento eventoId={el.id} refresh={refresh} setRefresh={setRefresh}/></div>
-     
+          <div className="datosEventos">
+            Calle de mi madre,45, Barcelona 08888
+          </div>
+          <div className="datosEventos">
+            <i>{el.fecha}</i>
+          </div>
+          <div className="datosEventos">
+            Val. Media: <b>{media}</b>
+          </div>
+          
+
+          { usuarioId !== undefined ? (
+            <div></div>
+          ) : (
+            
+            <div>
+              
+          <div>
+            <EditarEvento
+              eventoId={el.id}
+              eventos={el}
+              refresh={refresh}
+              setRefresh={setRefresh}
+            />
+          </div>
+          <div>
+            <EliminarEvento
+              eventoId={el.id}
+              refresh={refresh}
+              setRefresh={setRefresh}
+            />
+          </div>
+            </div>
+
+          )}
+
         </Card.Body>
       </Card>
     );
   });
+
+  // onClick={() => goToEvento(el.Evento.id)}
 
   // Tabla de eventos en los que se ha participado
   //Eventos futuros
@@ -129,7 +213,12 @@ function Perfil() {
         <div>{el.Evento.nivel}</div>
         <div>{el.Evento.participantes}</div>
         <div>{el.Evento.direccion}</div>
-        <div>{el.Usuario.nombre}</div>
+        <img
+      style={{width: "30px", borderRadius: "30px"}}
+      src={"http://localhost:5000/" + el.Usuario.foto}
+      alt=""
+    />
+        <button onClick={() => goToPerfil(el.Evento.id_usuario)}>{el.Usuario.nombre}</button>
         <div>{el.puntuacion}</div>
         <div></div>
       </Card.Body>
@@ -147,9 +236,17 @@ function Perfil() {
         <div>{el.Evento.nivel}</div>
         <div>{el.Evento.participantes}</div>
         <div>{el.Evento.direccion}</div>
-        <div>{el.Usuario.nombre}</div>
+        <div onClick={() => goToPerfil(el.Evento.id_usuario)}>{el.Usuario.nombre}</div>
+        
+        { usuarioId !== undefined ? (
+            <div></div>
+          ) : (
+            
+            <div>
+        
         <div>
           {" "}
+        
           {!el.puntuacion ? (
             <Valoraciones
               cargarPerfil={cargarPerfil}
@@ -162,11 +259,12 @@ function Perfil() {
             </>
           )}
         </div>
-        <div></div>
+        <div></div></div> )}
       </Card.Body>
     </Card>
   ));
-
+console.log(userid)
+console.log(usuarioId)
   return (
     <Container fluid className="containerDatos">
       <Row>
@@ -187,14 +285,22 @@ function Perfil() {
             Experiencia - <b>{datos.experiencia}</b>
           </div>
           <hr />
-         { !datos.contacto ? (<div></div>):( <div className="contacto">
-            Contacto - <i>{datos.contacto}</i>
-          </div>)}
+          {!datos.contacto ? (
+            <div></div>
+          ) : (
+            <div className="contacto">
+              Contacto - <i>{datos.contacto}</i>
+            </div>
+          )}
         </Col>
 
         <Col xs={12} lg={6} className="columnasDatos">
           <div className="descripcion">{datos.descripcion}</div>
           <div className="botones">
+            
+          { usuarioId !== undefined ? (
+            <div></div>
+          ) : (
             <div>
               <Editar
                 perfil={datos}
@@ -202,7 +308,7 @@ function Perfil() {
                 refresh={refresh}
               />{" "}
               <Eliminar />
-            </div>
+            </div>  )}
           </div>
         </Col>
       </Row>
@@ -212,8 +318,9 @@ function Perfil() {
             <div>
               <h3>Eventos creados</h3>
             </div>
+            <Button onClick={()=>{futuro}}>creadoooduuuuuturi</Button>
             <div>
-              {creadoFuture}
+              
               {creadoPasado}
             </div>
           </div>
