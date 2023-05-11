@@ -123,7 +123,7 @@ router.delete("/:id", function (req, res, next) {
   sequelize
     .sync()
     .then(() => {
-      Evento.destroy({ where: { id: req.params.id } })
+      Evento.destroy({ where: { id: req.params.id }})
         .then((data) => res.json({ ok: true, data }))
         .catch((error) => res.json({ ok: false, error }));
     })

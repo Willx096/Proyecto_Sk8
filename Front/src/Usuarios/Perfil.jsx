@@ -7,6 +7,8 @@ import Editar from "./EditarPerfil";
 import Valoraciones from "./Valoraciones";
 
 import { useParams } from "react-router-dom";
+import EditarEvento from "../Eventos/EditarEvento";
+import EliminarEvento from "../Eventos/Eliminar";
 
 function Perfil() {
   const { userid, token } = useContext(GlobalContext);
@@ -79,6 +81,8 @@ function Perfil() {
         <div className="datosEventos">Participantes: {el.participantes}</div>
         <div className="datosEventos">Calle de mi madre,45, Barcelona 08888</div>
         <div className="datosEventos"><i>{el.fecha}</i></div>
+        <div><EditarEvento eventoId={el.id} eventos={el} refresh={refresh} setRefresh={setRefresh}/></div>
+        <div><EliminarEvento eventoId={el.id} refresh={refresh} setRefresh={setRefresh}/></div>
       </Card.Body>
       </div>
     </Card>
@@ -92,7 +96,7 @@ function Perfil() {
     //obtengo los valores de las puntuaciones
     const puntuaciones2 = el.Participacions.map((e) => e.puntuacion);
     //llamo a la funcion que calcula la media
-    const media = valoMedia(puntuaciones2);
+    const media = valoMedia(puntuaciones2).toFixed(1);
 
     return (
       <Card  bg={'secondary'} text={'white'} className="cardsEventos" key={index}>
