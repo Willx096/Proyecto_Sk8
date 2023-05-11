@@ -7,22 +7,22 @@ function MostrarEvento({ evento }) {
   const { eventoId } = useParams();
   const [error, setError] = useState(false);
 
-  useEffect(() => {
+  // useEffect(() => {
    
 
-    fetch(`http://localhost:5000/api/eventos/${eventoId}`, requestOptions)
-      .then((resultado) => resultado.json())
-      .then((resultado2) => {
-        if (resultado2.ok === true) {
-          setDatos(resultado2.data);
-          console.log("xxx", resultado2.data);
-          const participantes = resultado2.data.Participacions.map(
-            (e) => e.id_usuario
-          );
-        }
-      })
-      .catch((error) => setError("error", error));
-  });
+  //   fetch(`http://localhost:5000/api/eventos/${eventoId}`, requestOptions)
+  //     .then((resultado) => resultado.json())
+  //     .then((resultado2) => {
+  //       if (resultado2.ok === true) {
+  //         setDatos(resultado2.data);
+  //         console.log("xxx", resultado2.data);
+  //         const participantes = resultado2.data.Participacions.map(
+  //           (e) => e.id_usuario
+  //         );
+  //       }
+  //     })
+  //     .catch((error) => setError("error", error));
+  // });
 
   // const filas = (
   //   <Card.Body>
