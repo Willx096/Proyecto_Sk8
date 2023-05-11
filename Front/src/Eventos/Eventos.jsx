@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Marker, useMap, Popup } from "react-leaflet";
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
 import { goldIcona, greenIcona, redIcona, greyIcona } from "./Icona";
-
 import GlobalContext from "../GlobalContext";
-import { useNavigate } from "react-router";
+import PerfilEvento from "./PerfilEvento";
 
 function Eventos(props) {
   const { userid } = useContext(GlobalContext);
@@ -14,24 +13,25 @@ function Eventos(props) {
   const [eventoSeleccionado, setEventoSeleccionado] = useState({});
   // const [eventoDetalle, setEventoDetalle] = useState({});
   const [eventos, setEventos] = useState([]);
-
+  console.log(eventos);
+  const [refresh, setRefresh] = useState(0);
   const [mostrarTarjeta, setMostrarTarjeta] = useState(false);
-
-  const goTo = useNavigate();
-  function goToEvento(id) {
-    console.log("id de evento:" + id);
-    goTo("/perfil-evento/" + id);
-  }
+  const [nivelSelect, setNivelSelect] = useState("Todos los Niveles");
+  const [fechaSelect, setFechalSelect] = useState((new Date()).toISOString().split("T")[0]);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/eventos")
       .then((response) => response.json())
       .then((x) => {
-        console.log(x);
+        console.log("Eventos recibidos", x);
         setEventos(x.data);
+        if (eventoSeleccionado.id) {
+          const z = x.data.find((e) => e.id === eventoSeleccionado.id);
+          setEventoSeleccionado(z);
+        }
       })
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [refresh]);
 
   function handleMarcadorClick(ev) {
     if (new Date(ev.fecha + " " + ev.hora) > new Date()) {
@@ -45,14 +45,16 @@ function Eventos(props) {
   function handleMapClick() {
     setMostrarTarjeta(false);
   }
-
+  console.log("fecha selecionada", fechaSelect);
   /**
    * En este codigo se usa el método filter para filtrar la lista de eventos antes de ser creados
    */
-  const eventosDisponibles = eventos.filter(
-    (e) => new Date(e.fecha).getTime() > new Date().getTime()
+  const eventosDisponibles = eventos.filter( // Filtra la lista de eventos para mostrar solo los que cumplen con los criterios de búsqueda
+    (e) =>
+      new Date(e.fecha).getTime() >= new Date(fechaSelect).getTime() && //Fecha actual hacia adelante para no mostrar eventos pasados
+      (nivelSelect === "Todos los Niveles" || nivelSelect === e.nivel)  //En funcion del nivel selecionado muestra los eventos con ese nivel
   );
-
+  console.log("eventos disponibles", eventosDisponibles);
   const marcadores = eventosDisponibles.map((e, idx) => (
     <Marker
       className="button"
@@ -62,9 +64,9 @@ function Eventos(props) {
       icon={
         eventoSeleccionado.id === e.id
           ? greyIcona
-          : e.nivel === "avanzado"
+          : e.nivel === "Avanzado"
           ? redIcona
-          : e.nivel === "intermedio"
+          : e.nivel === "Intermedio"
           ? goldIcona
           : greenIcona
       }
@@ -73,37 +75,49 @@ function Eventos(props) {
 
   return (
     <>
-      <Container fluid="lg">
-        <MapView
-          direccion={direccion}
-          setDireccion={setDireccion}
-          marcadores={marcadores}
-          onClick={handleMapClick}
-        />
-      </Container>
-      <br />
-      <Container fluid="lg">
-        {mostrarTarjeta && (
-          <Row>
-            <Col>
-              <Card style={{ width: "18rem" }}>
-                <p className="text-center">
-                  Titulo: {eventoSeleccionado.titulo}
-                </p>
-                <p className="text-center">{eventoSeleccionado.descripcion}</p>
-                <p className="text-center">
-                  Fecha: {eventoSeleccionado.fecha} Hora: {eventoSeleccionado.hora}
-                </p>
-                <p className="text-center">{eventoSeleccionado.direccion}</p>
-                <p className="text-center">Nº Participantes: {eventoSeleccionado.participantes}
-                </p>
-                <Button onClick={() => goToEvento(eventoSeleccionado.id)}>
-                  Mas Informacion
-                </Button>
-              </Card>
-            </Col>
-          </Row>
-        )}
+      <Container>
+        <h3>Mapa de eventos</h3>
+        <Row xs={1} sm={1} lg={2}>
+          <Col>
+            <h5>Filtros:</h5>
+            <Form.Group>
+              <Form.Label>Nivel</Form.Label>
+              <Form.Select
+                type="text"
+                value={nivelSelect}
+                onChange={(e) => setNivelSelect(e.target.value)}
+              >
+                <option>Todos los Niveles</option>
+                <option>Principante</option>
+                <option>Intermedio</option>
+                <option>Avanzado</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Fecha</Form.Label>
+              <Form.Control
+                type="date"
+                value={fechaSelect}
+                onChange={(e) => setFechalSelect(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <MapView
+              direccion={direccion}
+              setDireccion={setDireccion}
+              marcadores={marcadores}
+              onClick={handleMapClick}
+            />
+          </Col>
+          <Col>
+            {mostrarTarjeta && (
+              <PerfilEvento
+                refresh={refresh}
+                setRefresh={setRefresh}
+                evento={eventoSeleccionado}
+              />
+            )}
+          </Col>
+        </Row>
       </Container>
     </>
   );
