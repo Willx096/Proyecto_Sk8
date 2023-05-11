@@ -88,14 +88,32 @@ button {
     
     font-size: 16px;
 }
+ 
+.card {
+    margin: 10px; 
+}
 
 .cardsEventos {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    background-color: rgb(77, 77, 77); 
+    background-color: rgba(194, 194, 194, 0.486);
+    
 }
 
 .datosEventos {
     padding: 5px;
+}
+
+.posicionDatos {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.tituloEvento {
+    font-size: 24px;
+}
+.fecha {
+    margin-top: auto;
 }

@@ -15,6 +15,7 @@ function Perfil() {
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
+  const [futuros, setFuturos] = useState(false);
 
   const goTo = useNavigate();
   function goToPerfil(id_usuario) {
@@ -88,11 +89,13 @@ function Perfil() {
         <Card key={index}>
           <div className="cardsEventos">
             <Card.Body>
-              <div className="datosEventos">
+              <div className="posicionDatos">
+              <div className="tituloEvento">
                 <b>{el.titulo}</b>
               </div>
-              <div className="datosEventos">
+              <div className="nivel">
                 Nivel: <i>{el.nivel}</i>
+              </div>
               </div>
               <div className="datosEventos">
                 Participantes: {el.participantes}
@@ -100,7 +103,8 @@ function Perfil() {
               <div className="datosEventos">
                 Calle de mi madre,45, Barcelona 08888
               </div>
-              <div className="datosEventos">
+              <div className="posicionDatos">
+              <div className="fecha">
                 <i>{el.fecha}</i>
               </div>
               { usuarioId !== undefined ? (
@@ -109,15 +113,14 @@ function Perfil() {
               
               <div>
                 
-            <div>
+            <div className="botones">
               <EditarEvento
                 eventoId={el.id}
                 eventos={el}
                 refresh={refresh}
                 setRefresh={setRefresh}
               />
-            </div>
-            <div>
+             
               <EliminarEvento
                 eventoId={el.id}
                 refresh={refresh}
@@ -127,6 +130,7 @@ function Perfil() {
               </div>
   
             )}
+              </div>
             </Card.Body>
           </div>
         </Card>
@@ -144,58 +148,57 @@ function Perfil() {
     const media = valoMedia(puntuaciones2).toFixed(1);
 
     return (
-      <Card
-        bg={"secondary"}
-        text={"white"}
-        className="cardsEventos"
-        key={index}
-      >
-        <Card.Body>
-          <div className="datosEventos">
-            <b>{el.titulo}</b>
-          </div>
-          <div className="datosEventos">
-            Nivel: <i>{el.nivel}</i>
-          </div>
-          <div className="datosEventos">Participantes: {el.participantes}</div>
-          <div className="datosEventos">
-            Calle de mi madre,45, Barcelona 08888
-          </div>
-          <div className="datosEventos">
-            <i>{el.fecha}</i>
-          </div>
-          <div className="datosEventos">
-            Val. Media: <b>{media}</b>
-          </div>
-          
-
-          { usuarioId !== undefined ? (
-            <div></div>
-          ) : (
-            
-            <div>
+      <Card key={index}>
+          <div className="cardsEventos">
+            <Card.Body>
+              <div className="posicionDatos">
+              <div className="tituloEvento">
+                <b>{el.titulo}</b>
+              </div>
+              <div className="nivel">
+                Nivel: <i>{el.nivel}</i>
+              </div>
+              </div>
+              <div className="datosEventos">
+                Participantes: {el.participantes}
+              </div>
+              <div className="datosEventos">
+                Calle de mi madre,45, Barcelona 08888
+              </div>
+              <div className="datosEventos">
+    Val. Media: <b>{media}</b>
+  </div>
+              <div className="posicionDatos">
+              <div className="fecha">
+                <i>{el.fecha}</i>
+              </div>
+              { usuarioId !== undefined ? (
+              <div></div>
+            ) : (
               
-          <div>
-            <EditarEvento
-              eventoId={el.id}
-              eventos={el}
-              refresh={refresh}
-              setRefresh={setRefresh}
-            />
-          </div>
-          <div>
-            <EliminarEvento
-              eventoId={el.id}
-              refresh={refresh}
-              setRefresh={setRefresh}
-            />
-          </div>
+              <div>
+                
+            <div className="botones">
+              <EditarEvento
+                eventoId={el.id}
+                eventos={el}
+                refresh={refresh}
+                setRefresh={setRefresh}
+              />
+             
+              <EliminarEvento
+                eventoId={el.id}
+                refresh={refresh}
+                setRefresh={setRefresh}
+              />
             </div>
-
-          )}
-
-        </Card.Body>
-      </Card>
+              </div>
+  
+            )}
+              </div>
+            </Card.Body>
+          </div>
+        </Card>
     );
   });
 
@@ -207,21 +210,37 @@ function Perfil() {
     (el) => new Date(el.Evento.fecha).getTime() > fechaHoy.getTime()
   ).map((el, index) => (
     <Card key={index}>
-      <Card.Body>
-        <div>{el.Evento.titulo}</div>
-        <div>{el.Evento.fecha}</div>
-        <div>{el.Evento.nivel}</div>
-        <div>{el.Evento.participantes}</div>
-        <div>{el.Evento.direccion}</div>
-        <img
+          <div className="cardsEventos">
+            <Card.Body>
+              <div className="posicionDatos">
+              <div className="tituloEvento">
+                <b>{el.Evento.titulo}</b>
+              </div>
+              <div className="nivel">
+                Nivel: <i>{el.Evento.nivel}</i>
+              </div>
+              <img
       style={{width: "30px", borderRadius: "30px"}}
       src={"http://localhost:5000/" + el.Usuario.foto}
       alt=""
     />
         <button onClick={() => goToPerfil(el.Evento.id_usuario)}>{el.Usuario.nombre}</button>
-        <div>{el.puntuacion}</div>
-        <div></div>
-      </Card.Body>
+              </div>
+              <div className="datosEventos">
+              {el.Evento.participantes}
+              </div>
+              <div className="datosEventos">
+                Calle de mi madre,45, Barcelona 08888
+              </div>
+              <div className="datosEventos">
+              {el.puntuacion}
+  </div>
+              
+              <div className="fecha">
+                <i>{el.Evento.fecha}</i>
+              </div>
+              </Card.Body>
+              </div>
     </Card>
   ));
 
@@ -230,39 +249,68 @@ function Perfil() {
     (el) => new Date(el.Evento.fecha).getTime() < fechaHoy.getTime()
   ).map((el, index) => (
     <Card key={index}>
-      <Card.Body>
-        <div>{el.Evento.titulo}</div>
-        <div>{el.Evento.fecha}</div>
-        <div>{el.Evento.nivel}</div>
-        <div>{el.Evento.participantes}</div>
-        <div>{el.Evento.direccion}</div>
-        <div onClick={() => goToPerfil(el.Evento.id_usuario)}>{el.Usuario.nombre}</div>
-        
-        { usuarioId !== undefined ? (
-            <div></div>
-          ) : (
-            
-            <div>
-        
-        <div>
-          {" "}
-        
-          {!el.puntuacion ? (
-            <Valoraciones
-              cargarPerfil={cargarPerfil}
-              puntu={el.puntuacion}
-              eventoid={el.Evento.id}
-            />
-          ) : (
-            <>
-              <p>Valorado</p>
-            </>
-          )}
-        </div>
-        <div></div></div> )}
-      </Card.Body>
+          <div className="cardsEventos">
+            <Card.Body>
+              <div className="posicionDatos">
+              <div className="tituloEvento">
+                <b>{el.Evento.titulo}</b>
+              </div>
+              <div className="nivel">
+                Nivel: <i>{el.Evento.nivel}</i>
+              </div>
+              
+              </div>
+              <div className="datosEventos">
+              Participantes: {el.Evento.participantes}
+              </div>
+              <div className="datosEventos">
+                Calle de mi madre,45, Barcelona 08888
+              </div>
+              <div className="datosEventos">
+              Puntuado con un: {el.puntuacion}/5
+  </div>
+ 
+              { usuarioId !== undefined ? (
+    <div></div>
+  ) : (
+    
+    <div>
+
+<div>
+  {" "}
+
+  {!el.puntuacion ? (
+    <Valoraciones
+      cargarPerfil={cargarPerfil}
+      puntu={el.puntuacion}
+      eventoid={el.Evento.id}
+    />
+  ) : (
+    <>
+      <p><i>Valorado</i></p>
+    </>
+  )}
+</div>
+<div></div></div> )}
+              
+           
+             <div className="posicionDatos">
+             <div className="fecha">
+                <i>{el.Evento.fecha}</i>
+              
+             </div>
+             <div><img
+      style={{width: "30px", height:"30px", borderRadius: "30px", objectFit: "cover"}}
+      src={"http://localhost:5000/" + el.Usuario.foto}
+      alt=""
+    />
+        <button onClick={() => goToPerfil(el.Evento.id_usuario)}>{el.Usuario.nombre}</button></div>
+             </div>
+              </Card.Body>
+              </div>
     </Card>
   ));
+  
 console.log(userid)
 console.log(usuarioId)
   return (
@@ -313,19 +361,20 @@ console.log(usuarioId)
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col xs={12} md={12} lg={6}>
           <div className="eventos">
             <div>
               <h3>Eventos creados</h3>
             </div>
-            <Button onClick={()=>{futuro}}>creadoooduuuuuturi</Button>
+            <Button onClick={()=>setFuturos(true)}>creadoooduuuuuturi</Button>
+            {futuros ? (<div>{creadoFuture}</div>) : (<div></div>)}
             <div>
               
               {creadoPasado}
             </div>
           </div>
         </Col>
-        <Col>
+        <Col xs={12} md={12} lg={6}>
           <div className="eventos">
             <div>
               <h3>Participaciones</h3>
