@@ -2,12 +2,16 @@ import React, { useState, useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 
-function EliminarEvento({eventoId, refresh, setRefresh}) {
+function EliminarEvento({participacionId, eventoId, refresh, setRefresh}) {
 
 
   //funcion que elimina el usuario de la base de datos
   function eliminarEvento(e) {
     e.preventDefault();
+
+  
+
+  
 
     const URL = `http://localhost:5000/api/eventos/${eventoId}`;
 

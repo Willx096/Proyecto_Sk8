@@ -72,6 +72,8 @@ function Perfil() {
   const creadoFuture = datos.Eventos.filter(
     (el) => new Date(el.fecha).getTime() > fechaHoy.getTime()
   ).map((el, index) => {
+
+    
     return (
       <Card  key={index}>
       <div className="cardsEventos">
@@ -82,7 +84,7 @@ function Perfil() {
         <div className="datosEventos">Calle de mi madre,45, Barcelona 08888</div>
         <div className="datosEventos"><i>{el.fecha}</i></div>
         <div><EditarEvento eventoId={el.id} eventos={el} refresh={refresh} setRefresh={setRefresh}/></div>
-        <div><EliminarEvento eventoId={el.id} refresh={refresh} setRefresh={setRefresh}/></div>
+        <div><EliminarEvento  eventoId={el.id} refresh={refresh} setRefresh={setRefresh}/></div>
       </Card.Body>
       </div>
     </Card>
@@ -97,7 +99,7 @@ function Perfil() {
     const puntuaciones2 = el.Participacions.map((e) => e.puntuacion);
     //llamo a la funcion que calcula la media
     const media = valoMedia(puntuaciones2).toFixed(1);
-
+    
     return (
       <Card  bg={'secondary'} text={'white'} className="cardsEventos" key={index}>
         <Card.Body>
@@ -107,6 +109,9 @@ function Perfil() {
           <div className="datosEventos">Calle de mi madre,45, Barcelona 08888</div>
           <div className="datosEventos"><i>{el.fecha}</i></div>
           <div className="datosEventos">Val. Media: <b>{media}</b></div>
+          <div><EditarEvento eventoId={el.id} eventos={el} refresh={refresh} setRefresh={setRefresh}/></div>
+        <div><EliminarEvento eventoId={el.id} refresh={refresh} setRefresh={setRefresh}/></div>
+     
         </Card.Body>
       </Card>
     );
