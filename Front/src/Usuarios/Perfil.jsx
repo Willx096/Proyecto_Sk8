@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import { Container, Row, Col, Table, Button, Card} from "react-bootstrap";
 import Eliminar from "./Eliminar";
 import GlobalContext from "../GlobalContext";
 import Editar from "./EditarPerfil";
@@ -71,152 +71,174 @@ function Perfil() {
     (el) => new Date(el.fecha).getTime() > fechaHoy.getTime()
   ).map((el, index) => {
     return (
-      <tr key={index}>
-        <td>{el.titulo}</td>
-        <td>{el.fecha}</td>
-        <td>{el.nivel}</td>
-        <td>{el.participantes}</td>
-        <td>{el.direccion}</td>
-      </tr>
+      <Card>
+      <Card.Body><Card.Title key={index}>{el.titulo}</Card.Title>
+        <Card.Text>{el.titulo}</Card.Text>
+        <Card.Text>{el.fecha}</Card.Text>
+        <Card.Text>{el.nivel}</Card.Text>
+        <Card.Text>{el.participantes}</Card.Text>
+        <Card.Text>{el.direccion}</Card.Text>
+      </Card.Body>
+    </Card>
+      
     );
   });
 
   //Eventos pasados
-  const creadoPasado = datos.Eventos.filter(
-    (el) => new Date(el.fecha).getTime() < fechaHoy.getTime()
-  ).map((el, index) => {
-    //obtengo los valores de las puntuaciones
-    const puntuaciones2 = el.Participacions.map((e) => e.puntuacion);
-    //llamo a la funcion que calcula la media
-    const media = valoMedia(puntuaciones2);
-
-    return (
-      <tr key={index}>
-        <td>{el.titulo}</td>
-        <td>{el.fecha}</td>
-        <td>{el.nivel}</td>
-        <td>{el.participantes}</td>
-        <td>{el.direccion}</td>
-        <td>{media}</td>
-      </tr>
-    );
-  });
+  // const creadoPasado = datos.Eventos.filter(
+  //   (el) => new Date(el.fecha).getTime() < fechaHoy.getTime()
+  // ).map((el, index) => {
+  //   //obtengo los valores de las puntuaciones
+  //   const puntuaciones2 = el.Participacions.map((e) => e.puntuacion);
+  //   //llamo a la funcion que calcula la media
+  //   const media = valoMedia(puntuaciones2).toFixed(2);
+  
+  //   return (
+  //     <tr key={index}>
+  //       <td>{el.titulo}</td>
+  //       <td>{el.fecha}</td>
+  //       <td>{el.nivel}</td>
+  //       <td>{el.participantes}</td>
+  //       <td>{el.direccion}</td>
+  //       <td>{media}</td>
+  //     </tr>
+  //   );
+  // });
 
   // Tabla de eventos en los que se ha participado
   //Eventos futuros
   const participadoFuture = datos.Participacions.filter(
     (el) => new Date(el.Evento.fecha).getTime() > fechaHoy.getTime()
-  ).map((el, index) => (
-    <tr key={index}>
-      <td>{el.Evento.titulo}</td>
-      <td>{el.Evento.fecha}</td>
-      <td>{el.Evento.nivel}</td>
-      <td>{el.Evento.participantes}</td>
-      <td>{el.Evento.direccion}</td>
-      <td>{el.Usuario.nombre}</td>
-      <td>{el.puntuacion}</td>
-      <td></td>
-    </tr>
-  ));
+  ).map((el, index) => {
+    return(
+    <Card>
+      <Card.Body>
+      <Card.Title key={index}>{el.Evento.titulo}</Card.Title>
+
+        <Card.Text>{el.Evento.fecha}</Card.Text>
+      <Card.Text>{el.Evento.nivel}</Card.Text>
+      <Card.Text>{el.Evento.participantes}</Card.Text>
+      <Card.Text>{el.Evento.direccion}</Card.Text>
+      <Card.Text>{el.Usuario.nombre}</Card.Text>
+      <Card.Text>{el.puntuacion}</Card.Text>
+      <Card.Text></Card.Text>
+   
+      </Card.Body>
+    </Card>
+    
+  )});
 
   //Eventos pasados
   const participadoPasado = datos.Participacions.filter(
     (el) => new Date(el.Evento.fecha).getTime() < fechaHoy.getTime()
-  ).map((el, index) => (
-    <tr key={index}>
-      <td>{el.Evento.titulo}</td>
-      <td>{el.Evento.fecha}</td>
-      <td>{el.Evento.nivel}</td>
-      <td>{el.Evento.participantes}</td>
-      <td>{el.Evento.direccion}</td>
-      <td>{el.Usuario.nombre}</td>
-      <td>{el.puntuacion}</td>
-      {/* Esto mostrara o no la opcion de validar si no se ha valorado */}
-      <td>
-        {!el.puntuacion ? (
-          <Valoraciones
-            cargarPerfil={cargarPerfil}
-            puntu={el.puntuacion}
-            eventoid={el.Evento.id}
-          />
-        ) : (
-          <>
-            <p>Valorado</p>
-          </>
-        )}
-      </td>
-    </tr>
-  ));
+  ).map((el, index) => {
+    return(
+   <Card sm={1}><Card.Body>
+     <Card.Title key={index}>{el.Evento.titulo}</Card.Title>
+<Card.Text>{el.Evento.fecha}</Card.Text>
+<Card.Text>{el.Evento.nivel}</Card.Text>
+<Card.Text>{el.Evento.participantes}</Card.Text>
+<Card.Text>{el.Evento.direccion}</Card.Text>
+<Card.Text>{el.Usuario.nombre}</Card.Text>
+<Card.Text>{el.puntuacion}</Card.Text>
+ 
+     {!el.puntuacion ? (
+       <Valoraciones
+         cargarPerfil={cargarPerfil}
+         puntu={el.puntuacion}
+         eventoid={el.Evento.id}
+       />
+     ) : (
+       <>
+         <p>Valorado</p>
+       </>
+     )}
+  
+ </Card.Body></Card>
+   
+  )});
 
   return (
-    <>
-      <Container fluid>
-        <Row lg={3}>{foto}</Row>
-        <Row lg={3}>
-          {datos.nombre} {datos.apellido}
-        </Row>
-        <Row>{datos.nickname}</Row>
-        <Row lg={3}>{datos.descripcion}</Row>
-        <Row>Nivel: {datos.nivel}</Row>
-        <Row>Experiencia: {datos.experiencia} años</Row>
-        <Row lg={3}>{datos.contacto}</Row>
-        <br />
-        <Row lg={3}>
-          <Col>
-            <Editar perfil={datos} refresh={refresh} setRefresh={setRefresh} />
-          </Col>
-        </Row>
-        <br />
-        <Row lg={3}>
-          <Col>
-            <Eliminar />
-          </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col>
-            <h3>Eventos creados</h3>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Titulo</th>
-                  <th>Fecha</th>
-                  <th>Nivel</th>
-                  <th>Participantes</th>
-                  <th>Ubicacion</th>
-                  <th>Valoracion media</th>
-                </tr>
-              </thead>
-              <tbody>
-                {creadoFuture}
-                {creadoPasado}
-              </tbody>
-            </Table>
-          </Col>
-          <Col>
-            <h3>Eventos en los que se ha participado</h3>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Titulo</th>
-                  <th>Fecha</th>
-                  <th>Nivel</th>
-                  <th>Participantes</th>
-                  <th>Ubicacion</th>
-                  <th>Creador</th>
-                  <th>Valoracion</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {participadoFuture}
-                {participadoPasado}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
-      </Container>
-    </>
+  
+      // <Container className="containerPerfilUsuario">
+      //   <Row lg={12}>
+      //   <Col  lg={6} xs={12} className="recuadrosPerfil">
+      //   <div >{foto}</div>
+      //   <div >
+      //     {datos.nombre} {datos.apellido}
+      //   </div>
+      //   <div>{datos.nickname}</div>
+      //   <div >{datos.descripcion}</div>
+      //   <div>Nivel: {datos.nivel}</div>
+      //   <div>Experiencia: {datos.experiencia} años</div>
+      //   <div >{datos.contacto}</div>
+       
+      //     <div>
+      //       <Editar perfil={datos} refresh={refresh} setRefresh={setRefresh} />
+      //     </div>
+       
+      //     <div>
+      //       <Eliminar />
+      //     </div>
+              
+      //   </Col>
+      //   <Col lg={6} xs={12} className="recuadrosPerfil">
+     
+          
+      //       <h3>Eventos creados</h3>
+            
+      //           {creadoFuture}
+      //           {/* {creadoPasado} */}
+             
+          
+      //     </Col>
+      //     </Row>
+          
+      //     <Row>
+      //       <Col  className="recuadrosPerfil">
+      //       <h3>Eventos en los que se ha participado</h3>
+           
+      //           {participadoFuture}
+      //           {participadoPasado}
+              
+           
+      //  </Col>
+      //   </Row>
+      // </Container>
+
+<Container fluid className="base1">
+  <Row className="base2">
+    <Col lg={6} md={9} sm={1} className="datos">
+      <Row>
+        <Col>{foto}</Col>
+        <Col>
+        {datos.nombre} {datos.apellido}
+        {datos.nickname}
+        </Col>
+      </Row>
+      <Row>
+      <Col>Nivel: {datos.nivel}
+     </Col>
+        <Col> Experiencia: {datos.experiencia} años</Col>
+      </Row>
+      <Row>
+      <Col>{datos.descripcion}</Col>
+        <Col>{datos.contacto}</Col>
+      </Row>
+    </Col>
+    <Col lg={6} md={9} sm={1} className="pasticipado">
+    <Row>participaciones</Row>
+    <Row>{participadoPasado}</Row>
+    
+    
+    </Col>
+  </Row>
+  <Row lg={12} md={9} sm={1} className="base2">
+  {creadoFuture}
+  </Row>
+</Container>
+
+
   );
 }
 
