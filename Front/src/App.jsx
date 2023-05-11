@@ -108,7 +108,7 @@ function App() {
             <Route path="/" element={<Inicio />} />
             <Route path="/perfil-evento/:eventoId" element={<PerfilEvento />} />
             <Route path="/eventos" element={<Eventos />} />
-            <Route path="/mostrar-evento" element={<MostrarEvento />} />
+            <Route path="/mostrar-evento/:id" element={<MostrarEvento />} />
             <Route path="/nuevo-evento" element={<NuevoEvento />} />
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/perfil/:usuarioId" element={<Perfil />} />

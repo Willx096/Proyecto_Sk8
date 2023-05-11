@@ -46,9 +46,6 @@ const NavUsuario = () => {
             <Nav.Link as={Link} to="/eventos" className="nav-link">
               Eventos
             </Nav.Link>
-            <Nav.Link as={Link} to="/mostrar-evento" className="nav-link">
-              Detalle Eventos
-            </Nav.Link>
             <NavDropdown
               id="nav-dropdown-dark-example"
               menuVariant="dark"
