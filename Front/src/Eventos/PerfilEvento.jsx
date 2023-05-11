@@ -23,6 +23,11 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
 
   if (!datos) return <>...</>; // Si "datos" es null, muestra puntos suspensivos mientras se carga
 
+  useEffect(()=>{
+    setApuntado(participantes.includes(userid));
+  }, [evento])
+
+
   console.log("provando datos", datos);
   //Tabla de eventos
   const filas = (

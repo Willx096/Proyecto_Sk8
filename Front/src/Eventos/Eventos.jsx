@@ -17,7 +17,7 @@ function Eventos(props) {
   const [refresh, setRefresh] = useState(0);
   const [mostrarTarjeta, setMostrarTarjeta] = useState(false);
   const [nivelSelect, setNivelSelect] = useState("Todos los Niveles");
-  const [fechaSelect, setFechalSelect] = useState("");
+  const [fechaSelect, setFechalSelect] = useState((new Date()).toISOString().split("T")[0]);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/eventos")
@@ -51,10 +51,8 @@ function Eventos(props) {
    */
   const eventosDisponibles = eventos.filter( // Filtra la lista de eventos para mostrar solo los que cumplen con los criterios de búsqueda
     (e) =>
-      new Date(e.fecha).getTime() >= new Date().getTime() && //Fecha actual hacia adelante para no mostrar eventos pasados
-      (nivelSelect === "Todos los Niveles" || nivelSelect === e.nivel) && //En funcion del nivel selecionado muestra los eventos con ese nivel
-      (fechaSelect === "" ||
-        new Date(e.fecha).getDate() <= new Date(fechaSelect).getDate()) //Muestra los eventos de la fecha actual a la fecha selecionada
+      new Date(e.fecha).getTime() >= new Date(fechaSelect).getTime() && //Fecha actual hacia adelante para no mostrar eventos pasados
+      (nivelSelect === "Todos los Niveles" || nivelSelect === e.nivel)  //En funcion del nivel selecionado muestra los eventos con ese nivel
   );
   console.log("eventos disponibles", eventosDisponibles);
   const marcadores = eventosDisponibles.map((e, idx) => (
