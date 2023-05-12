@@ -33,7 +33,7 @@ function NuevoEvento(props) {
     console.log("direccion completa", direccion);
     setEvento({
       ...evento,
-      direccion: direccion.display_name,
+      direccion: direccion.address.road+","+direccion.address.house_number+","+direccion.address.city+","+direccion.address.postcode,
       longitud: direccion.lon * 1,
       latitud: direccion.lat * 1,
     });
