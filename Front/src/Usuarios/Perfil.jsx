@@ -92,31 +92,29 @@ function Perfil() {
   ).map((el, index) => {
     return (
       <Card key={index}>
-        <div className="cardsEventos">
-          <Card.Body>
-            <div className="posicionDatos">
-              <div className="tituloEvento">
+        <div className="cardsEventos container">
+          <Card.Body >
+            <div className="posicionDatos row">
+              <div  className="tituloEvento">
                 <b>{el.titulo}</b>
               </div>
-              <div className="nivel">
+              <div className="nivel ">
                 Nivel: <i>{el.nivel}</i>
               </div>
-            </div>
-            <div className="datosEventos">
+            </div >
+            <div className="datosEventos"><div className="datosEventos">
               Participantes: {el.participantes}
             </div>
             <div className="datosEventos">
-              Calle de mi madre,45, Barcelona 08888
+              Ubicación: Calle de mi madre,45, Barcelona 08888
             </div>
-            <div className="posicionDatos">
-              <div className="fecha">
-                <i>{el.fecha}</i>
-              </div>
-              {usuarioId !== undefined ? (
+            </div>
+            <div className="posicionDatos row">
+            {usuarioId !== undefined ? (
                 <div></div>
               ) : (
                 <div>
-                  <div className="botones">
+                  <div className="botones col">
                     <EditarEvento
                       eventoId={el.id}
                       eventos={el}
@@ -130,6 +128,10 @@ function Perfil() {
                       setRefresh={setRefresh}
                     />
                   </div>
+              <div className="fecha">
+                <i>Fecha: {new Date(el.fecha).toLocaleDateString()}</i>
+              </div>
+              
                 </div>
               )}
             </div>
@@ -171,7 +173,7 @@ function Perfil() {
             </div>
             <div className="posicionDatos">
               <div className="fecha">
-                <i>{el.fecha}</i>
+                <i>{new Date(el.fecha).toLocaleDateString()}</i>
               </div>
               {usuarioId !== undefined ? (
                 <div></div>
@@ -208,32 +210,32 @@ function Perfil() {
     (el) => new Date(el.Evento.fecha).getTime() > fechaHoy.getTime()
   ).map((el, index) => (
     <Card key={index}>
-      <div className="cardsEventos">
+      <div className="cardsEventos container">
         <Card.Body>
-          <div className="posicionDatos">
-            <div className="tituloEvento">
+          <div className="posicionDatos row">
+            <div className="tituloEvento col">
               <b>{el.Evento.titulo}</b>
             </div>
-            <div className="nivel">
+            <div className="nivel col">
               Nivel: <i>{el.Evento.nivel}</i>
             </div>
-            <img
+            <div><img  
               style={{ width: "30px", borderRadius: "30px" }}
               src={"http://localhost:5000/" + el.Usuario.foto}
               alt=""
             />
             <button onClick={() => goToPerfil(el.Evento.id_usuario)}>
               {el.Usuario.nombre}
-            </button>
+            </button></div>
           </div>
-          <div className="datosEventos">{el.Evento.participantes}</div>
-          <div className="datosEventos">
+          <div className="datosEventos col">{el.Evento.participantes}</div>
+          <div className="datosEventos col">
             Calle de mi madre,45, Barcelona 08888
           </div>
-          <div className="datosEventos">{el.puntuacion}</div>
+          <div className="datosEventos col">{el.puntuacion}</div>
 
-          <div className="fecha">
-            <i>{el.Evento.fecha}</i>
+          <div className="fecha ">
+            <i>{new Date(el.Evento.fecha).toLocaleDateString()}</i>
           </div>
         </Card.Body>
       </div>
@@ -289,7 +291,7 @@ function Perfil() {
 
           <div className="posicionDatos">
             <div className="fecha">
-              <i>{el.Evento.fecha}</i>
+              <i>{new Date(el.Evento.fecha).toLocaleDateString()}</i>
             </div>
             <div>
               <img
@@ -376,8 +378,7 @@ function Perfil() {
               setPasados(true),
               setTodos(false))}>Pasados</Button>
             <Button onClick={() => (setFuturos(false),
-              setPasados(false),
-              setTodos(true))}>Todos</Button>
+              setPasados(false))}>Todos</Button>
             {futuros ? <div>{creadoFuture}</div> : <div></div>}
 
             {pasados ? <div>{creadoPasado}</div> : <div></div>}
@@ -391,14 +392,7 @@ function Perfil() {
               <div></div>
             )}
 
-            {todos ? (
-              <div>
-                {creadoFuture}
-                {creadoPasado}
-              </div>
-            ) : (
-              <div></div>
-            )}
+            
           </div>
         </Col>
         <Col xs={12} md={12} lg={6}>
@@ -414,8 +408,7 @@ function Perfil() {
               setPasado(true),
               setTodo(false))}>Pasados</Button>
             <Button onClick={() => (setFuturo(false),
-              setPasado(false),
-              setTodo(true))}>Todos</Button>
+              setPasado(false))}>Todos</Button>
             {futuro ? <div>{participadoFuture}</div> : <div></div>}
 
             {pasado ? <div>{participadoPasado}</div> : <div></div>}
@@ -428,16 +421,7 @@ function Perfil() {
             ) : (
               <div></div>
             )}
-
-            {todo ? (
-              <div>
-                {participadoPasado}
-              {participadoFuture}
-              </div>
-            ) : (
-              <div></div>
-            )}
-              
+                       
             </div>
           </div>
         </Col>
