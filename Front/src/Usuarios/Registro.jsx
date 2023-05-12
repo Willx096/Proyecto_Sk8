@@ -16,7 +16,7 @@ function Registro() {
   )
     .toISOString()
     .split("T")[0];
-  console.log("Muestar fa18anys", fa18anys);
+  // console.log("Muestar fa18anys", fa18anys);
   //State con array de objetos de usuario para no hacer muchos states
   const [usuario, setUsuario] = useState({
     nombre: "",

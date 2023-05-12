@@ -25,18 +25,23 @@ function NuevoEvento(props) {
     direccion: "",
     latitud: 0,
     longitud: 0,
-    nivel: "",
-    participantes: "",
+    nivel: "Principiante",
+    participantes: 1,
   });
 
   useEffect(() => {
-    console.log("direccion completa", direccion);
-    setEvento({
-      ...evento,
-      direccion: direccion.address.road+","+direccion.address.house_number+","+direccion.address.city+","+direccion.address.postcode,
-      longitud: direccion.lon * 1,
-      latitud: direccion.lat * 1,
-    });
+    if(direccion){
+      console.log("direccion completa", direccion);
+      //Array para que muestro los valores que queremos en direccio al hacer click en el mapa
+      const direccionCorta = [direccion.address.road,direccion.address.house_number,direccion.address.city,direccion.address.postcode].filter(e => e).join(", ")
+      setEvento({
+        ...evento,
+        direccion: direccionCorta,
+        longitud: direccion.lon * 1,
+        latitud: direccion.lat * 1,
+      });
+    }
+    
   }, [direccion]);
 
   function CrearEvento(e) {
