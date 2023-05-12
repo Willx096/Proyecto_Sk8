@@ -2,21 +2,31 @@ import React, { useContext, useState, useEffect } from "react";
 import {Button,Form,FormControl,Modal,ModalBody,ModalFooter,ModalHeader,ModalTitle,} from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
-function EditarEvento({ refresh, setRefresh, useEvento }) {
-  const { eventoId } = useParams();
+function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
 
   //Parametros para mostar o no el modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleOpen = () => setShow(true);
-  const [evento, setEvento] = useEvento;
 
-  console.log(evento.titulo);
+  const [titulo, setTitulo] = useState(eventos.titulo);
+  const [descripcion, setDescripcion] = useState(eventos.descripcion);
+  const [hora, setHora] = useState(eventos.hora);
+  const [fecha, setFecha] = useState(eventos.fecha);
+  const [nivel, setNivel] = useState(eventos.nivel);
+  const [participantes, setParticipantes] = useState(eventos.participantes);
+  
+  const evento = {
+    titulo,
+    hora,
+    fecha,
+    nivel,
+    descripcion,
+    participantes,
+  };
 
   function editarEvento(e) {
     e.preventDefault();
-
-    console.log("Evento editado", evento);
 
     const URL = `http://localhost:5000/api/eventos/${eventoId}`;
 
@@ -56,10 +66,10 @@ function EditarEvento({ refresh, setRefresh, useEvento }) {
               <Form.Label>Titulo</Form.Label>
               <FormControl
                 type="text"
-                value={evento.titulo}
+                value={titulo}
                 // onInput={(e) => setEvento(e.target.value)}
                 onInput={(e) =>
-                  setEvento({ ...evento, titulo: e.target.value })
+                  setTitulo(e.target.value)
                 }
               />
             </Form.Group>
@@ -67,9 +77,9 @@ function EditarEvento({ refresh, setRefresh, useEvento }) {
               <Form.Label>Descripcion</Form.Label>
               <FormControl
                 type="text"
-                value={evento.descripcion}
+                value={descripcion}
                 onInput={(e) =>
-                  setEvento({ ...evento, descripcion: e.target.value })
+                  setDescripcion(e.target.value)
                 }
               />
             </Form.Group>
@@ -77,16 +87,16 @@ function EditarEvento({ refresh, setRefresh, useEvento }) {
               <Form.Label>Fecha</Form.Label>
               <FormControl
                 type="date"
-                value={evento.fecha}
-                onInput={(e) => setEvento({ ...evento, fecha: e.target.value })}
+                value={fecha}
+                onInput={(e) => setFecha(e.target.value)}
               />
             </Form.Group>
             <Form.Group>
               <Form.Label>Hora</Form.Label>
               <FormControl
                 type="time"
-                value={evento.hora}
-                onInput={(e) => setEvento({ ...evento, hora: e.target.value })}
+                value={hora}
+                onInput={(e) => setHora(e.target.value)}
               />
             </Form.Group>
             {/* <Form.Group>
@@ -103,8 +113,8 @@ function EditarEvento({ refresh, setRefresh, useEvento }) {
               <Form.Label>Nivel</Form.Label>
               <Form.Select
                 type="text"
-                value={evento.nivel}
-                onInput={(e) => setEvento({ ...evento, nivel: e.target.value })}
+                value={nivel}
+                onInput={(e) => setNivel(e.target.value)}
               >
                 <option>Selecciona el Nivel</option>
                 <option>Principante</option>
@@ -116,9 +126,9 @@ function EditarEvento({ refresh, setRefresh, useEvento }) {
               <Form.Label>Participantes</Form.Label>
               <Form.Select
                 type="number"
-                value={evento.participantes}
+                value={participantes}
                 onInput={(e) =>
-                  setEvento({ ...evento, participantes: e.target.value })
+                  setParticipantes(e.target.value)
                 }
               >
                 <option>Selecciona el número de participantes</option>
