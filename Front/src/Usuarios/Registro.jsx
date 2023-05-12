@@ -184,7 +184,7 @@ function Registro() {
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">
-              Introduce fecha de nacimiento.
+              Fecha de nacimiento no valida.
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">

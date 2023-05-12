@@ -11,33 +11,14 @@ import { Row, Col } from "react-bootstrap";
 import "leaflet/dist/leaflet.css";
 import GlobalContext from "../GlobalContext";
 
-
-const primers = [
-  {
-    adr: "figueres",
-    lat: 42.2667,
-    long: 2.9667,
-  },
-  {
-    adr: "molina",
-    lat: 42.3427392,
-    long: 1.9562059,
-  },
-  {
-    adr: "girona",
-    lat: 41.9842,
-    long: 2.8239,
-  },
-];
-
 export default ({ direccion, setDireccion, marcadores }) => {
   const { cargaInfo } = useContext(GlobalContext);
   /**
    *  Valores que varian del estado actual a uno actualizado
    */
 
-  const [llocs, setLlocs] = useState(primers);
-  const [center, setCenter] = useState([41.3879,  2.16992]);
+  const [llocs, setLlocs] = useState([]);
+  const [center, setCenter] = useState([41.3879, 2.16992]);
 
   /**
    *  Llama la función getLocation y comprueba si el navegador es compatible con la API,
