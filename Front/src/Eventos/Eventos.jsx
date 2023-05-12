@@ -6,6 +6,7 @@ import "../mapa/leaflet.css";
 import { goldIcona, greenIcona, redIcona, greyIcona } from "./Icona";
 import GlobalContext from "../GlobalContext";
 import PerfilEvento from "./PerfilEvento";
+import MostrarEvento from "./MostrarEvento";
 
 function Eventos(props) {
   const { userid } = useContext(GlobalContext);

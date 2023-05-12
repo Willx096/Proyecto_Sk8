@@ -1,0 +1,13 @@
+.box .foto {
+    
+    width: 200px; 
+    height: 200px;
+    border-radius: 10px;
+    float: left;
+    margin-right: 10px;   
+
+}
+
+.box{
+    float: right;
+}

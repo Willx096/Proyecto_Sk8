@@ -21,6 +21,10 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
     goTo("/perfil/" + id_usuario); // Redirige a la página de perfil del usuario
   }
 
+  function goToMostrar() {
+    goTo("/mostrar-evento/" + evento.id); // Redirige a la página de perfil del usuario
+  }
+
   if (!datos) return <>...</>; // Si "datos" es null, muestra puntos suspensivos mientras se carga
 
   useEffect(()=>{
@@ -101,6 +105,7 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
     <div>
       <h3>Informacion del evento</h3>
       <Card border="dark">
+        <Button onClick={goToMostrar}>Más Informacion</Button>
         {filas}
         {userid === datos.id_usuario ? ( //Si el usuario logeado coincide con el id_usuario del evento le mostrara para editar
           <>
