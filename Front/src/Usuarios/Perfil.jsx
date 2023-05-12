@@ -16,6 +16,8 @@ function Perfil() {
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
   const [futuros, setFuturos] = useState(false);
+  const [pasados, setPasados] = useState(false);
+  const [todos, setTodos] = useState(false);
 
   const goTo = useNavigate();
   function goToPerfil(id_usuario) {
@@ -51,8 +53,8 @@ function Perfil() {
   }
 
   useEffect(() => {
-    console.log("usuari", usuarioId)
-     cargarPerfil();
+    console.log("usuari", usuarioId);
+    cargarPerfil();
   }, [refresh, usuarioId]);
   //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
@@ -81,62 +83,58 @@ function Perfil() {
 
   // Tabla de eventos creados
   //Eventos futuros
- 
-    const creadoFuture = datos.Eventos.filter(
-      (el) => new Date(el.fecha).getTime() > fechaHoy.getTime()
-    ).map((el, index) => {
-      return (
-        <Card key={index}>
-          <div className="cardsEventos">
-            <Card.Body>
-              <div className="posicionDatos">
+
+  const creadoFuture = datos.Eventos.filter(
+    (el) => new Date(el.fecha).getTime() > fechaHoy.getTime()
+  ).map((el, index) => {
+    return (
+      <Card key={index}>
+        <div className="cardsEventos">
+          <Card.Body>
+            <div className="posicionDatos">
               <div className="tituloEvento">
                 <b>{el.titulo}</b>
               </div>
               <div className="nivel">
                 Nivel: <i>{el.nivel}</i>
               </div>
-              </div>
-              <div className="datosEventos">
-                Participantes: {el.participantes}
-              </div>
-              <div className="datosEventos">
-                Calle de mi madre,45, Barcelona 08888
-              </div>
-              <div className="posicionDatos">
+            </div>
+            <div className="datosEventos">
+              Participantes: {el.participantes}
+            </div>
+            <div className="datosEventos">
+              Calle de mi madre,45, Barcelona 08888
+            </div>
+            <div className="posicionDatos">
               <div className="fecha">
                 <i>{el.fecha}</i>
               </div>
-              { usuarioId !== undefined ? (
-              <div></div>
-            ) : (
-              
-              <div>
-                
-            <div className="botones">
-              <EditarEvento
-                eventoId={el.id}
-                eventos={el}
-                refresh={refresh}
-                setRefresh={setRefresh}
-              />
-             
-              <EliminarEvento
-                eventoId={el.id}
-                refresh={refresh}
-                setRefresh={setRefresh}
-              />
+              {usuarioId !== undefined ? (
+                <div></div>
+              ) : (
+                <div>
+                  <div className="botones">
+                    <EditarEvento
+                      eventoId={el.id}
+                      eventos={el}
+                      refresh={refresh}
+                      setRefresh={setRefresh}
+                    />
+
+                    <EliminarEvento
+                      eventoId={el.id}
+                      refresh={refresh}
+                      setRefresh={setRefresh}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
-              </div>
-  
-            )}
-              </div>
-            </Card.Body>
-          </div>
-        </Card>
-      );
-    });
-  
+          </Card.Body>
+        </div>
+      </Card>
+    );
+  });
 
   //Eventos pasados
   const creadoPasado = datos.Eventos.filter(
@@ -145,60 +143,57 @@ function Perfil() {
     //obtengo los valores de las puntuaciones
     const puntuaciones2 = el.Participacions.map((e) => e.puntuacion);
     //llamo a la funcion que calcula la media
-    const media = valoMedia(puntuaciones2).toFixed(1);
-
+    const media = valoMedia(puntuaciones2);
+    // const media = valoMedia(puntuaciones2).toFixed(1);
     return (
       <Card key={index}>
-          <div className="cardsEventos">
-            <Card.Body>
-              <div className="posicionDatos">
+        <div className="cardsEventos">
+          <Card.Body>
+            <div className="posicionDatos">
               <div className="tituloEvento">
                 <b>{el.titulo}</b>
               </div>
               <div className="nivel">
                 Nivel: <i>{el.nivel}</i>
               </div>
-              </div>
-              <div className="datosEventos">
-                Participantes: {el.participantes}
-              </div>
-              <div className="datosEventos">
-                Calle de mi madre,45, Barcelona 08888
-              </div>
-              <div className="datosEventos">
-    Val. Media: <b>{media}</b>
-  </div>
-              <div className="posicionDatos">
+            </div>
+            <div className="datosEventos">
+              Participantes: {el.participantes}
+            </div>
+            <div className="datosEventos">
+              Calle de mi madre,45, Barcelona 08888
+            </div>
+            <div className="datosEventos">
+              Val. Media: <b>{media}</b>
+            </div>
+            <div className="posicionDatos">
               <div className="fecha">
                 <i>{el.fecha}</i>
               </div>
-              { usuarioId !== undefined ? (
-              <div></div>
-            ) : (
-              
-              <div>
-                
-            <div className="botones">
-              <EditarEvento
-                eventoId={el.id}
-                eventos={el}
-                refresh={refresh}
-                setRefresh={setRefresh}
-              />
-             
-              <EliminarEvento
-                eventoId={el.id}
-                refresh={refresh}
-                setRefresh={setRefresh}
-              />
+              {usuarioId !== undefined ? (
+                <div></div>
+              ) : (
+                <div>
+                  <div className="botones">
+                    <EditarEvento
+                      eventoId={el.id}
+                      eventos={el}
+                      refresh={refresh}
+                      setRefresh={setRefresh}
+                    />
+
+                    <EliminarEvento
+                      eventoId={el.id}
+                      refresh={refresh}
+                      setRefresh={setRefresh}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
-              </div>
-  
-            )}
-              </div>
-            </Card.Body>
-          </div>
-        </Card>
+          </Card.Body>
+        </div>
+      </Card>
     );
   });
 
@@ -210,37 +205,35 @@ function Perfil() {
     (el) => new Date(el.Evento.fecha).getTime() > fechaHoy.getTime()
   ).map((el, index) => (
     <Card key={index}>
-          <div className="cardsEventos">
-            <Card.Body>
-              <div className="posicionDatos">
-              <div className="tituloEvento">
-                <b>{el.Evento.titulo}</b>
-              </div>
-              <div className="nivel">
-                Nivel: <i>{el.Evento.nivel}</i>
-              </div>
-              <img
-      style={{width: "30px", borderRadius: "30px"}}
-      src={"http://localhost:5000/" + el.Usuario.foto}
-      alt=""
-    />
-        <button onClick={() => goToPerfil(el.Evento.id_usuario)}>{el.Usuario.nombre}</button>
-              </div>
-              <div className="datosEventos">
-              {el.Evento.participantes}
-              </div>
-              <div className="datosEventos">
-                Calle de mi madre,45, Barcelona 08888
-              </div>
-              <div className="datosEventos">
-              {el.puntuacion}
-  </div>
-              
-              <div className="fecha">
-                <i>{el.Evento.fecha}</i>
-              </div>
-              </Card.Body>
-              </div>
+      <div className="cardsEventos">
+        <Card.Body>
+          <div className="posicionDatos">
+            <div className="tituloEvento">
+              <b>{el.Evento.titulo}</b>
+            </div>
+            <div className="nivel">
+              Nivel: <i>{el.Evento.nivel}</i>
+            </div>
+            <img
+              style={{ width: "30px", borderRadius: "30px" }}
+              src={"http://localhost:5000/" + el.Usuario.foto}
+              alt=""
+            />
+            <button onClick={() => goToPerfil(el.Evento.id_usuario)}>
+              {el.Usuario.nombre}
+            </button>
+          </div>
+          <div className="datosEventos">{el.Evento.participantes}</div>
+          <div className="datosEventos">
+            Calle de mi madre,45, Barcelona 08888
+          </div>
+          <div className="datosEventos">{el.puntuacion}</div>
+
+          <div className="fecha">
+            <i>{el.Evento.fecha}</i>
+          </div>
+        </Card.Body>
+      </div>
     </Card>
   ));
 
@@ -249,70 +242,76 @@ function Perfil() {
     (el) => new Date(el.Evento.fecha).getTime() < fechaHoy.getTime()
   ).map((el, index) => (
     <Card key={index}>
-          <div className="cardsEventos">
-            <Card.Body>
-              <div className="posicionDatos">
-              <div className="tituloEvento">
-                <b>{el.Evento.titulo}</b>
-              </div>
-              <div className="nivel">
-                Nivel: <i>{el.Evento.nivel}</i>
-              </div>
-              
-              </div>
-              <div className="datosEventos">
-              Participantes: {el.Evento.participantes}
-              </div>
-              <div className="datosEventos">
-                Calle de mi madre,45, Barcelona 08888
-              </div>
-              <div className="datosEventos">
-              Puntuado con un: {el.puntuacion}/5
-  </div>
- 
-              { usuarioId !== undefined ? (
-    <div></div>
-  ) : (
-    
-    <div>
+      <div className="cardsEventos">
+        <Card.Body>
+          <div className="posicionDatos">
+            <div className="tituloEvento">
+              <b>{el.Evento.titulo}</b>
+            </div>
+            <div className="nivel">
+              Nivel: <i>{el.Evento.nivel}</i>
+            </div>
+          </div>
+          <div className="datosEventos">
+            Participantes: {el.Evento.participantes}
+          </div>
+          <div className="datosEventos">
+            Calle de mi madre,45, Barcelona 08888
+          </div>
+          <div className="datosEventos">Puntuado con un: {el.puntuacion}/5</div>
 
-<div>
-  {" "}
-
-  {!el.puntuacion ? (
-    <Valoraciones
-      cargarPerfil={cargarPerfil}
-      puntu={el.puntuacion}
-      eventoid={el.Evento.id}
-    />
-  ) : (
-    <>
-      <p><i>Valorado</i></p>
-    </>
-  )}
-</div>
-<div></div></div> )}
-              
-           
-             <div className="posicionDatos">
-             <div className="fecha">
-                <i>{el.Evento.fecha}</i>
-              
-             </div>
-             <div><img
-      style={{width: "30px", height:"30px", borderRadius: "30px", objectFit: "cover"}}
-      src={"http://localhost:5000/" + el.Usuario.foto}
-      alt=""
-    />
-        <button onClick={() => goToPerfil(el.Evento.id_usuario)}>{el.Usuario.nombre}</button></div>
-             </div>
-              </Card.Body>
+          {usuarioId !== undefined ? (
+            <div></div>
+          ) : (
+            <div>
+              <div>
+                {" "}
+                {!el.puntuacion ? (
+                  <Valoraciones
+                    cargarPerfil={cargarPerfil}
+                    puntu={el.puntuacion}
+                    eventoid={el.Evento.id}
+                  />
+                ) : (
+                  <>
+                    <p>
+                      <i>Valorado</i>
+                    </p>
+                  </>
+                )}
               </div>
+              <div></div>
+            </div>
+          )}
+
+          <div className="posicionDatos">
+            <div className="fecha">
+              <i>{el.Evento.fecha}</i>
+            </div>
+            <div>
+              <img
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "30px",
+                  objectFit: "cover",
+                }}
+                src={"http://localhost:5000/" + el.Usuario.foto}
+                alt=""
+              />
+              <button onClick={() => goToPerfil(el.Evento.id_usuario)}>
+                {el.Usuario.nombre}
+              </button>
+            </div>
+          </div>
+        </Card.Body>
+      </div>
     </Card>
   ));
-  
-console.log(userid)
-console.log(usuarioId)
+
+  console.log(userid);
+  console.log(usuarioId);
+  console.log(futuros);
   return (
     <Container fluid className="containerDatos">
       <Row>
@@ -345,33 +344,49 @@ console.log(usuarioId)
         <Col xs={12} lg={6} className="columnasDatos">
           <div className="descripcion">{datos.descripcion}</div>
           <div className="botones">
-            
-          { usuarioId !== undefined ? (
-            <div></div>
-          ) : (
-            <div>
-              <Editar
-                perfil={datos}
-                setRefresh={setRefresh}
-                refresh={refresh}
-              />{" "}
-              <Eliminar />
-            </div>  )}
+            {usuarioId !== undefined ? (
+              <div></div>
+            ) : (
+              <div>
+                <Editar
+                  perfil={datos}
+                  setRefresh={setRefresh}
+                  refresh={refresh}
+                />{" "}
+                <Eliminar />
+              </div>
+            )}
           </div>
         </Col>
       </Row>
       <Row>
         <Col xs={12} md={12} lg={6}>
-          <div className="eventos">
+          <div div className="eventos">
             <div>
               <h3>Eventos creados</h3>
             </div>
-            <Button onClick={()=>setFuturos(true)}>creadoooduuuuuturi</Button>
-            {futuros ? (<div>{creadoFuture}</div>) : (<div></div>)}
-            <div>
-              
-              {creadoPasado}
-            </div>
+
+            <Button onClick={() => (setFuturos(true),
+              setPasados(false),
+              setTodos(false))}>Futuros</Button>
+            <Button onClick={() => (setFuturos(false),
+              setPasados(true),
+              setTodos(false))}>Pasados</Button>
+            <Button onClick={() => (setFuturos(false),
+              setPasados(false),
+              setTodos(true))}>Todos</Button>
+            {futuros ? <div>{creadoFuture}</div> : <div></div>}
+
+            {pasados ? <div>{creadoPasado}</div> : <div></div>}
+
+            {todos ? (
+              <div>
+                {creadoFuture}
+                {creadoPasado}
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </Col>
         <Col xs={12} md={12} lg={6}>
