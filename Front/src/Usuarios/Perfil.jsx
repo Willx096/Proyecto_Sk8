@@ -106,7 +106,7 @@ function Perfil() {
               Participantes: {el.participantes}
             </div>
             <div className="datosEventos">
-              Ubicación: Calle de mi madre,45, Barcelona 08888
+              {el.direccion}
             </div>
             </div>
             <div className="posicionDatos row">
@@ -166,7 +166,7 @@ function Perfil() {
               Participantes: {el.participantes}
             </div>
             <div className="datosEventos">
-              Calle de mi madre,45, Barcelona 08888
+            {el.direccion}
             </div>
             <div className="datosEventos">
               Val. Media: <b>{media}</b>
@@ -230,7 +230,7 @@ function Perfil() {
           </div>
           <div className="datosEventos col">{el.Evento.participantes}</div>
           <div className="datosEventos col">
-            Calle de mi madre,45, Barcelona 08888
+          {el.direccion}
           </div>
           <div className="datosEventos col">{el.puntuacion}</div>
 
@@ -261,7 +261,7 @@ function Perfil() {
             Participantes: {el.Evento.participantes}
           </div>
           <div className="datosEventos">
-            Calle de mi madre,45, Barcelona 08888
+          {el.direccion}
           </div>
           <div className="datosEventos">Puntuado con un: {el.puntuacion}/5</div>
 
