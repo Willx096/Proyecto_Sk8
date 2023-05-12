@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Container } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 
 function Registro() {
   //Validate para validar que los campos se han rellenado
   const [validated, setValidated] = useState(false);
+  //Constantes con toastify para que el usuario seapa si se a creado el evetno o no
+  const formularioOk = () => toast.success("Usuario creado!");
+  const formularioBad = () => toast.error("Usuario no creado");
   //Creamos este state clave refrescar el valor de la foto
   const [clave, setClave] = useState(0);
   //Fecha actual para verificar si es mayor de 18 años
@@ -12,7 +16,7 @@ function Registro() {
   )
     .toISOString()
     .split("T")[0];
-  console.log("xxxxxxx", fa18anys);
+  console.log("Muestar fa18anys", fa18anys);
   //State con array de objetos de usuario para no hacer muchos states
   const [usuario, setUsuario] = useState({
     nombre: "",
@@ -35,6 +39,7 @@ function Registro() {
       e.preventDefault();
       e.stopPropagation();
       setValidated(true);
+      formularioBad();
       return;
     }
 
@@ -76,6 +81,7 @@ function Registro() {
         });
         //cambiamos el valor de clave a 1
         setClave(clave + 1);
+        formularioOk();
         setValidated(false);
       })
       .catch((error) => console.log("error", error));
@@ -265,6 +271,7 @@ function Registro() {
           </Form.Group>
         </Row>
       </Form>
+      <ToastContainer />
     </Container>
   );
 }

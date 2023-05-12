@@ -8,23 +8,14 @@ import GlobalContext from "../GlobalContext";
 
 function NuevoEvento(props) {
   const { userid, token } = useContext(GlobalContext);
-
-  const formularioOk = () => toast.success("Evetno creado");
-  const formularioBad = () => toast.error("Evetno no creado");
+  //Constantes con toastify para que el usuario seapa si se a creado el evetno o no
+  const formularioOk = () => toast.success("Evento creado!");
+  const formularioBad = () => toast.error("Evento no creado");
 
   const [direccion, setDireccion] = useState("");
   //Validate para validar que los campos se han rellenado
   const [validated, setValidated] = useState(false);
   const fechaActual = new Date().toISOString().split("T")[0];
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
-  };
 
   const [evento, setEvento] = useState({
     titulo: "",
@@ -54,6 +45,9 @@ function NuevoEvento(props) {
     if (form.checkValidity() === false) {
       e.preventDefault();
       e.stopPropagation();
+      setValidated(true);
+      formularioBad();
+      return;
     }
 
     var myHeaders = new Headers();
@@ -64,6 +58,7 @@ function NuevoEvento(props) {
       formularioBad();
       return;
     }
+
     var raw = JSON.stringify({
       titulo: evento.titulo,
       descripcion: evento.descripcion,
@@ -103,7 +98,7 @@ function NuevoEvento(props) {
       })
       .catch((error) => console.log("error", error));
     formularioOk();
-    setValidated(true);
+    setValidated(false);
   }
 
   return (
@@ -118,38 +113,52 @@ function NuevoEvento(props) {
           <Form noValidate validated={validated} onSubmit={CrearEvento}>
             <Row md={2}>
               <Form.Group className="mb-3" controlId="formBasicEmail" as={Col}>
-                <Form.Label>Titulo</Form.Label>
-                <Form.Control
-                  value={evento.titulo}
-                  onInput={(e) =>
-                    setEvento({ ...evento, titulo: e.target.value })
-                  }
-                  type="text"
-                  placeholder="Inserta un titulo"
-                />
-                <Form.Label>Participantes</Form.Label>
-                <Form.Select
-                  value={evento.participantes}
-                  onInput={(e) =>
-                    setEvento({ ...evento, participantes: e.target.value })
-                  }
-                  type="number"
-                  aria-label="Default select example"
-                >
-                  <option>Selecciona el número de participantes</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                </Form.Select>
+                <Form.Group>
+                  <Form.Label>Titulo</Form.Label>
+                  <Form.Control
+                    required
+                    value={evento.titulo}
+                    onInput={(e) =>
+                      setEvento({ ...evento, titulo: e.target.value })
+                    }
+                    type="text"
+                    placeholder="Inserta un titulo"
+                  />
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Tienes que introducir un Titulo!
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>Participantes</Form.Label>
+                  <Form.Select
+                    required
+                    value={evento.participantes}
+                    onInput={(e) =>
+                      setEvento({ ...evento, participantes: e.target.value })
+                    }
+                    type="number"
+                    aria-label="Default select example"
+                  >
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                  </Form.Select>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Intoduce un numero de participantes!
+                  </Form.Control.Feedback>
+                </Form.Group>
                 <Form.Label>Nivel</Form.Label>
                 <Form.Select
+                  required
                   value={evento.nivel}
                   onInput={(e) =>
                     setEvento({ ...evento, nivel: e.target.value })
@@ -157,10 +166,13 @@ function NuevoEvento(props) {
                   type="text"
                   aria-label="Default select example"
                 >
-                  <option>Selecciona el Nivel</option>
                   <option>Principante</option>
                   <option>Intermedio</option>
                   <option>Avanzado</option>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Seleciona un nivel!
+                  </Form.Control.Feedback>
                 </Form.Select>
                 <Form.Group className="mb-3" controlId="validationCustom02">
                   <Form.Label>Fecha</Form.Label>
@@ -184,6 +196,7 @@ function NuevoEvento(props) {
                 >
                   <Form.Label>Hora</Form.Label>
                   <Form.Control
+                    required
                     value={evento.hora}
                     onInput={(e) =>
                       setEvento({ ...evento, hora: e.target.value })
@@ -191,6 +204,10 @@ function NuevoEvento(props) {
                     type="time"
                     rows={3}
                   />
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Tienes que introducir una hora!
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Form.Group>
               <Row size={2}>
@@ -220,6 +237,7 @@ function NuevoEvento(props) {
               >
                 <Form.Label>Address</Form.Label>
                 <Form.Control
+                  required
                   value={evento.direccion}
                   onInput={(e) =>
                     setEvento({ ...evento, direccion: e.target.value })
@@ -228,6 +246,10 @@ function NuevoEvento(props) {
                   as="textarea"
                   rows={3}
                 />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Seleciona un dirección en el mapa!
+                </Form.Control.Feedback>
               </Form.Group>
             </Row>
             <div className="d-flex justify-content-center">

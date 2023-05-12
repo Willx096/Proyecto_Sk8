@@ -34,18 +34,13 @@ function Eventos(props) {
   }, [refresh]);
 
   function handleMarcadorClick(ev) {
-    if (new Date(ev.fecha + " " + ev.hora) > new Date()) {
       setEventoSeleccionado(ev);
       setMostrarTarjeta(true);
-    } else {
-      setEventoSeleccionado(null);
-    }
   }
 
   function handleMapClick() {
     setMostrarTarjeta(false);
   }
-  console.log("fecha selecionada", fechaSelect);
   /**
    * En este codigo se usa el método filter para filtrar la lista de eventos antes de ser creados
    */
@@ -54,7 +49,7 @@ function Eventos(props) {
       new Date(e.fecha).getTime() >= new Date(fechaSelect).getTime() && //Fecha actual hacia adelante para no mostrar eventos pasados
       (nivelSelect === "Todos los Niveles" || nivelSelect === e.nivel)  //En funcion del nivel selecionado muestra los eventos con ese nivel
   );
-  console.log("eventos disponibles", eventosDisponibles);
+  console.log("Eventos disponibles", eventosDisponibles);
   const marcadores = eventosDisponibles.map((e, idx) => (
     <Marker
       className="button"
