@@ -18,6 +18,9 @@ function Perfil() {
   const [futuros, setFuturos] = useState(false);
   const [pasados, setPasados] = useState(false);
   const [todos, setTodos] = useState(false);
+  const [futuro, setFuturo] = useState(false);
+  const [pasado, setPasado] = useState(false);
+  const [todo, setTodo] = useState(false);
 
   const goTo = useNavigate();
   function goToPerfil(id_usuario) {
@@ -379,6 +382,15 @@ function Perfil() {
 
             {pasados ? <div>{creadoPasado}</div> : <div></div>}
 
+            {!futuros && !pasados ? (
+              <div>
+                {creadoFuture}
+                {creadoPasado}
+              </div>
+            ) : (
+              <div></div>
+            )}
+
             {todos ? (
               <div>
                 {creadoFuture}
@@ -395,8 +407,37 @@ function Perfil() {
               <h3>Participaciones</h3>
             </div>
             <div>
-              {participadoPasado}
+            <Button onClick={() => (setFuturo(true),
+              setPasado(false),
+              setTodo(false))}>Futuros</Button>
+            <Button onClick={() => (setFuturo(false),
+              setPasado(true),
+              setTodo(false))}>Pasados</Button>
+            <Button onClick={() => (setFuturo(false),
+              setPasado(false),
+              setTodo(true))}>Todos</Button>
+            {futuro ? <div>{participadoFuture}</div> : <div></div>}
+
+            {pasado ? <div>{participadoPasado}</div> : <div></div>}
+
+            {!futuro && !pasado ? (
+              <div>
+                {participadoPasado}
               {participadoFuture}
+              </div>
+            ) : (
+              <div></div>
+            )}
+
+            {todo ? (
+              <div>
+                {participadoPasado}
+              {participadoFuture}
+              </div>
+            ) : (
+              <div></div>
+            )}
+              
             </div>
           </div>
         </Col>
