@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import {Button,Form,FormControl,Modal,ModalBody,ModalFooter,ModalHeader,ModalTitle,} from "react-bootstrap";
+import {Button,Form,FormControl,Modal, Row} from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
@@ -8,7 +8,7 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleOpen = () => setShow(true);
-
+  const [validated, setValidated] = useState(false);
   const [titulo, setTitulo] = useState(eventos.titulo);
   const [descripcion, setDescripcion] = useState(eventos.descripcion);
   const [hora, setHora] = useState(eventos.hora);
@@ -27,6 +27,13 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
 
   function editarEvento(e) {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
 
     const URL = `http://localhost:5000/api/eventos/${eventoId}`;
 
@@ -48,6 +55,7 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
         console.log("Respuesta del servidor:", data);
         setRefresh(refresh + 1);
         setShow(false);
+        setValidated(false);
       })
       .catch((error) => console.log("error", error));
   }
@@ -57,14 +65,16 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
         Editar
       </Button>
       <Modal show={show} onHide={handleClose}>
-        <ModalHeader closeButton>
-          <ModalTitle>Editar Evento</ModalTitle>
-        </ModalHeader>
-        <ModalBody>
-          <Form>
+      <Form noValidate validated={validated} onSubmit={editarEvento}>
+        <Modal.Header closeButton>
+          <Modal.Title>Editar Evento</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Row xs={1} sm={2} md={2}>
             <Form.Group>
               <Form.Label>Titulo</Form.Label>
               <FormControl
+              required
                 type="text"
                 value={titulo}
                 // onInput={(e) => setEvento(e.target.value)}
@@ -72,20 +82,31 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
                   setTitulo(e.target.value)
                 }
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Introduce un nombre.
+            </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group>
+          <Form.Group className="mb-3" controlId="validationCustom02">
+            <Form.Group >
               <Form.Label>Descripcion</Form.Label>
               <FormControl
+              required
                 type="text"
                 value={descripcion}
                 onInput={(e) =>
                   setDescripcion(e.target.value)
                 }
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Introduce un Apellido.
+            </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="mb-3" controlId="validationCustomUsername">
               <Form.Label>Fecha</Form.Label>
               <FormControl
+              required
                 type="date"
                 value={fecha}
                 onInput={(e) => setFecha(e.target.value)}
@@ -98,6 +119,10 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
                 value={hora}
                 onInput={(e) => setHora(e.target.value)}
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Elige un nombre de usuario.
+            </Form.Control.Feedback>
             </Form.Group>
             {/* <Form.Group>
               <Form.Label>Dirección</Form.Label>
@@ -109,22 +134,28 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
                 }
               />
             </Form.Group> */}
-            <Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Nivel</Form.Label>
               <Form.Select
                 type="text"
                 value={nivel}
                 onInput={(e) => setNivel(e.target.value)}
+                required
               >
                 <option>Selecciona el Nivel</option>
                 <option>Principante</option>
                 <option>Intermedio</option>
                 <option>Avanzado</option>
               </Form.Select>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Introduce un email.
+            </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>Participantes</Form.Label>
               <Form.Select
+              required
                 type="number"
                 value={participantes}
                 onInput={(e) =>
@@ -143,17 +174,23 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
                 <option>9</option>
                 <option>10</option>
               </Form.Select>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              Introduce fecha de nacimiento.
+            </Form.Control.Feedback>
             </Form.Group>
-          </Form>
-        </ModalBody>
-        <ModalFooter>
+            </Form.Group>
+            </Row>
+        </Modal.Body>
+        <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={editarEvento}>
+          <Button variant="primary" type="submit">
             Guardar cambios
           </Button>
-        </ModalFooter>
+        </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );
