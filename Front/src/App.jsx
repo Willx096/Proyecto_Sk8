@@ -17,6 +17,7 @@ import PerfilEvento from "./Eventos/PerfilEvento";
 //Para el login
 import jwt_decode from "jwt-decode";
 import GlobalContext from "./GlobalContext";
+import MostrarEvento from "./Eventos/MostrarEvento";
 
 function App() {
   //useStates
@@ -107,6 +108,7 @@ function App() {
             <Route path="/" element={<Inicio />} />
             <Route path="/perfil-evento/:eventoId" element={<PerfilEvento />} />
             <Route path="/eventos" element={<Eventos />} />
+            <Route path="/mostrar-evento/:id" element={<MostrarEvento />} />
             <Route path="/nuevo-evento" element={<NuevoEvento />} />
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/perfil/:usuarioId" element={<Perfil />} />
