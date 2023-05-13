@@ -157,3 +157,16 @@ gap: 10px;
     padding: 5px;
     padding-top: 20px;
 }
+
+/* pantalla de inicio */
+
+.valoracionInicio {
+    display: flex;
+    justify-content: space-between;
+}
+
+.img-fluid {
+  width: 100%;
+
+
+}

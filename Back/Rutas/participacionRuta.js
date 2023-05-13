@@ -34,6 +34,7 @@ router.get("/", function (req, res, next) {
       Participacion.findAll({
         include: [
           { model: Usuario },
+          { model: Evento }
         ],
       })
         .then((data) =>

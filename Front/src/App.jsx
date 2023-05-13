@@ -28,6 +28,7 @@ function App() {
   const [userid, setUserid] = useState("");
   const [admin, setAdmin] = useState(0);
   const [nombreNav, setNombreNav] = useState("");
+  const [showRegister, setShowRegister] = useState(false);
 
   //Navegación
   const navigateTo = useNavigate();
@@ -58,6 +59,9 @@ function App() {
 
   //Funcion para iniciar sesion
   function iniciaSesion(email, pswd) {
+
+
+  
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -73,10 +77,12 @@ function App() {
         if (resp.ok === true) {
           setToken(resp.token);
           setShowLogin(false);
+          
         } else {
           console.log("resp", resp);
           setError(resp.msg);
         }
+   
       })
       .catch((e) => setError(e));
   }
@@ -88,7 +94,7 @@ function App() {
   }
 
   return (
-    <>
+    
       <GlobalContext.Provider
         value={{
           showLogin,
@@ -100,6 +106,8 @@ function App() {
           nombreNav,
           logout,
           goHome,
+          setShowRegister,
+          showRegister
         }}
       >
         <NavUsuario />
@@ -122,7 +130,7 @@ function App() {
           setShowLogin={setShowLogin}
         />
       </GlobalContext.Provider>
-    </>
+   
   );
 }
 
