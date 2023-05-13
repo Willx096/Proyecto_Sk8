@@ -61,10 +61,7 @@ button {
     padding-bottom: 20px;
 }
 
-.nivel {
-    font-size: 16px;
-    padding-bottom: 10px;
-}
+
 
 .descripcion {
     background-color: rgba(151, 151, 151, 0.267);
@@ -81,7 +78,7 @@ button {
     padding-top: 20px;
     font-size: 16px;
     text-align: right;
-
+gap: 10px;
 }
 
 .contacto {
@@ -89,8 +86,24 @@ button {
     font-size: 16px;
 }
  
+/* Estilo cards eventos */
+
+.tituloSeccion {
+    text-align: center;
+    padding: 15px;
+}
+
+.filtros {
+    display: flex;
+    flex-flow: wrap;
+    padding-left: 10px;
+    gap: 10px;
+    
+}
+
 .card {
     margin: 10px; 
+    
 }
 
 .cardsEventos {
@@ -102,18 +115,45 @@ button {
 }
 
 .datosEventos {
-    padding: 5px;
+    padding-bottom: 10px;
 }
 
-.posicionDatos {
+.posicionIconos {
     display: flex;
-    justify-content: space-between;
-    
+    gap: 10px;
 }
 
 .tituloEvento {
     font-size: 24px;
+    text-align: left;
 }
-.fecha {
-    margin-top: auto;
+
+.nivel {
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+
+.tituloEvento:hover {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    text-shadow: 60px;
+    text-align: left;
+}
+
+.bodyModal {
+    background-color: rgba(185, 185, 185, 0.486);
+}
+
+.creador {
+    display: flex;
+    justify-content: space-between;
+}
+
+.valoraciones {
+    padding-bottom: 10px;
+}
+
+.imagenesSubidas {
+    padding: 5px;
+    padding-top: 20px;
 }

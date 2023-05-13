@@ -61,8 +61,8 @@ const DropArea = ({ eventoid}) => {
     <>
     {/* visualizacion de las imagenes cargadas */}
     {preview.map((el,idx) => (
-      <div key={idx}  className="box">
-          <img src={el} style={{ width: 100 }} />
+      <div key={idx} className="imagenesSubidas" >
+          <img  src={el} style={{ width: 100 }} />
         </div>
     ))}
     {/* zona donde se dipositan las imagenes */}

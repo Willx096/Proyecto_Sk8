@@ -61,7 +61,7 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
   }
   return (
     <>
-      <Button variant="warning" onClick={handleOpen}>
+      <Button variant="outline-secondary" onClick={handleOpen}>
         Editar
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -69,38 +69,37 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
         <Modal.Header closeButton>
           <Modal.Title>Editar Evento</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-        <Row xs={1} sm={2} md={2}>
+        <Modal.Body className="bodyModal">
+        <Row xs={1} sm={1} md={1}>
             <Form.Group>
-              <Form.Label>Titulo</Form.Label>
+              <Form.Label>Titulo del evento</Form.Label>
               <FormControl
               required
                 type="text"
                 value={titulo}
-                // onInput={(e) => setEvento(e.target.value)}
-                onInput={(e) =>
+                               onInput={(e) =>
                   setTitulo(e.target.value)
                 }
               />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              
             <Form.Control.Feedback type="invalid">
-              Introduce un nombre.
+            Este campo es obligatorio.
             </Form.Control.Feedback>
             </Form.Group>
           <Form.Group className="mb-3" controlId="validationCustom02">
             <Form.Group >
-              <Form.Label>Descripcion</Form.Label>
+              <Form.Label>Descripción</Form.Label>
               <FormControl
               required
+              as="textarea"
                 type="text"
                 value={descripcion}
                 onInput={(e) =>
                   setDescripcion(e.target.value)
                 }
               />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">
-              Introduce un Apellido.
+            Este campo es obligatorio.
             </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="validationCustomUsername">
@@ -119,23 +118,14 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
                 value={hora}
                 onInput={(e) => setHora(e.target.value)}
               />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              
             <Form.Control.Feedback type="invalid">
-              Elige un nombre de usuario.
+            Este campo es obligatorio..
             </Form.Control.Feedback>
             </Form.Group>
-            {/* <Form.Group>
-              <Form.Label>Dirección</Form.Label>
-              <FormControl
-                type="text"
-                value={evento.direccion}
-                onInput={(e) =>
-                  setEvento({ ...evento, direccion: e.target.value })
-                }
-              />
-            </Form.Group> */}
+          
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Nivel</Form.Label>
+              <Form.Label>Nivel mínimo</Form.Label>
               <Form.Select
                 type="text"
                 value={nivel}
@@ -147,9 +137,9 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
                 <option>Intermedio</option>
                 <option>Avanzado</option>
               </Form.Select>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            
             <Form.Control.Feedback type="invalid">
-              Introduce un email.
+            Este campo es obligatorio.
             </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
@@ -174,19 +164,19 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos}) {
                 <option>9</option>
                 <option>10</option>
               </Form.Select>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+           
             <Form.Control.Feedback type="invalid">
-              Introduce fecha de nacimiento.
+            Este campo es obligatorio.
             </Form.Control.Feedback>
             </Form.Group>
             </Form.Group>
             </Row>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="outline-danger" onClick={handleClose}>
             Cancelar
           </Button>
-          <Button variant="primary" type="submit">
+          <Button variant="outline-secondary" type="submit">
             Guardar cambios
           </Button>
         </Modal.Footer>

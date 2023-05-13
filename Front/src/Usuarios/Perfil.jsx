@@ -10,28 +10,32 @@ import { useParams } from "react-router-dom";
 import EditarEvento from "../Eventos/EditarEvento";
 import EliminarEvento from "../Eventos/Eliminar";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot, faUsers } from "@fortawesome/free-solid-svg-icons";
 function Perfil() {
   const { userid, token } = useContext(GlobalContext);
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
-  const [futuros, setFuturos] = useState(false);
-  const [pasados, setPasados] = useState(false);
-  const [todos, setTodos] = useState(false);
-  const [futuro, setFuturo] = useState(false);
-  const [pasado, setPasado] = useState(false);
-  const [todo, setTodo] = useState(false);
 
+  let { usuarioId } = useParams();
+
+  //filtros
+  const [createFuture, setCreateFuture] = useState(false);
+  const [createPast, setCreatePast] = useState(false);
+  const [participateFuture, setParticipateFuture] = useState(false);
+  const [participatePast, setParticipatePast] = useState(false);
+
+  //navegación entre perfiles
   const goTo = useNavigate();
+
   function goToPerfil(id_usuario) {
     goTo("/perfil/" + id_usuario); // Redirige a la página de perfil del usuario
   }
 
   function goToEvento(id_evento) {
-    goTo("/eventos/" + id_evento); // Redirige a la página de perfil del usuario
+    goTo("/perfil-evento/" + id_evento); // Redirige al perfil del evento
   }
-
-  let { usuarioId } = useParams();
 
   //Funcion para datos del perfil
   function cargarPerfil() {
@@ -56,14 +60,12 @@ function Perfil() {
   }
 
   useEffect(() => {
-    console.log("usuari", usuarioId);
     cargarPerfil();
   }, [refresh, usuarioId]);
-  //cada vez que cambia el valor de refresh se ejecuta cargarPerfil
 
   if (!datos) return <>...</>;
 
-  //Constante que contiene la foto
+  //Constante que contiene la foto de perfil
   const foto = (
     <img
       className="fotoPerfil"
@@ -82,35 +84,41 @@ function Perfil() {
     return media;
   }
 
+  //fecha actual
   const fechaHoy = new Date();
 
-  // Tabla de eventos creados
-  //Eventos futuros
-
-  const creadoFuture = datos.Eventos.filter(
+  // Tabla de eventos creados que aun no han pasado
+  const EventsCreatedFuture = datos.Eventos.filter(
     (el) => new Date(el.fecha).getTime() > fechaHoy.getTime()
   ).map((el, index) => {
     return (
-      <Card key={index}>
+      <Card>
         <div className="cardsEventos container">
-          <Card.Body >
-            <div className="posicionDatos row">
-              <div  className="tituloEvento">
+          <Card.Body>
+            <div className=" row">
+              <button
+                onClick={() => goToEvento(el.id)}
+                key={index}
+                className="tituloEvento"
+              >
                 <b>{el.titulo}</b>
-              </div>
+              </button>
               <div className="nivel ">
                 Nivel: <i>{el.nivel}</i>
               </div>
-            </div >
-            <div className="datosEventos"><div className="datosEventos">
-              Participantes: {el.participantes}
             </div>
             <div className="datosEventos">
-              {el.direccion}
+              <div className="posicionIconos">
+                <FontAwesomeIcon icon={faLocationDot} />
+                <div>{el.direccion}</div>
+              </div>
+              <br />
+              <div className="posicionIconos">
+                <FontAwesomeIcon icon={faUsers} /> <div>{el.participantes}</div>
+              </div>
             </div>
-            </div>
-            <div className="posicionDatos row">
-            {usuarioId !== undefined ? (
+            <div className="row">
+              {usuarioId !== undefined ? (
                 <div></div>
               ) : (
                 <div>
@@ -121,17 +129,15 @@ function Perfil() {
                       refresh={refresh}
                       setRefresh={setRefresh}
                     />
-
                     <EliminarEvento
                       eventoId={el.id}
                       refresh={refresh}
                       setRefresh={setRefresh}
                     />
                   </div>
-              <div className="fecha">
-                <i>Fecha: {new Date(el.fecha).toLocaleDateString()}</i>
-              </div>
-              
+                  <div>
+                    <i>Fecha: {new Date(el.fecha).toLocaleDateString()}</i>
+                  </div>
                 </div>
               )}
             </div>
@@ -141,40 +147,45 @@ function Perfil() {
     );
   });
 
-  //Eventos pasados
-  const creadoPasado = datos.Eventos.filter(
+  //Eventos creados que ya han pasado
+  const EventsCreatedPast = datos.Eventos.filter(
     (el) => new Date(el.fecha).getTime() < fechaHoy.getTime()
   ).map((el, index) => {
-    //obtengo los valores de las puntuaciones
-    const puntuaciones2 = el.Participacions.map((e) => e.puntuacion);
+    const puntuaciones = el.Participacions.map((e) => e.puntuacion);
     //llamo a la funcion que calcula la media
-    const media = valoMedia(puntuaciones2);
+    const media = valoMedia(puntuaciones);
     // const media = valoMedia(puntuaciones2).toFixed(1);
     return (
-      <Card key={index}>
+      <Card>
         <div className="cardsEventos">
           <Card.Body>
-            <div className="posicionDatos">
-              <div className="tituloEvento">
+            <div className="posicionDatos row">
+              <button
+                onClick={() => goToEvento(el.id)}
+                key={index}
+                className="tituloEvento"
+              >
                 <b>{el.titulo}</b>
-              </div>
+              </button>
               <div className="nivel">
                 Nivel: <i>{el.nivel}</i>
               </div>
-            </div>
-            <div className="datosEventos">
-              Participantes: {el.participantes}
-            </div>
-            <div className="datosEventos">
-            {el.direccion}
-            </div>
-            <div className="datosEventos">
-              Val. Media: <b>{media}</b>
-            </div>
-            <div className="posicionDatos">
-              <div className="fecha">
-                <i>{new Date(el.fecha).toLocaleDateString()}</i>
+              <div className="datosEventos">
+                Valoración media: <b>{media}</b>/5
               </div>
+            </div>
+            <div className="datosEventos">
+              <div className="posicionIconos">
+                <FontAwesomeIcon icon={faLocationDot} />
+                <div>{el.direccion}</div>
+              </div>
+              <br />
+              <div className="posicionIconos">
+                <FontAwesomeIcon icon={faUsers} /> <div>{el.participantes}</div>
+              </div>
+            </div>
+
+            <div className="posicionDatos row">
               {usuarioId !== undefined ? (
                 <div></div>
               ) : (
@@ -195,6 +206,9 @@ function Perfil() {
                   </div>
                 </div>
               )}
+              <div className="fecha">
+                Fecha: <i>{new Date(el.fecha).toLocaleDateString()}</i>
+              </div>
             </div>
           </Card.Body>
         </div>
@@ -202,108 +216,55 @@ function Perfil() {
     );
   });
 
-  // onClick={() => goToEvento(el.Evento.id)}
-
-  // Tabla de eventos en los que se ha participado
-  //Eventos futuros
-  const participadoFuture = datos.Participacions.filter(
+  //Eventos en los que se ha apuntado
+  const EventParticipateFuture = datos.Participacions.filter(
     (el) => new Date(el.Evento.fecha).getTime() > fechaHoy.getTime()
   ).map((el, index) => (
-    <Card key={index}>
+    <Card>
       <div className="cardsEventos container">
         <Card.Body>
           <div className="posicionDatos row">
-            <div className="tituloEvento col">
+            <button
+              onClick={() => goToEvento(el.Evento.id)}
+              key={index}
+              className="tituloEvento"
+            >
               <b>{el.Evento.titulo}</b>
-            </div>
-            <div className="nivel col">
-              Nivel: <i>{el.Evento.nivel}</i>
-            </div>
-            <div><img  
-              style={{ width: "30px", borderRadius: "30px" }}
-              src={"http://localhost:5000/" + el.Usuario.foto}
-              alt=""
-            />
-            <button onClick={() => goToPerfil(el.Evento.id_usuario)}>
-              {el.Usuario.nombre}
-            </button></div>
-          </div>
-          <div className="datosEventos col">{el.Evento.participantes}</div>
-          <div className="datosEventos col">
-          {el.direccion}
-          </div>
-          <div className="datosEventos col">{el.puntuacion}</div>
-
-          <div className="fecha ">
-            <i>{new Date(el.Evento.fecha).toLocaleDateString()}</i>
-          </div>
-        </Card.Body>
-      </div>
-    </Card>
-  ));
-
-  //Eventos pasados
-  const participadoPasado = datos.Participacions.filter(
-    (el) => new Date(el.Evento.fecha).getTime() < fechaHoy.getTime()
-  ).map((el, index) => (
-    <Card key={index}>
-      <div className="cardsEventos">
-        <Card.Body>
-          <div className="posicionDatos">
-            <div className="tituloEvento">
-              <b>{el.Evento.titulo}</b>
-            </div>
+            </button>
             <div className="nivel">
               Nivel: <i>{el.Evento.nivel}</i>
             </div>
           </div>
-          <div className="datosEventos">
-            Participantes: {el.Evento.participantes}
-          </div>
-          <div className="datosEventos">
-          {el.direccion}
-          </div>
-          <div className="datosEventos">Puntuado con un: {el.puntuacion}/5</div>
 
-          {usuarioId !== undefined ? (
-            <div></div>
-          ) : (
-            <div>
-              <div>
-                {" "}
-                {!el.puntuacion ? (
-                  <Valoraciones
-                    cargarPerfil={cargarPerfil}
-                    puntu={el.puntuacion}
-                    eventoid={el.Evento.id}
-                  />
-                ) : (
-                  <>
-                    <p>
-                      <i>Valorado</i>
-                    </p>
-                  </>
-                )}
-              </div>
-              <div></div>
+          <div className="datosEventos">
+            <div className="posicionIconos">
+              <FontAwesomeIcon icon={faLocationDot} />
+              <div>{el.Evento.direccion}</div>
             </div>
-          )}
+            <br />
+            <div className="posicionIconos">
+              <FontAwesomeIcon icon={faUsers} />{" "}
+              <div>{el.Evento.participantes}</div>
+            </div>
+          </div>
 
-          <div className="posicionDatos">
-            <div className="fecha">
+          <div className="creador">
+            {" "}
+            <div className="fecha ">
               <i>{new Date(el.Evento.fecha).toLocaleDateString()}</i>
             </div>
             <div>
-              <img
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "30px",
-                  objectFit: "cover",
-                }}
-                src={"http://localhost:5000/" + el.Usuario.foto}
-                alt=""
-              />
+              {/* <img
+              style={{
+                width: "30px",
+                height: "30px",
+                borderRadius: "30px",
+                objectFit: "cover",
+              }}
+              src={"http://localhost:5000/" + el.Usuario.foto}
+              alt=""
+            /> */}
+              By:
               <button onClick={() => goToPerfil(el.Evento.id_usuario)}>
                 {el.Usuario.nombre}
               </button>
@@ -314,9 +275,93 @@ function Perfil() {
     </Card>
   ));
 
-  console.log(userid);
-  console.log(usuarioId);
-  console.log(futuros);
+  //Eventos en los que se ha apuntado que ya han pasado
+  const EventParticipatePast = datos.Participacions.filter(
+    (el) => new Date(el.Evento.fecha).getTime() < fechaHoy.getTime()
+  ).map((el, index) => (
+    <Card>
+      <div className="cardsEventos">
+        <Card.Body>
+          <div className="posicionDatos row">
+            <button
+              onClick={() => goToEvento(el.Evento.id)}
+              key={index}
+              className="tituloEvento col"
+            >
+              <b>{el.Evento.titulo}</b>
+            </button>
+            <div className="nivel">
+              Nivel: <i>{el.Evento.nivel}</i>
+            </div>
+          </div>
+          <div className="valoraciones">
+            {usuarioId !== undefined ? (
+              <div>
+                <div className="datosEventos">
+                  Puntuado {el.Usuario.nombre} con un: {el.puntuacion}/5
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div>
+                  {" "}
+                  {!el.puntuacion ? (
+                    <Valoraciones
+                      cargarPerfil={cargarPerfil}
+                      puntu={el.puntuacion}
+                      eventoid={el.Evento.id}
+                    />
+                  ) : (
+                    <>
+                      <p>
+                        <div className="datosEventos">
+                          Puntuado con un: {el.puntuacion}/5
+                        </div>
+                      </p>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="datosEventos">
+            <div className="posicionIconos">
+              <FontAwesomeIcon icon={faLocationDot} />
+              <div>{el.Evento.direccion}</div>
+            </div>
+            <br />
+            <div className="posicionIconos">
+              <FontAwesomeIcon icon={faUsers} />{" "}
+              <div>{el.Evento.participantes}</div>
+            </div>
+          </div>
+
+          <div className="creador">
+            <div className="fecha">
+              <i>{new Date(el.Evento.fecha).toLocaleDateString()}</i>
+            </div>
+            <div>
+              {/* <img
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "30px",
+                  objectFit: "cover",
+                }}
+                src={"http://localhost:5000/" + el.Usuario.foto}
+                alt=""
+              /> */}
+              By:{" "}
+              <button onClick={() => goToPerfil(el.Evento.id_usuario)}>
+                {el.Usuario.nombre}
+              </button>
+            </div>
+          </div>
+        </Card.Body>
+      </div>
+    </Card>
+  ));
+
   return (
     <Container fluid className="containerDatos">
       <Row>
@@ -328,6 +373,7 @@ function Perfil() {
           <div className="titulos">
             {datos.nombre} {datos.apellido}
           </div>
+          <div></div>
           <div className="nickname">@{datos.nickname}</div>
           <hr />
           <div className="nivel">
@@ -366,63 +412,110 @@ function Perfil() {
       </Row>
       <Row>
         <Col xs={12} md={12} lg={6}>
-          <div div className="eventos">
-            <div>
-              <h3>Eventos creados</h3>
+          <div className="eventos">
+            <div className="tituloSeccion">
+              <h3>
+                <b>Eventos creados</b>
+              </h3>
             </div>
 
-            <Button onClick={() => (setFuturos(true),
-              setPasados(false),
-              setTodos(false))}>Futuros</Button>
-            <Button onClick={() => (setFuturos(false),
-              setPasados(true),
-              setTodos(false))}>Pasados</Button>
-            <Button onClick={() => (setFuturos(false),
-              setPasados(false))}>Todos</Button>
-            {futuros ? <div>{creadoFuture}</div> : <div></div>}
+            <div className="filtros">
+              <Button
+                variant="outline-dark"
+                onClick={() => (
+                  setCreateFuture(true), setCreatePast(false)
+                )}
+              >
+                Activos
+              </Button>
+              <Button
+                variant="outline-dark"
+                onClick={() => (
+                  setCreateFuture(false), setCreatePast(true)
+                )}
+              >
+                Pasados
+              </Button>
+              <Button
+                variant="outline-dark"
+                onClick={() => (setCreateFuture(false), setCreatePast(false))}
+              >
+                Todos
+              </Button>
+            </div>
 
-            {pasados ? <div>{creadoPasado}</div> : <div></div>}
+            <div>
+              {createFuture ? <div>{EventsCreatedFuture}</div> : <div></div>}
 
-            {!futuros && !pasados ? (
-              <div>
-                {creadoFuture}
-                {creadoPasado}
-              </div>
-            ) : (
-              <div></div>
-            )}
+              {createPast ? <div>{EventsCreatedPast}</div> : <div></div>}
 
-            
+              {!createFuture && !createPast ? (
+                <div>
+                  {EventsCreatedFuture}
+                  {EventsCreatedPast}
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </div>
           </div>
         </Col>
         <Col xs={12} md={12} lg={6}>
           <div className="eventos">
-            <div>
-              <h3>Participaciones</h3>
+            <div className="tituloSeccion">
+              <h3>
+                <b>Participaciones en eventos</b>
+              </h3>
             </div>
-            <div>
-            <Button onClick={() => (setFuturo(true),
-              setPasado(false),
-              setTodo(false))}>Futuros</Button>
-            <Button onClick={() => (setFuturo(false),
-              setPasado(true),
-              setTodo(false))}>Pasados</Button>
-            <Button onClick={() => (setFuturo(false),
-              setPasado(false))}>Todos</Button>
-            {futuro ? <div>{participadoFuture}</div> : <div></div>}
 
-            {pasado ? <div>{participadoPasado}</div> : <div></div>}
+            <div className="filtros">
+              <Button
+                variant="outline-dark"
+                onClick={() => (
+                  setParticipateFuture(true), setParticipatePast(false)
+                )}
+              >
+                Activos
+              </Button>
+              <Button
+                variant="outline-dark"
+                onClick={() => (
+                  setParticipateFuture(false), setParticipatePast(true)
+                )}
+              >
+                Pasados
+              </Button>
+              <Button
+                variant="outline-dark"
+                onClick={() => (
+                  setParticipateFuture(false), setParticipatePast(false)
+                )}
+              >
+                Todos
+              </Button>
 
-            {!futuro && !pasado ? (
-              <div>
-                {participadoPasado}
-              {participadoFuture}
-              </div>
-            ) : (
-              <div></div>
-            )}
-                       
+             
             </div>
+            <div> {participateFuture ? (
+                <div>{EventParticipateFuture}</div>
+              ) : (
+                <div></div>
+              )}
+
+              {participatePast ? (
+                <div>{EventParticipatePast}</div>
+              ) : (
+                <div></div>
+              )}
+
+              {!participateFuture && !participatePast ? (
+                <div>
+                  {EventParticipatePast}
+                  {EventParticipateFuture}
+                </div>
+              ) : (
+                <div></div>
+              )}</div>
           </div>
         </Col>
       </Row>

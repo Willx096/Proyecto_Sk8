@@ -58,7 +58,7 @@ function MostrarEvento({}) {
         <b>Dirección:</b> {datos.direccion}
         
         <b>Participantes:</b>          
-          <span>
+          {/* <span>
           {datos.Participacions.map((e, i) => (
             <button key={i} onClick={() => goToPerfil(e.Usuario.id)}>
               {" "}
@@ -70,7 +70,7 @@ function MostrarEvento({}) {
           {" "}
           {datos.Participacions.map((e) => e.valoracion).join("\n")}
           </Card>
-        </span>
+        </span> */}
        
           <b>Puntuacion:</b> {datos.Participacions.map((e) => e.puntuacion).join("\n")} 
       </div>
