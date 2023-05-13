@@ -8,11 +8,11 @@ import Eventos from "./Eventos";
 import EditarEvento from "./EditarEvento";
 
 function PerfilEvento({ evento, refresh, setRefresh }) {
-  // const participantes = evento.Participacions.map((e) => e.id_usuario);
+  const participantes = evento.Participacions.map((e) => e.id_usuario);
   const datos = evento;
 
   const { userid, token } = useContext(GlobalContext);
-  // const [apuntado, setApuntado] = useState(participantes.includes(userid));
+  const [apuntado, setApuntado] = useState(participantes.includes(userid));
   const { eventoId } = useParams();
 
   const goTo = useNavigate();
@@ -50,20 +50,20 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
       </Card.Text>
       <Card.Text>
         {/* Muestra los nkckames separados por comoas */}
-        {/* Participantes1:{" "}
+        Participantes1:{" "}
         <span>
           {datos.Participacions.map((e) => e.Usuario?.nickname).join(", ")}
-        </span> */}
+        </span>
         {/* Muestra los nkckames sin separar por comoas y coje el id del usuario y te manda a perfi/id pero solo muestra tu usuario */}
         Participantes:{" "}
-        {/* <span>
+        <span>
           {datos.Participacions.map((e, i) => (
             <Button key={i} onClick={() => goToPerfil(e.Usuario.id)}>
               {" "}
               {e.Usuario.nickname}
             </Button>
           ))}
-        </span> */}
+        </span>
         <br />
       </Card.Text>
       {/* valores que solo queremos mostrar al acabar el evento osea en mostrar evento
@@ -105,7 +105,7 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
     <div>
       <h3>Informacion del evento</h3>
       <Card border="dark">
-        {/* <Button onClick={goToMostrar}>Más Informacion</Button>
+        <Button onClick={goToMostrar}>Más Informacion</Button>
         {filas}
         {userid === datos.id_usuario ? ( //Si el usuario logeado coincide con el id_usuario del evento le mostrara para editar
           <>
@@ -119,7 +119,7 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
         ) : (
           // Si el evento está completo, muestra un mensaje
           <h3>Evento completo</h3>
-        )} */}
+        )}
       </Card>
     </div>
   );

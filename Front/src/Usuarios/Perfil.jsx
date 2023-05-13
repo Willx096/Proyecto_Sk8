@@ -298,7 +298,7 @@ function Perfil() {
             {usuarioId !== undefined ? (
               <div>
                 <div className="datosEventos">
-                  Puntuado {el.Usuario.nombre} con un: {el.puntuacion}/5
+                  Puntuado por {el.Usuario.nombre} con un: {el.puntuacion}/5
                 </div>
               </div>
             ) : (
