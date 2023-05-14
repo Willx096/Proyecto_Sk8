@@ -58,7 +58,7 @@ function Inicio(props) {
   const Valorations = data.filter(
     (el) => new Date(el.Evento.fecha).getTime() < fechaHoy.getTime()
   ).map((el, index) => (
-    <Card>
+    <Card style={ index % 2 === 0 ? { alignSelf: "flex-start", minWidth: '70%', maxWidth: '70%'} : { alignSelf: "flex-end", minWidth: '70%', maxWidth: '70%' }}>
       
         <Card.Body>
         <div className="valoracionInicio">
@@ -95,11 +95,11 @@ function Inicio(props) {
   
 
   return (
-    <div>
+    <div >
     
         <video src={encabezado} autoPlay loop muted className="img-fluid" alt="imagen-inicio" />
       
-      <div>
+      <div style={{display: 'flex', flexDirection: 'column' }}>
         {Valorations}
       </div>
       <Button
