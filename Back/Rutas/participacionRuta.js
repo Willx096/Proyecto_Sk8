@@ -9,6 +9,8 @@ import {
 
 import multer from "multer";
 
+import { Op } from "sequelize";
+
 //Conexiones entre tablas
 Participacion.belongsTo(Usuario, { foreignKey: "id_usuario" });
 
@@ -34,7 +36,13 @@ router.get("/", function (req, res, next) {
       Participacion.findAll({
         include: [
           { model: Usuario },
+          { model: Evento }
         ],
+        where: { valoracion: {
+          [Op.not]: null
+        }},
+        order: sequelize.literal('rand()'),
+        limit: 5
       })
         .then((data) =>
           res.json({

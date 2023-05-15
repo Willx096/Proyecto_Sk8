@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
 
+
 const NavUsuario = () => {
-  const { username, admin, nombreNav, setShowLogin, logout } =
+  const { username, admin, nombreNav, setShowLogin, logout, setShowRegister } =
     useContext(GlobalContext);
+ 
 
   // console.log(nombre)
   if (!username) {
@@ -23,9 +25,9 @@ const NavUsuario = () => {
             </Navbar>
             <Navbar>
               <button
-                onClick={() =>
-                  document.getElementById("registro-id").scrollIntoView()
-                }
+                onClick={() => (
+                  setShowRegister(true)
+                )}
                 className="nav-link"
               >
                 Registrarse
