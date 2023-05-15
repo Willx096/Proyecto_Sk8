@@ -201,11 +201,9 @@ function Registro() {
               onInput={(e) => setUsuario({ ...usuario, nivel: e.target.value })}
               type="text"
             >
-              <option>Empezando</option>
               <option>Principiante</option>
-              <option>Casual</option>
-              <option>Pro</option>
-              <option>Tony Hawk</option>
+              <option>Intermedio</option>
+              <option>Avanzado</option>
             </Form.Select>
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>

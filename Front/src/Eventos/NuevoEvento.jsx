@@ -174,6 +174,7 @@ function NuevoEvento(props) {
                   <option>Principante</option>
                   <option>Intermedio</option>
                   <option>Avanzado</option>
+                  <option>Para todos</option>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   <Form.Control.Feedback type="invalid">
                     Seleciona un nivel!
