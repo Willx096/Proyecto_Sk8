@@ -78,10 +78,12 @@ function Eventos(props) {
 
   return (
     <>
-      <Container>
+      <div class="mx-5">
+        <div className="tituloEventosd">
+            <h3>Eventos Disponibles</h3>
+        </div>
         <Row xs={1} sm={1} lg={2}>
           <Col>
-            <h3>Mapa de eventos</h3>
             <Row className="mb-1">
               <Form.Group as={Col} sm={5}>
                 <Form.Label>Filtrar Nivel</Form.Label>
@@ -163,7 +165,7 @@ function Eventos(props) {
             )}
           </Col>
         </Row>
-      </Container>
+      </div>
     </>
   );
 }

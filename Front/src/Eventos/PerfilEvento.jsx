@@ -35,16 +35,19 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
   //Tabla de eventos
   const filas = (
     <Card.Body>
-      <Card.Title>{datos.titulo} {datos.Usuario.nickname}</Card.Title>
-      <Card.Subtitle className="mb-2 text-muted">
-        {datos.descripcion}
-      </Card.Subtitle>
+      <Card.Header as="h5">Evento creado por:{" "+datos.Usuario.nickname}</Card.Header>
       <ListGroup className="list-group-flush">
-        <ListGroup.Item>
+      <ListGroup.Item className="mb-2">
+        {datos.titulo}
+      </ListGroup.Item>
+      <ListGroup.Item className="mb-2">
+        {datos.descripcion}
+      </ListGroup.Item>
+        <ListGroup.Item className="mb-2">
           Fecha: {datos.fecha} Hora: {datos.hora}
         </ListGroup.Item>
-        <ListGroup.Item>Dirección: {datos.direccion}</ListGroup.Item>
-        <ListGroup.Item>Nivel: {datos.nivel}</ListGroup.Item>
+        <ListGroup.Item className="mb-2">Dirección: {datos.direccion}</ListGroup.Item>
+        <ListGroup.Item className="mb-2">Nivel: {datos.nivel}</ListGroup.Item>
         <ListGroup.Item>
           {/* Muestra los nkckames separados por comoas */}
           {/* Participantes1:{" "}
@@ -55,10 +58,14 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
           Participantes:{datos.Participacions.length}/{datos.participantes}
           <span>
             {datos.Participacions.map((e, i) => (
-              <Button variant="dark" key={i} onClick={() => goToPerfil(e.Usuario.id)}>
+              <Card.Link
+                variant="dark"
+                key={i}
+                onClick={() => goToPerfil(e.Usuario.id)}
+              >
                 {" "}
                 {e.Usuario.nickname}
-              </Button>
+              </Card.Link>
             ))}
           </span>
           <br />
@@ -93,13 +100,12 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
   }
 
   return (
-    <div>
-      <Card border="dark">
-        <Button onClick={goToMostrar}>Más Informacion</Button>
+    <>
+      <Card style={{ marginTop: "30px", height: "86%" }} border="dark">
         {filas}
         {userid === datos.id_usuario ? ( //Si el usuario logeado coincide con el id_usuario del evento le mostrara para editar
           <>
-            <Button variant="light">Mi evento</Button>
+            <Card.Footer className="text-center text-muted">Mi evento</Card.Footer>
           </>
         ) : datos.participantes > datos.Participacions.length ? (
           // Si hay plazas disponibles, muestra un botón para apuntarse o desapuntarse llamando a la función Apuntarse
@@ -108,10 +114,11 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
           </Button>
         ) : (
           // Si el evento está completo, muestra un mensaje
-          <Button variant="secondary">Evento lleno</Button>
+          <Card.Footer className="text-center text-muted">Evento lleno</Card.Footer>
         )}
       </Card>
-    </div>
+      {/* <Button onClick={goToMostrar}>Más Informacion</Button> */}
+    </>
   );
 }
 
