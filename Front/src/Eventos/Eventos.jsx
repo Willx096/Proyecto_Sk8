@@ -110,10 +110,10 @@ function Eventos(props) {
           </Col>
           <Col>
           <div className="leyenda">
-            <li>Sin nivel</li>
-            <li>Principiante</li>
-            <li>Intermedio</li>
-            <li>Avanzado</li>
+            <div className="nivel">Sin nivel</div>
+            <div className="nivel">Principiante</div>
+            <div className="nivel">Intermedio</div>
+            <div className="nivel">Avanzado</div>
           </div>
             {mostrarTarjeta && (
               <PerfilEvento
