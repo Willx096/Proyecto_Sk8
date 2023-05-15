@@ -18,7 +18,9 @@ function Eventos(props) {
   const [refresh, setRefresh] = useState(0);
   const [mostrarTarjeta, setMostrarTarjeta] = useState(false);
   const [nivelSelect, setNivelSelect] = useState("Todos los Niveles");
-  const [fechaSelect, setFechalSelect] = useState((new Date()).toISOString().split("T")[0]);
+  const [fechaSelect, setFechalSelect] = useState(
+    new Date().toISOString().split("T")[0]
+  );
 
   useEffect(() => {
     fetch("http://localhost:5000/api/eventos")
@@ -35,8 +37,8 @@ function Eventos(props) {
   }, [refresh]);
 
   function handleMarcadorClick(ev) {
-      setEventoSeleccionado(ev);
-      setMostrarTarjeta(true);
+    setEventoSeleccionado(ev);
+    setMostrarTarjeta(true);
   }
 
   function handleMapClick() {
@@ -45,10 +47,11 @@ function Eventos(props) {
   /**
    * En este codigo se usa el método filter para filtrar la lista de eventos antes de ser creados
    */
-  const eventosDisponibles = eventos.filter( // Filtra la lista de eventos para mostrar solo los que cumplen con los criterios de búsqueda
+  const eventosDisponibles = eventos.filter(
+    // Filtra la lista de eventos para mostrar solo los que cumplen con los criterios de búsqueda
     (e) =>
       new Date(e.fecha).getTime() >= new Date(fechaSelect).getTime() && //Fecha actual hacia adelante para no mostrar eventos pasados
-      (nivelSelect === "Todos los Niveles" || nivelSelect === e.nivel)  //En funcion del nivel selecionado muestra los eventos con ese nivel
+      (nivelSelect === "Todos los Niveles" || nivelSelect === e.nivel) //En funcion del nivel selecionado muestra los eventos con ese nivel
   );
   console.log("Eventos disponibles", eventosDisponibles);
   const marcadores = eventosDisponibles.map((e, idx) => (
@@ -72,31 +75,32 @@ function Eventos(props) {
   return (
     <>
       <Container>
-        <h3>Mapa de eventos</h3>
         <Row xs={1} sm={1} lg={2}>
           <Col>
-            <h5>Filtros:</h5>
-            <Form.Group>
-              <Form.Label>Nivel</Form.Label>
-              <Form.Select
-                type="text"
-                value={nivelSelect}
-                onChange={(e) => setNivelSelect(e.target.value)}
-              >
-                <option>Todos los Niveles</option>
-                <option>Principante</option>
-                <option>Intermedio</option>
-                <option>Avanzado</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Fecha</Form.Label>
-              <Form.Control
-                type="date"
-                value={fechaSelect}
-                onChange={(e) => setFechalSelect(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+        <h3>Mapa de eventos</h3>
+            <Row className="mb-1">
+              <Form.Group as={Col} sm={5}>
+                <Form.Label>Filtrar Nivel</Form.Label>
+                <Form.Select
+                  type="text"
+                  value={nivelSelect}
+                  onChange={(e) => setNivelSelect(e.target.value)}
+                >
+                  <option>Todos los Niveles</option>
+                  <option>Principante</option>
+                  <option>Intermedio</option>
+                  <option>Avanzado</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Label>Filtrar Fecha</Form.Label>
+                <Form.Control
+                  type="date"
+                  value={fechaSelect}
+                  onChange={(e) => setFechalSelect(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+            </Row>
             <MapView
               direccion={direccion}
               setDireccion={setDireccion}
@@ -105,6 +109,12 @@ function Eventos(props) {
             />
           </Col>
           <Col>
+          <div className="leyenda">
+            <li>Sin nivel</li>
+            <li>Principiante</li>
+            <li>Intermedio</li>
+            <li>Avanzado</li>
+          </div>
             {mostrarTarjeta && (
               <PerfilEvento
                 refresh={refresh}
