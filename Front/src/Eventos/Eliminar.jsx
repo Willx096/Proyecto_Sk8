@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Row } from "react-bootstrap";
 
 
 function EliminarEvento({participacionId, eventoId, refresh, setRefresh}) {
@@ -8,10 +8,6 @@ function EliminarEvento({participacionId, eventoId, refresh, setRefresh}) {
   //funcion que elimina el usuario de la base de datos
   function eliminarEvento(e) {
     e.preventDefault();
-
-  
-
-  
 
     const URL = `http://localhost:5000/api/eventos/${eventoId}`;
 
@@ -41,7 +37,7 @@ function EliminarEvento({participacionId, eventoId, refresh, setRefresh}) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="danger" onClick={handleShow}>
         Eliminar
       </Button>
 
@@ -49,17 +45,18 @@ function EliminarEvento({participacionId, eventoId, refresh, setRefresh}) {
         <Modal.Header closeButton>
           <Modal.Title>Eliminar evento</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Atención! Si eliminas el evento, se eliminará la evento
-          permanentemente.
+        <Modal.Body className="bodyModal">
+        Atención! Si eliminas el evento, se <b>eliminará permanentemente</b>.
         </Modal.Body>
         <Modal.Footer>
+        <Row xs={12} sm={12} md={12}>
           <Button variant="secondary" onClick={handleClose}>
             No quiero eliminar la cuenta.
           </Button>
-          <Button variant="primary" onClick={eliminarEvento}>
-            Si, quiero eliminar el evento permanentemente.
+          <Button variant="danger" onClick={eliminarEvento}>
+            Eliminar el evento permanentemente.
           </Button>
+          </Row>
         </Modal.Footer>
       </Modal>
     </>

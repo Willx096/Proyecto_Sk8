@@ -13,7 +13,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
   const { userid, token } = useContext(GlobalContext);
 
   const [error, setError] = useState(false);
-  const [valoracion, setValoracion] = useState("eidur");
+  const [valoracion, setValoracion] = useState("");
   const [puntuacion, setPuntuacion] = useState(3);
   const [refresh, setRefresh] = useState(0);
   
@@ -62,9 +62,9 @@ function Valoraciones({ eventoid, cargarPerfil }) {
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Valoración del evento</Modal.Title>
+          <Modal.Title>Valora el evento</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="bodyModal">
           <Form>
             <Form.Group>
               <Form.Label>Puntuación</Form.Label>
@@ -84,6 +84,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
             <Form.Group>
               <Form.Label>Valoración</Form.Label>
               <Form.Control
+              as="textarea"
                 type="textarea"
                 value={valoracion}
                 onInput={(e) => setValoracion(e.target.value)}
@@ -96,10 +97,10 @@ function Valoraciones({ eventoid, cargarPerfil }) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="outline-danger" onClick={handleClose}>
             Cerrar
           </Button>
-          <Button variant="primary" onClick={Valorar}>
+          <Button variant="outline-secondary" onClick={Valorar}>
             Valorar
           </Button>
         </Modal.Footer>

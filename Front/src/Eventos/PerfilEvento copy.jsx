@@ -68,10 +68,10 @@ function PerfilEvento(props) {
       </Card.Text>
       <Card.Text>
         {/* Muestra los nkckames separados por comoas */}
-        {/* Participantes1:{" "}
+        Participantes1:{" "}
         <span>
           {datos.Participacions.map((e) => e.Usuario?.nickname).join(", ")}
-        </span> */}
+        </span>
         {/* Muestra los nkckames sin separar por comoas y coje el id del usuario y te manda a perfi/id pero solo muestra tu usuario */}
         Participantes:{" "}
         <span>
