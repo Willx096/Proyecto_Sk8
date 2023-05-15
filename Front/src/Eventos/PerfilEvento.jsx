@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, ListGroup } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
@@ -35,43 +35,35 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
   //Tabla de eventos
   const filas = (
     <Card.Body>
-      <Card.Title>{datos.titulo}</Card.Title>
+      <Card.Title>{datos.titulo} {datos.Usuario.nickname}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted">
         {datos.descripcion}
       </Card.Subtitle>
-      <Card.Text>
-        Fecha: {datos.fecha} Hora: {datos.hora}
-      </Card.Text>
-      <Card.Text>Dirección: {datos.direccion}</Card.Text>
-      <Card.Text>Nivel: {datos.nivel}</Card.Text>
-      <Card.Text>
-        Participantes: {datos.Participacions.length}/{datos.participantes}:
-      </Card.Text>
-      <Card.Text>
-        {/* Muestra los nkckames separados por comoas */}
-        Participantes1:{" "}
+      <ListGroup className="list-group-flush">
+        <ListGroup.Item>
+          Fecha: {datos.fecha} Hora: {datos.hora}
+        </ListGroup.Item>
+        <ListGroup.Item>Dirección: {datos.direccion}</ListGroup.Item>
+        <ListGroup.Item>Nivel: {datos.nivel}</ListGroup.Item>
+        <ListGroup.Item>
+          {/* Muestra los nkckames separados por comoas */}
+          {/* Participantes1:{" "}
         <span>
           {datos.Participacions.map((e) => e.Usuario?.nickname).join(", ")}
-        </span>
-        {/* Muestra los nkckames sin separar por comoas y coje el id del usuario y te manda a perfi/id pero solo muestra tu usuario */}
-        Participantes:{" "}
-        <span>
-          {datos.Participacions.map((e, i) => (
-            <Button key={i} onClick={() => goToPerfil(e.Usuario.id)}>
-              {" "}
-              {e.Usuario.nickname}
-            </Button>
-          ))}
-        </span>
-        <br />
-      </Card.Text>
-      {/* valores que solo queremos mostrar al acabar el evento osea en mostrar evento
-      <Card.Text>
-        Valoraciones: {datos.Participacions.map((e) => e.valoracion).join("\n")}
-      </Card.Text>
-      <Card.Text>
-        Puntuacion: {datos.Participacions.map((e) => e.puntuacion).join("\n")}
-      </Card.Text> */}
+        </span> */}
+          {/* Muestra los nkckames sin separar por comoas y coje el id del usuario y te manda a perfi/id pero solo muestra tu usuario */}
+          Participantes:{datos.Participacions.length}/{datos.participantes}
+          <span>
+            {datos.Participacions.map((e, i) => (
+              <Button variant="dark" key={i} onClick={() => goToPerfil(e.Usuario.id)}>
+                {" "}
+                {e.Usuario.nickname}
+              </Button>
+            ))}
+          </span>
+          <br />
+        </ListGroup.Item>
+      </ListGroup>
     </Card.Body>
   );
 
@@ -107,7 +99,7 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
         {filas}
         {userid === datos.id_usuario ? ( //Si el usuario logeado coincide con el id_usuario del evento le mostrara para editar
           <>
-            <h3>Mi Evento</h3>
+            <Button variant="light">Mi evento</Button>
           </>
         ) : datos.participantes > datos.Participacions.length ? (
           // Si hay plazas disponibles, muestra un botón para apuntarse o desapuntarse llamando a la función Apuntarse
@@ -116,7 +108,7 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
           </Button>
         ) : (
           // Si el evento está completo, muestra un mensaje
-          <h3>Evento completo</h3>
+          <Button variant="secondary">Evento lleno</Button>
         )}
       </Card>
     </div>

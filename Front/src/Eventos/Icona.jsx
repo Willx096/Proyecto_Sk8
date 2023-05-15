@@ -3,6 +3,7 @@ import Ic from './marker-icon-2x-green.png';
 import Ic2 from './marker-icon-2x-gold.png'
 import Ic3 from './marker-icon-2x-red.png'
 import Ic4 from './marker-icon-2x-grey.png'
+import Ic5 from './marker-icon-2x-blue.png'
 
 
 
@@ -49,6 +50,18 @@ const redIcona = new L.Icon({
 const greyIcona = new L.Icon({
     iconUrl: Ic4,
     iconRetinaUrl: Ic4,
+    iconAnchor: null,
+    popupAnchor: null,
+    shadowUrl: null,
+    shadowSize: 0,
+    shadowAnchor:0,
+    iconSize: new L.Point(24,41),
+    
+});
+
+const blueIcona = new L.Icon({
+    iconUrl: Ic5,
+    iconRetinaUrl: Ic5,
     iconAnchor: null,
     popupAnchor: null,
     shadowUrl: null,
@@ -105,5 +118,5 @@ const greyIcona = new L.Icon({
 
 
 
-export { greenIcona, goldIcona, redIcona, greyIcona };
+export { greenIcona, goldIcona, redIcona, greyIcona, blueIcona };
 

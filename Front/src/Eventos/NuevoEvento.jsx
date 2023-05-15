@@ -25,7 +25,7 @@ function NuevoEvento(props) {
     direccion: "",
     latitud: 0,
     longitud: 0,
-    nivel: "Principiante",
+    nivel: "Todos",
     participantes: 1,
   });
 
@@ -171,10 +171,10 @@ function NuevoEvento(props) {
                   type="text"
                   aria-label="Default select example"
                 >
-                  <option>Principante</option>
+                  <option>Todos</option>
+                  <option>Principiante</option>
                   <option>Intermedio</option>
                   <option>Avanzado</option>
-                  <option>Para todos</option>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   <Form.Control.Feedback type="invalid">
                     Seleciona un nivel!

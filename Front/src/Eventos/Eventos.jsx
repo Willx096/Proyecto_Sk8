@@ -3,7 +3,9 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Marker, useMap, Popup } from "react-leaflet";
 import MapView from "../mapa/MapView";
 import "../mapa/leaflet.css";
-import { goldIcona, greenIcona, redIcona, greyIcona } from "./Icona";
+import { goldIcona, greenIcona, redIcona, greyIcona, blueIcona } from "./Icona";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot, faUsers } from "@fortawesome/free-solid-svg-icons";
 import GlobalContext from "../GlobalContext";
 import PerfilEvento from "./PerfilEvento";
 import MostrarEvento from "./MostrarEvento";
@@ -67,7 +69,9 @@ function Eventos(props) {
           ? redIcona
           : e.nivel === "Intermedio"
           ? goldIcona
-          : greenIcona
+          : e.nivel === "Principiante"
+          ? greenIcona
+          : blueIcona
       }
     ></Marker>
   ));
@@ -77,7 +81,7 @@ function Eventos(props) {
       <Container>
         <Row xs={1} sm={1} lg={2}>
           <Col>
-        <h3>Mapa de eventos</h3>
+            <h3>Mapa de eventos</h3>
             <Row className="mb-1">
               <Form.Group as={Col} sm={5}>
                 <Form.Label>Filtrar Nivel</Form.Label>
@@ -87,6 +91,7 @@ function Eventos(props) {
                   onChange={(e) => setNivelSelect(e.target.value)}
                 >
                   <option>Todos los Niveles</option>
+                  <option>Todos</option>
                   <option>Principante</option>
                   <option>Intermedio</option>
                   <option>Avanzado</option>
@@ -107,14 +112,48 @@ function Eventos(props) {
               marcadores={marcadores}
               onClick={handleMapClick}
             />
+            <Row>
+              <div className="leyenda">
+                <div className="contenidoLeyenda">
+                  Todos
+                  <br />
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    size="xl"
+                    style={{ color: "#2990ff" }}
+                  />
+                </div>
+                <div className="contenidoLeyenda">
+                  Principiante
+                  <br />
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    size="xl"
+                    style={{ color: "#17c814" }}
+                  />
+                </div>
+                <div className="contenidoLeyenda">
+                  Intermedio
+                  <br />
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    size="xl"
+                    style={{ color: "#e8e23b" }}
+                  />
+                </div>
+                <div className="contenidoLeyenda">
+                  Avanzado
+                  <br />
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    size="xl"
+                    style={{ color: "#e30d0d" }}
+                  />
+                </div>
+              </div>
+            </Row>
           </Col>
           <Col>
-          <div className="leyenda">
-            <div className="nivel">Sin nivel</div>
-            <div className="nivel">Principiante</div>
-            <div className="nivel">Intermedio</div>
-            <div className="nivel">Avanzado</div>
-          </div>
             {mostrarTarjeta && (
               <PerfilEvento
                 refresh={refresh}
