@@ -1,12 +1,18 @@
 .imagen-usuario {
   display: flex;
+  margin-top: 30px;
   align-self: center;
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
+}
+.usuario{
+  margin-top: 10px;
+  text-align: center;
 }
 .puntuacion {
   font-size: 50px;
+  padding-top: 45px;
   text-align: center;
 }
 
@@ -51,7 +57,7 @@ hr {
 .mapa-mostrar-evento {
   float: right;
   border: 1px solid black;
-  height: 200px !important; 
+  height: 280px !important; 
   width: 100%;
   pointer-events: auto !important;
   margin-top: 20px;
