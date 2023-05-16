@@ -1,11 +1,12 @@
 import express from "express";
 import { sequelize } from "../loadSequelize.js";
-import { Evento, Participacion, Usuario } from "../Models/models.js";
+import { Evento, FotosEvento, Participacion, Usuario } from "../Models/models.js";
 
 const router = express.Router();
 
 //Conexiones entre tablas
 Evento.hasMany(Participacion, { foreignKey: "id_evento" });
+Evento.hasMany(FotosEvento, { foreignKey: "id_evento" });
 Evento.belongsTo(Usuario, { foreignKey: "id_usuario" });
 
 //Para la lista de eventos
@@ -50,7 +51,10 @@ router.get("/:id", function (req, res, next) {
     .then(() => {
       Evento.findOne({
         where: { id: req.params.id },
-        include: { model: Participacion, include: { model: Usuario } },
+        include: [
+          { model: Participacion, include: { model: Usuario } },
+           FotosEvento
+          ],
       })
         .then((data) =>
           res.json({

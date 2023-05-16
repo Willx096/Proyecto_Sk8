@@ -1,17 +1,28 @@
-.box .foto {
-    
-    width: 200px; 
-    height: 200px;
-    border-radius: 10px;
-    float: left;
-    margin-right: 10px;   
-
+.imagen-usuario {
+  display: flex;
+  margin-top: 30px;
+  align-self: center;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+.usuario{
+  margin-top: 10px;
+  text-align: center;
+}
+.puntuacion {
+  font-size: 50px;
+  padding-top: 45px;
+  text-align: center;
 }
 
-.box{
-    float: right;
+hr {
+  display: flex;
+  align-self: center;
+  width: 100px;
 }
 
+<<<<<<< HEAD
 .tituloEventosd{
     text-align: center;
     width: 100%;
@@ -31,3 +42,49 @@
     height: 100%;
     text-align: center;
 }
+=======
+
+.valoracion {
+  text-align: center;
+  font-style: italic;
+}
+
+.texto-valoracion {
+  text-align: center;
+  font-size: 16px;
+}
+
+.texto-evento{
+  padding-top: 30px;
+  border-radius: 10px;
+}
+
+.descripcion2{
+  background-color: rgba(151, 151, 151, 0.267);
+  font-size: large;
+}
+
+.texto-des{
+  text-align: center;
+}
+.texto-des2{
+  text-align: center;
+}
+.texto-evento2{
+  background-color: rgba(151, 151, 151, 0.267);
+  font-size: large;
+  border-radius: 10px;
+}
+.mapa-mostrar-evento {
+  float: right;
+  border: 1px solid black;
+  height: 280px !important; 
+  width: 100%;
+  pointer-events: auto !important;
+  margin-top: 20px;
+  border-radius: 12px;
+}
+
+
+
+>>>>>>> Guillem_MostrarEvento
