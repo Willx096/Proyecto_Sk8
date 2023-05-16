@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button, Form, Modal, Row } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 import GlobalContext from "../GlobalContext";
 
 function Editar({ perfil, refresh, setRefresh }) {
   const { userid } = useContext(GlobalContext);
-
+  const formularioOk = () => toast.success("Usuario editado!");
+  const formularioBad = () => toast.error("Usuario no editado");
   //validaciones
   const [validated, setValidated] = useState(false);
 
@@ -45,6 +47,7 @@ function Editar({ perfil, refresh, setRefresh }) {
       e.preventDefault();
       e.stopPropagation();
       setValidated(true);
+      formularioBad();
       return;
     }
 
@@ -76,6 +79,7 @@ function Editar({ perfil, refresh, setRefresh }) {
         setRefresh(refresh + 1);
         setShow(false);
         setValidated(false);
+        formularioOk();
       })
       .catch((error) => console.log("error", error));
   }
@@ -122,7 +126,7 @@ function Editar({ perfil, refresh, setRefresh }) {
               </Form.Group>
               <Form.Group className="mb-3" controlId="validationCustomUsername">
                 <Form.Label>Nombre de usuario</Form.Label>
-                <Form.Control 
+                <Form.Control
                   type="text"
                   value={nickname}
                   onInput={(e) => setNickname(e.target.value)}
@@ -205,7 +209,7 @@ function Editar({ perfil, refresh, setRefresh }) {
             </Row>
           </Modal.Body>
 
-          <Modal.Footer  className="tituloModal">
+          <Modal.Footer className="tituloModal">
             <Button variant="outline-danger" onClick={handleClose}>
               Cancelar
             </Button>
@@ -215,6 +219,7 @@ function Editar({ perfil, refresh, setRefresh }) {
           </Modal.Footer>
         </Form>
       </Modal>
+      <ToastContainer />
     </>
   );
 }

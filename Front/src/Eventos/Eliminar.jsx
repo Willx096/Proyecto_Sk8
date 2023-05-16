@@ -1,13 +1,21 @@
 import React, { useState, useContext } from "react";
 import { Button, Modal, Row } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 
-
-function EliminarEvento({participacionId, eventoId, refresh, setRefresh}) {
-
+function EliminarEvento({ participacionId, eventoId, refresh, setRefresh }) {
+  const formularioOk = () => toast.success("Evento eliminado!");
+  const formularioBad = () => toast.error("Evento no eliminado");
 
   //funcion que elimina el usuario de la base de datos
   function eliminarEvento(e) {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      formularioBad();
+      return;
+    }
 
     const URL = `http://localhost:5000/api/eventos/${eventoId}`;
 
@@ -21,12 +29,12 @@ function EliminarEvento({participacionId, eventoId, refresh, setRefresh}) {
         response.json();
       })
       .then((data) => {
-        console.log("Eliminado",data);
+        console.log("Eliminado", data);
         setRefresh(refresh + 1);
         setShow(false);
+        formularioOk();
       })
       .catch((error) => console.log("error", error));
-    
   }
 
   //para mostrar o no el mensaje que confirma que se quiere eliminar
@@ -46,19 +54,20 @@ function EliminarEvento({participacionId, eventoId, refresh, setRefresh}) {
           <Modal.Title>Eliminar evento</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bodyModal">
-        Atención! Si eliminas el evento, se <b>eliminará permanentemente</b>.
+          Atención! Si eliminas el evento, se <b>eliminará permanentemente</b>.
         </Modal.Body>
         <Modal.Footer>
-        <Row xs={12} sm={12} md={12}>
-          <Button variant="secondary" onClick={handleClose}>
-            No quiero eliminar la cuenta.
-          </Button>
-          <Button variant="danger" onClick={eliminarEvento}>
-            Eliminar el evento permanentemente.
-          </Button>
+          <Row xs={12} sm={12} md={12}>
+            <Button variant="secondary" onClick={handleClose}>
+              No quiero eliminar la cuenta.
+            </Button>
+            <Button variant="danger" onClick={eliminarEvento}>
+              Eliminar el evento permanentemente.
+            </Button>
           </Row>
         </Modal.Footer>
       </Modal>
+      <ToastContainer/>
     </>
   );
 }
