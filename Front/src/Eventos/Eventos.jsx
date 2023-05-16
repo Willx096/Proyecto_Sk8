@@ -94,7 +94,7 @@ function Eventos(props) {
                 >
                   <option>Todos los Niveles</option>
                   <option>Todos</option>
-                  <option>Principante</option>
+                  <option>Principiante</option>
                   <option>Intermedio</option>
                   <option>Avanzado</option>
                 </Form.Select>
