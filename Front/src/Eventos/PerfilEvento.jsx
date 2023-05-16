@@ -101,7 +101,7 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
 
   return (
     <>
-      <Card style={{ marginTop: "30px", height: "86%" }} border="dark">
+      <Card style={{ marginTop: "30px"}} border="dark">
         {filas}
         {userid === datos.id_usuario ? ( //Si el usuario logeado coincide con el id_usuario del evento le mostrara para editar
           <>

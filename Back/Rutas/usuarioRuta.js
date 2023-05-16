@@ -119,7 +119,9 @@ router.put("/:id", function (req, res, next) {
       .sync()
       .then(() => {
         delete req.body.pswd
-        req.body.foto = req.file.path.split("\\")[1] 
+        if (req.file){
+          req.body.foto = req.file.path.split("\\")[1] 
+        }
         Usuario.findOne({ where: { id: req.params.id } })
           .then((data) => data.update(req.body))
           .then((data) =>

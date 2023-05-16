@@ -21,7 +21,7 @@ function Editar({ perfil, refresh, setRefresh }) {
   const [fecha, setFecha] = useState(perfil.fecha_nacimiento);
   const [nivel, setNivel] = useState(perfil.nivel);
   const [experiencia, setExperiencia] = useState(perfil.experiencia);
-  const [lafoto, setLafoto] = useState();
+  const [lafoto, setLafoto] = useState(null);
   const [descripcion, setDescripcion] = useState(perfil.descripcion);
   const [nickname, setNickname] = useState(perfil.nickname);
   const [contacto, setContacto] = useState(perfil.contacto);
@@ -59,9 +59,10 @@ function Editar({ perfil, refresh, setRefresh }) {
     formData.append("email", usuario.email);
     formData.append("fecha", usuario.fecha);
     formData.append("nivel", usuario.nivel);
-
     formData.append("experiencia", usuario.experiencia);
-    formData.append("file", usuario.lafoto);
+    if (usuario.lafoto){
+      formData.append("file", usuario.lafoto);
+    }
     formData.append("descripcion", usuario.descripcion);
     formData.append("nickname", usuario.nickname);
     formData.append("contacto", usuario.contacto);
