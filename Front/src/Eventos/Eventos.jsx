@@ -82,7 +82,7 @@ function Eventos(props) {
         <div className="tituloEventosd">
             <h3>Eventos Disponibles</h3>
         </div>
-        <Row xs={1} sm={1} lg={2}>
+        <Row className="pb-2 bg-secondary" xs={1} sm={1} lg={2}>
           <Col>
             <Row className="mb-1">
               <Form.Group as={Col} sm={5}>
