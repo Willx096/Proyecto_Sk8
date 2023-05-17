@@ -34,7 +34,7 @@ function Perfil() {
   }
 
   function goToEvento(id_evento) {
-    goTo("/perfil-evento/" + id_evento); // Redirige al perfil del evento
+    goTo("/mostrar-evento/" + id_evento); // Redirige al perfil del evento
   }
 
   //Funcion para datos del perfil
