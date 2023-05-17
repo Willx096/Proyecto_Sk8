@@ -80,7 +80,7 @@ function Eventos(props) {
     <>
       <div class="mx-5">
         <div className="tituloEventosd">
-            <h3>Eventos Disponibles</h3>
+          <h3>Eventos Disponibles</h3>
         </div>
         <Row className="pb-2 bg-secondary" xs={1} sm={1} lg={2}>
           <Col>
@@ -115,7 +115,7 @@ function Eventos(props) {
               onClick={handleMapClick}
             />
             <Row>
-              <div className="leyenda">
+              <div className="leyenda d-none d-sm-flex">
                 <div className="contenidoLeyenda">
                   Todos
                   <br />
@@ -145,6 +145,44 @@ function Eventos(props) {
                 </div>
                 <div className="contenidoLeyenda">
                   Avanzado
+                  <br />
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    size="xl"
+                    style={{ color: "#e30d0d" }}
+                  />
+                </div>
+              </div>
+              <div className="leyenda d-flex d-sm-none">
+                <div className="contenidoLeyenda">
+                  Todos
+                  <br />
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    size="xl"
+                    style={{ color: "#2990ff" }}
+                  />
+                </div>
+                <div className="contenidoLeyenda">
+                  Princ.
+                  <br />
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    size="xl"
+                    style={{ color: "#17c814" }}
+                  />
+                </div>
+                <div className="contenidoLeyenda">
+                  Inter.
+                  <br />
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    size="xl"
+                    style={{ color: "#e8e23b" }}
+                  />
+                </div>
+                <div className="contenidoLeyenda">
+                  Avan.
                   <br />
                   <FontAwesomeIcon
                     icon={faLocationDot}
