@@ -23,16 +23,6 @@ const NavUsuario = () => {
                 Iniciar sesion
               </button>
             </Navbar>
-            <Navbar>
-              <button
-                onClick={() => (
-                  setShowRegister(true)
-                )}
-                className="nav-link"
-              >
-                Registrarse
-              </button>
-            </Navbar>
           </Navbar.Collapse>
         </Container>
       </Navbar>

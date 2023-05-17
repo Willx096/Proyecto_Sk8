@@ -34,7 +34,7 @@ function Perfil() {
   }
 
   function goToEvento(id_evento) {
-    goTo("/perfil-evento/" + id_evento); // Redirige al perfil del evento
+    goTo("/mostrar-evento/" + id_evento); // Redirige al perfil del evento
   }
 
   //Funcion para datos del perfil
@@ -96,13 +96,11 @@ function Perfil() {
         <div className="cardsEventos container">
           <Card.Body>
             <div className=" row">
-              <button
-                onClick={() => goToEvento(el.id)}
-                key={index}
+            <div
                 className="tituloEvento"
               >
                 <b>{el.titulo}</b>
-              </button>
+              </div>
               <div className="nivel ">
                 Nivel: <i>{el.nivel}</i>
               </div>
@@ -160,13 +158,11 @@ function Perfil() {
         <div className="cardsEventos">
           <Card.Body>
             <div className="posicionDatos row">
-              <button
-                onClick={() => goToEvento(el.id)}
-                key={index}
+              <div
                 className="tituloEvento"
               >
                 <b>{el.titulo}</b>
-              </button>
+              </div>
               <div className="nivel">
                 Nivel: <i>{el.nivel}</i>
               </div>
@@ -208,6 +204,13 @@ function Perfil() {
               )}
               <div className="fecha">
                 Fecha: <i>{new Date(el.fecha).toLocaleDateString()}</i>
+                <button
+              onClick={() => goToEvento(el.Evento.id)}
+              key={index}
+              className="tituloEvento col"
+            >
+              + info
+            </button>
               </div>
             </div>
           </Card.Body>
@@ -224,13 +227,11 @@ function Perfil() {
       <div className="cardsEventos container">
         <Card.Body>
           <div className="posicionDatos row">
-            <button
-              onClick={() => goToEvento(el.Evento.id)}
-              key={index}
+            <div
               className="tituloEvento"
             >
               <b>{el.Evento.titulo}</b>
-            </button>
+            </div>
             <div className="nivel">
               Nivel: <i>{el.Evento.nivel}</i>
             </div>
@@ -283,13 +284,11 @@ function Perfil() {
       <div className="cardsEventos">
         <Card.Body>
           <div className="posicionDatos row">
-            <button
-              onClick={() => goToEvento(el.Evento.id)}
-              key={index}
+            <div
               className="tituloEvento col"
             >
               <b>{el.Evento.titulo}</b>
-            </button>
+            </div>
             <div className="nivel">
               Nivel: <i>{el.Evento.nivel}</i>
             </div>
@@ -339,9 +338,16 @@ function Perfil() {
           <div className="creador">
             <div className="fecha">
               <i>{new Date(el.Evento.fecha).toLocaleDateString()}</i>
+              <button
+              onClick={() => goToEvento(el.id_evento)}
+              key={index}
+              className="tituloEvento col"
+            >
+              + info
+            </button>
             </div>
             <div>
-              {/* <img
+              <img
                 style={{
                   width: "30px",
                   height: "30px",
@@ -350,8 +356,8 @@ function Perfil() {
                 }}
                 src={"http://localhost:5000/" + el.Usuario.foto}
                 alt=""
-              /> */}
-              By:{" "}
+              />
+           
               <button onClick={() => goToPerfil(el.Evento.id_usuario)}>
                 {el.Usuario.nombre}
               </button>

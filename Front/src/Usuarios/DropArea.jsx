@@ -59,14 +59,8 @@ const DropArea = ({ eventoid}) => {
 
   return (
     <>
-    {/* visualizacion de las imagenes cargadas */}
-    {preview.map((el,idx) => (
-      <div key={idx} className="imagenesSubidas" >
-          <img  src={el} style={{ width: 100 }} />
-        </div>
-    ))}
-    {/* zona donde se dipositan las imagenes */}
-    <div className="dropArea"
+     {/* zona donde se dipositan las imagenes */}
+     <div className="dropArea"
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
@@ -80,6 +74,13 @@ const DropArea = ({ eventoid}) => {
       )}
      
     </div>
+    {/* visualizacion de las imagenes cargadas */}
+    <div className="imagenesSubidas">{preview.map((el,idx) => (
+      <div key={idx}  >
+          <img  src={el} style={{ width: 100 }} />
+        </div>
+    ))}</div>
+   
     
     </>
     

@@ -64,7 +64,7 @@ button {
 
 
 .descripcion {
-    background-color: rgba(151, 151, 151, 0.267);
+    background-color: rgb(151, 151, 151);
     padding: 20px;
     font-size: 16px;
     /* border-radius: 15px; */
@@ -133,12 +133,7 @@ gap: 10px;
     padding-bottom: 10px;
 }
 
-.tituloEvento:hover {
-    text-decoration: none;
-    color: rgb(255, 255, 255);
-    text-shadow: 60px;
-    text-align: left;
-}
+
 
 .bodyModal {
     background-color: rgba(185, 185, 185, 0.486);
@@ -156,17 +151,55 @@ gap: 10px;
 .imagenesSubidas {
     padding: 5px;
     padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
+.imagenesSubidas div {
+padding: 10px;}
 
 /* pantalla de inicio */
 
-.valoracionInicio {
+.containerValoraciones {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
+.containerValoraciones div {
+    padding: 5px;
+}
+
+.valoracionInicio {
+   padding: 10px;
+   display: flex;
+}
+
+.tituloValoracion b {
+    font-size: 25px;
+}
 .img-fluid {
   width: 100%;
 
 
+}
+
+.puntuacionValo {
+    font-size: 28px;
+}
+
+.logoweb {
+    width: 500px;
+}
+
+
+
+.sobreposicion {
+    background-color: rgba(54, 54, 54, 0.856);
+    width: 40%;
+    position: absolute;
+    padding: 20px;
+     left: 15%; 
+ color: white;
+     top: 25%;
+     border-radius: 10px;
 }
