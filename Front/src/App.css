@@ -186,6 +186,14 @@ padding: 10px;}
     border-radius: 0px;
 }
 
+.inputs textarea {
+    border-radius: 0px;
+}
+
+.inputs select {
+    border-radius: 0px;
+}
+
 .containerValoraciones {
     display: flex;
     justify-content: space-between;
