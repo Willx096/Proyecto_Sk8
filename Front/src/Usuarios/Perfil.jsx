@@ -11,7 +11,7 @@ import EditarEvento from "../Eventos/EditarEvento";
 import EliminarEvento from "../Eventos/Eliminar";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faUsers, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 function Perfil() {
   const { userid, token } = useContext(GlobalContext);
   const [datos, setDatos] = useState(null);
@@ -61,6 +61,7 @@ function Perfil() {
 
   useEffect(() => {
     cargarPerfil();
+    
   }, [refresh, usuarioId]);
 
   if (!datos) return <>...</>;
@@ -93,7 +94,7 @@ function Perfil() {
   ).map((el, index) => {
     return (
       <Card>
-        <div className="cardsEventos container">
+        <div className="cardsEventos">
           <Card.Body>
             <div className=" row">
             <div
@@ -202,15 +203,16 @@ function Perfil() {
                   </div>
                 </div>
               )}
-              <div className="fecha">
-                Fecha: <i>{new Date(el.fecha).toLocaleDateString()}</i>
-                <button
+               <div className="fecha">
+               <button
               onClick={() => goToEvento(el.Evento.id)}
               key={index}
               className="tituloEvento col"
             >
-              + info
+              <FontAwesomeIcon icon={faCircleInfo} size="lg" />
             </button>
+              <i> {new Date(el.fecha).toLocaleDateString()}</i>
+               
               </div>
             </div>
           </Card.Body>
@@ -337,14 +339,15 @@ function Perfil() {
 
           <div className="creador">
             <div className="fecha">
-              <i>{new Date(el.Evento.fecha).toLocaleDateString()}</i>
-              <button
+            <button
               onClick={() => goToEvento(el.id_evento)}
               key={index}
               className="tituloEvento col"
             >
-              + info
-            </button>
+              <FontAwesomeIcon icon={faCircleInfo} size="lg" />
+            </button> 
+               <i> {new Date(el.Evento.fecha).toLocaleDateString()}</i>
+              
             </div>
             <div>
               <img
@@ -502,7 +505,7 @@ function Perfil() {
 
              
             </div>
-            <div> {participateFuture ? (
+            <div > {participateFuture ? (
                 <div>{EventParticipateFuture}</div>
               ) : (
                 <div></div>

@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
 
 
 const NavUsuario = () => {
-  const { username, admin, nombreNav, setShowLogin, logout, setShowRegister, foto  } =
+  const { username, admin, nombreNav, logout, foto } =
     useContext(GlobalContext);
- 
+   
 
   // console.log(nombre)
   if (!username) {
@@ -15,13 +15,13 @@ const NavUsuario = () => {
       <Navbar  className="px-4" bg="light" variant="light" expand="lg">
         <Container>
           <Navbar.Brand href="#home">Sk8tea</Navbar.Brand>
-          <Navbar.Toggle />
+          {/* <Navbar.Toggle /> */}
           <Navbar.Collapse className="justify-content-end">
             <Navbar>
               {/* hacer este tambien con boton de bootstrap o asi */}
-              <button className="login" onClick={() => setShowLogin(true)}>
+              {/* <button className="login" onClick={() => setShowLogin(true)}>
                 Iniciar sesion
-              </button>
+              </button> */}
             </Navbar>
           </Navbar.Collapse>
         </Container>

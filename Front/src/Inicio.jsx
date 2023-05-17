@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 function Inicio(props) {
   const { showRegister, setShowRegister, setShowLogin } =
@@ -82,13 +82,13 @@ function scrollToTop() {
                 }}
                 src={"http://localhost:5000/" + el.Usuario.foto}
                 alt=""
-              /><div>{el.Usuario.nombre}: </div>
+              /><div><b>{el.Usuario.nombre}</b> </div>
             <div className="valoracionInicio"> 
                     {el.valoracion}</div>
           </div>
-          <div className="tituloValoracion"><b>{el.Evento.titulo}</b>    Nivel: <i>{el.Evento.nivel}</i></div></div>
+          <div className="tituloValoracion"><b>{el.Evento.titulo}</b>    Nivel <i>{el.Evento.nivel}</i></div></div>
           
-        <div className="puntuacionValo"><div>{el.puntuacion}/5<FontAwesomeIcon icon={faUsers} /></div></div>
+        <div className="puntuacionValo"><div>{el.puntuacion}/5</div><div><FontAwesomeIcon icon={faStar} /></div></div>
         
         </div>
         </Card.Body>
@@ -101,13 +101,13 @@ function scrollToTop() {
   return (
     <div >
     
-       <div>
-       <video src={encabezado} autoPlay loop muted className="img-fluid" alt="imagen-inicio" />
+       <div className="video">
+       <video src={encabezado} autoPlay loop muted className="img-fluid video" alt="imagen-inicio" />
        <div className="sobreposicion">
         {/* <img src={titulo} className="logoweb" alt="" /> */}
         <h2>Skate Zone</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, qui deserunt in dolor pariatur maiores optio maxime quaerat quisquam possimus, eveniet fugit iure enim autem distinctio, ducimus dolorum dignissimos neque.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, qui deserunt in dolor pariatur maiores optio maxime quaerat quisquam possimus, eveniet fugit iure enim autem distinctio, ducimus dolorum dignissimos neque.</p>
+        <p>Skate Zone una web hecha por Skaters para Skaters. En esta web podrás compartir con otras personas tu pasión por el skate, tengas el nivel que tengas.</p>
+        
         <div className="botones"><Button variant="dark" onClick={() => setShowLogin(true)}>
               {/* hacer este tambien con boton de bootstrap o asi */}
               
@@ -128,7 +128,7 @@ function scrollToTop() {
         </div>
        </div>
       
-      <div style={{display: 'flex', flexDirection: 'column' }}>
+      <div className="cardsValoraciones" style={{display: 'flex', flexDirection: 'column' }}>
         {Valorations}
       </div>
       

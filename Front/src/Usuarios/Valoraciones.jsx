@@ -57,7 +57,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="secondary" onClick={handleShow}>
         Valorar
       </Button>
       <Modal show={show} onHide={handleClose}>

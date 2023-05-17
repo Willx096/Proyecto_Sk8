@@ -88,7 +88,7 @@ function Registro() {
   }
 
   return (
-    <Container>
+    <div className="m-5 inputs">
       <Form
         id="registro-id"
         noValidate
@@ -263,14 +263,14 @@ function Registro() {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Button variant="primary" type="submit">
+            <Button variant="outline-secondary" type="submit">
               Registrarse
             </Button>
           </Form.Group>
         </Row>
       </Form>
       <ToastContainer />
-    </Container>
+    </div>
   );
 }
 

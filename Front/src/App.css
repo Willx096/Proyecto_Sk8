@@ -55,6 +55,10 @@ button {
     text-align: left;
 }
 
+.columnasDatos hr {
+    text-decoration: 0px;
+}
+
 .titulos {
     font-weight: bold;
     font-size: 25px;
@@ -70,7 +74,7 @@ button {
 
 
 .descripcion {
-    background-color: rgb(151, 151, 151);
+    background-color: rgb(201, 201, 201);
     padding: 20px;
     font-size: 16px;
     /* border-radius: 15px; */
@@ -104,6 +108,7 @@ gap: 10px;
     flex-flow: wrap;
     padding-left: 10px;
     gap: 10px;
+    padding-bottom: 10px;
     
 }
 
@@ -115,9 +120,10 @@ gap: 10px;
     padding: 10px;
     display: flex;
     flex-direction: column;
-    background-color: rgba(194, 194, 194, 0.486);
+    background-color: rgba(216, 216, 216, 0.486);
     
 }
+
 
 .datosEventos {
     padding-bottom: 10px;
@@ -165,13 +171,24 @@ padding: 10px;}
 
 /* pantalla de inicio */
 
-.containerValoraciones {
-    display: flex;
-    justify-content: space-around;
+.cardsValoraciones {
+    margin: 20px;
+    
 }
 
-.containerValoraciones div {
-    padding: 5px;
+.cardsValoraciones div {
+    margin: 10px;
+    padding: 0px;
+    border-radius: 0px;
+}
+
+.inputs input {
+    border-radius: 0px;
+}
+
+.containerValoraciones {
+    display: flex;
+    justify-content: space-between;
 }
 
 .valoracionInicio {
@@ -179,17 +196,30 @@ padding: 10px;}
    display: flex;
 }
 
+.valoracionInicio b {
+    font-size: 21px;
+}
+
+
 .tituloValoracion b {
-    font-size: 25px;
+    font-size: 23px;
 }
-.img-fluid {
-  width: 100%;
-
-
-}
+.img-fluid video {
+    width: auto;
+    height: 100%;
+  
+  
+  }
 
 .puntuacionValo {
-    font-size: 28px;
+    font-size: 23px;
+    display:inline-flex;
+    
+}
+.puntuacionValo div {
+    
+    padding: 0px;
+    margin: 0px;
 }
 
 .logoweb {
@@ -205,6 +235,46 @@ padding: 10px;}
     padding: 20px;
      left: 15%; 
  color: white;
-     top: 25%;
+     top: 20%;
      border-radius: 10px;
 }
+
+@media screen and (max-width: 600px) {
+   
+    .sobreposicion {
+        font-size: 13px;
+        width: 90%;
+        position: absolute;
+        padding: 20px;
+         left: 5%; 
+         top:50%;
+     color: white;
+     padding: 10px;
+         border-radius: 10px;
+    }
+    .video {
+        width: 100%;
+        height: 500px;
+        position: relative;
+      }
+
+      .valoracionInicio {
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+     }
+    
+  }
+
+@media screen and (max-width: 800px) and (min-width: 600px)  {
+    .sobreposicion {
+ 
+        width: 90%;
+        position: absolute;
+         left: 5%; 
+         top:20%;
+     
+    }
+  
+  }
