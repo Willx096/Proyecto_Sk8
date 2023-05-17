@@ -78,7 +78,7 @@ function Eventos(props) {
 
   return (
     <>
-      <div class="mx-5">
+      <div class="mx-4">
         <div className="tituloEventosd">
             <h3>Eventos Disponibles</h3>
         </div>

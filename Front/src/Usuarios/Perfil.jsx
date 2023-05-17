@@ -369,7 +369,7 @@ function Perfil() {
   ));
 
   return (
-    <Container fluid className="containerDatos">
+    <div  className="containerDatos mx-4">
       <Row>
         <Col xs={12} md={4} lg={3} className="columnasDatos">
           <div className="fotoPerfil">{foto}</div>
@@ -525,7 +525,7 @@ function Perfil() {
           </div>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 }
 

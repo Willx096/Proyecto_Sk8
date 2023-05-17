@@ -5,14 +5,14 @@ import GlobalContext from "../GlobalContext";
 
 
 const NavUsuario = () => {
-  const { username, admin, nombreNav, setShowLogin, logout, setShowRegister } =
+  const { username, admin, nombreNav, setShowLogin, logout, setShowRegister, foto  } =
     useContext(GlobalContext);
  
 
   // console.log(nombre)
   if (!username) {
     return (
-      <Navbar bg="light" variant="light" expand="lg">
+      <Navbar  className="px-4" bg="light" variant="light" expand="lg">
         <Container>
           <Navbar.Brand href="#home">Sk8tea</Navbar.Brand>
           <Navbar.Toggle />
@@ -30,26 +30,34 @@ const NavUsuario = () => {
   }
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar className="px-4" bg="dark" variant="dark" expand="lg">
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="navbar-dark-example">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/eventos" className="nav-link">
-              Eventos
+            
+          
+              <Nav.Link as={Link} title={nombreNav} className="dropdown-item" to="/perfil">
+              <img
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "30px",
+                  objectFit: "cover",
+                }}
+                src={"http://localhost:5000/" + foto}
+                alt=""
+              />
+               <div className="userNav"> {nombreNav}</div>
+              </Nav.Link>
+              <Nav.Link as={Link} to="/eventos" className="dropdown-item">
+              Eventos Activos
             </Nav.Link>
-            <NavDropdown
-              id="nav-dropdown-dark-example"
-              menuVariant="dark"
-              title={nombreNav}
-            >
-              <Link as={Link} className="dropdown-item" to="/perfil">
-                Perfil
-              </Link>
-              <Link className="dropdown-item" to="/nuevo-evento">
-                Crear Evento
-              </Link>
-            </NavDropdown>
+              <Nav.Link as={Link} className="dropdown-item" to="/nuevo-evento">
+                Nuevo Evento
+              </Nav.Link>
+              
+
             {/* Si el usuario es un administrador, mostrar links adicionales (alomejor habria que añadir mas funcionalidades al admin?¿) */}
             {admin ? (
               <>

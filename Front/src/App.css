@@ -18,6 +18,12 @@ button {
    
 }
 
+.userNav {
+    display: inline-block;
+    margin-left: 10px;
+    
+}
+
 /* Perfil Usuario */
 
 .containerDatos {

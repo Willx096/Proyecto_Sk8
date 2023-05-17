@@ -199,6 +199,8 @@ router.post("/login", (req, res) => {
           nombre: usuario.nombre,
           id: usuario.id,
           admin: usuario.admin,
+          nickname: usuario.nickname,
+          foto: usuario.foto
         },
         secretKey
       );

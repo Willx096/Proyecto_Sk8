@@ -29,6 +29,7 @@ function App() {
   const [admin, setAdmin] = useState(0);
   const [nombreNav, setNombreNav] = useState("");
   const [showRegister, setShowRegister] = useState(false);
+  const [foto, setFoto] = useState("");
 
   //Navegación
   const navigateTo = useNavigate();
@@ -47,7 +48,8 @@ function App() {
       const decoded = jwt_decode(token);
       setUsername(decoded.email);
       setUserid(decoded.id);
-      setNombreNav(decoded.nombre);
+      setNombreNav(decoded.nickname);
+      setFoto(decoded.foto);
       setAdmin(decoded.admin || 0);
       goEventos();
     } else {
@@ -107,7 +109,8 @@ function App() {
           logout,
           goHome,
           setShowRegister,
-          showRegister
+          showRegister,
+          foto
         }}
       >
         <NavUsuario />

@@ -107,7 +107,7 @@ function NuevoEvento(props) {
   }
 
   return (
-    <Container fluid="lg">
+    <div className="mx-4">
       {/* className="image" demomento */}
       <Row>
         <h3>Crear un nuevo evento</h3>
@@ -267,7 +267,7 @@ function NuevoEvento(props) {
         </Col>
       </Row>
       <ToastContainer />
-    </Container>
+    </div>
   );
 }
 
