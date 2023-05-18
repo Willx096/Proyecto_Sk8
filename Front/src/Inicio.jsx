@@ -25,7 +25,7 @@ function Inicio(props) {
   const goTo = useNavigate();
 
   function goToEvento(id_evento) {
-    goTo("/perfil-evento/" + id_evento); // Redirige al perfil del evento
+    goTo("/mostrar-evento/" + id_evento); // Redirige al perfil del evento
   }
 
   const element = document.getElementById("content");
@@ -68,7 +68,7 @@ function scrollToTop() {
   const Valorations = data.filter(
     (el) => new Date(el.Evento.fecha).getTime() < fechaHoy.getTime()
   ).map((el, index) => (
-    <Card style={ index % 2 === 0 ? { alignSelf: "flex-start", minWidth: '70%', maxWidth: '70%'} : { alignSelf: "flex-end", minWidth: '70%', maxWidth: '70%' }}>
+    <Card onClick={() => goToEvento(el.id_evento)} style={ index % 2 === 0 ? { alignSelf: "flex-start", minWidth: '70%', maxWidth: '70%'} : { alignSelf: "flex-end", minWidth: '70%', maxWidth: '70%' }}>
       
         <Card.Body>
         <div className="containerValoraciones">
@@ -128,7 +128,7 @@ function scrollToTop() {
         </div>
        </div>
       
-      <div className="cardsValoraciones" style={{display: 'flex', flexDirection: 'column' }}>
+      <div className="cardsValoraciones"   style={{display: 'flex', flexDirection: 'column' }}>
         {Valorations}
       </div>
       
