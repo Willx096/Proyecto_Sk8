@@ -160,11 +160,9 @@ function Editar({ perfil, refresh, setRefresh }) {
                   onInput={(e) => setNivel(e.target.value)}
                   type="text"
                 >
-                  <option>Empezando</option>
                   <option>Principiante</option>
-                  <option>Casual</option>
-                  <option>Pro</option>
-                  <option>Tony Hawk</option>
+                  <option>Intermedio</option>
+                  <option>Avanzado</option>
                 </Form.Select>
               </Form.Group>
               <Form.Group className="mb-3">
