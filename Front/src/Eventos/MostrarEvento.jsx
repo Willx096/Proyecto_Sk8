@@ -50,7 +50,7 @@ function MostrarEvento({}) {
               alt=""
             />
             <p className="usuario">{e.Usuario.nickname}</p>
-            <p className="puntuacion">{e.puntuacion}</p>
+            <p className="puntuacion">{e.puntuacion}/5</p>
             <hr />
             <b className="valoracion">Descripción:</b><br />
             <p className="texto-valoracion">{e.valoracion}</p>
