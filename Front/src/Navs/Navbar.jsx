@@ -14,7 +14,7 @@ const NavUsuario = () => {
     return (
       <Navbar  className="px-4" bg="light" variant="light" expand="lg">
         <Container>
-          <Navbar.Brand href="#home">Sk8tea</Navbar.Brand>
+          <Navbar.Brand href="/" to="/" >Sk8tea</Navbar.Brand>
           {/* <Navbar.Toggle /> */}
           <Navbar.Collapse className="justify-content-end">
             <Navbar>
