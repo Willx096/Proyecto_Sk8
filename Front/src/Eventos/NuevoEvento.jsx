@@ -33,7 +33,7 @@ function NuevoEvento(props) {
     if(direccion){
       console.log("direccion completa", direccion);
       //Array para que muestro los valores que queremos en direccio al hacer click en el mapa
-      const direccionCorta = [direccion.address.road,direccion.address.leisure,direccion.address.house_number,direccion.address.city,direccion.address.postcode].filter(e => e).join(", ")
+      const direccionCorta = [direccion.address.road,direccion.address.leisure,direccion.address.tourism,direccion.address.house_number,direccion.address.city,direccion.address.postcode].filter(e => e).join(", ")
       setEvento({
         ...evento,
         direccion: direccionCorta,
@@ -233,7 +233,7 @@ function NuevoEvento(props) {
                     setEvento({ ...evento, descripcion: e.target.value })
                   }
                   type="text"
-                  as="textarea"
+                  as="textarea"na
                   rows={3}
                 />
               </Form.Group>
