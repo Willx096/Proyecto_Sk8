@@ -233,7 +233,7 @@ function NuevoEvento(props) {
                     setEvento({ ...evento, descripcion: e.target.value })
                   }
                   type="text"
-                  as="textarea"
+                  as="textarea"na
                   rows={3}
                 />
               </Form.Group>
