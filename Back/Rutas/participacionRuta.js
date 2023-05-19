@@ -93,7 +93,7 @@ router.put(
   }
 );
 
-//Para subir foto
+//Para subir foto de la valoracion
 router.post("/subir-fotos", function (req, res, next) {
   upload(req, res, function (err) {
     if (err) {
@@ -118,7 +118,7 @@ router.post("/subir-fotos", function (req, res, next) {
   });
 });
 
-//Para el apuntarse el valorar?
+//Para el apuntarse 
 router.post("/apuntarse",
   function (req, res, next) {
     sequelize
@@ -154,6 +154,7 @@ router.post("/apuntarse",
         });
       });
   });
+
 //Para que el admin pueda eliminar una participacion
 router.delete("/:id", function (req, res, next) {
   sequelize
@@ -170,65 +171,5 @@ router.delete("/:id", function (req, res, next) {
       });
     });
 });
-
-//demomento sin uso
-// router.get("/:id", function (req, res, next) {
-//   sequelize
-//     .sync()
-//     .then(() => {
-//       Participacion.findOne({
-//         where: { id: req.params.id },
-//         include: {
-//           model: Evento,
-//         },
-//       })
-
-//         .then((el) =>
-//           res.json({
-//             ok: true,
-//             data: el,
-//           })
-//         )
-//         .catch((error) =>
-//           res.json({
-//             ok: false,
-//             error: error,
-//           })
-//         );
-//     })
-//     .catch((error) => {
-//       res.json({
-//         ok: false,
-//         error: error,
-//       });
-//     });
-// });
-
-// router.put("/:id", function (req, res, next) {
-//   sequelize
-//     .sync()
-//     .then(() => {
-//       Participacion.findOne({ where: { id: req.params.id } })
-//         .then((data) => data.update(req.body))
-//         .then((data) =>
-//           res.json({
-//             ok: true,
-//             data: data,
-//           })
-//         )
-//         .catch((error) =>
-//           res.json({
-//             ok: false,
-//             error: error.message,
-//           })
-//         );
-//     })
-//     .catch((error) => {
-//       res.json({
-//         ok: false,
-//         error: error.message,
-//       });
-//     });
-// });
 
 export default router;

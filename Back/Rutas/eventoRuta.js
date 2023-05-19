@@ -53,7 +53,7 @@ router.get("/:id", function (req, res, next) {
         where: { id: req.params.id },
         include: [
           { model: Participacion, include: { model: Usuario } },
-           FotosEvento
+          { model: FotosEvento}
           ],
       })
         .then((data) =>

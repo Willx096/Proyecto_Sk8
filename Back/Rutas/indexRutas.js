@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 router.get('/secret', autentica, (req, res) => {
     res.status(200).json({
         ok: true,
-        data: "EL NÚMERO SECRET ÉS 42"
+        data: "Num secret: hacer-skate-mola-mucho"
     });
 });
 

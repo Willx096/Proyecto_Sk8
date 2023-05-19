@@ -1,9 +1,7 @@
 import React from "react";
 import encabezado from "../public/VideoInicio.mp4";
-import titulo from "./img/Grafiti.png";
 import Registro from "./Usuarios/Registro";
 import Footer from "./Footer";
-import "./inicio.css";
 import { useState, useEffect, useContext } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
@@ -11,8 +9,6 @@ import { useParams } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faLocationDot,
-  faUsers,
   faSpinner,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";

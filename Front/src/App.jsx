@@ -5,8 +5,9 @@ import NuevoEvento from "./Eventos/NuevoEvento";
 import Perfil from "./Usuarios/Perfil";
 import Registro from "./Usuarios/Registro";
 import ListaUsuarios from "./Usuarios/ListaUsuarios";
-import NavUsuario from "./Navs/Navbar";
+import NavUsuario from "./NavBar/Navbar";
 import Login from "./Login";
+import { API_URL } from './apiConfig.js'; 
 //Estilo
 import "./App.css";
 //React
@@ -70,7 +71,7 @@ function App() {
       body: JSON.stringify({ email, pswd }),
     };
 
-    fetch("http://localhost:5000/api/usuarios/login", requestOptions)
+    fetch(API_URL+"usuarios/login", requestOptions)
       .then((response) => {
         return response.json();
       })
