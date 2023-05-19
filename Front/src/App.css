@@ -247,7 +247,7 @@ padding: 10px;}
      border-radius: 10px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 500px) {
    
     .sobreposicion {
         font-size: 13px;
@@ -275,7 +275,7 @@ padding: 10px;}
     
   }
 
-@media screen and (max-width: 800px) and (min-width: 600px)  {
+@media screen and (max-width: 800px) and (min-width: 500px)  {
     .sobreposicion {
  
         width: 90%;
