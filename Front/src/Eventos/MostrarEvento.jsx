@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, redirect, useParams } from "react-router-dom";
 import { Container, Col, Row, Card, Carousel } from "react-bootstrap";
 import { Marker } from "react-leaflet";
 import "../Eventos/Evento.css";
+import GlobalContext from "../GlobalContext";
 import { goldIcona, greenIcona, redIcona, greyIcona } from "./Icona";
 import MapSimple from "../mapa/MapSimple";
 
@@ -32,8 +33,8 @@ function MostrarEvento({}) {
   const listacards = evento.Participacions.filter((e) => e.valoracion).map(
     (e, idx) => {
       return (
-        <Col xs={12} sm={6} md={4} lg={3} xl={2}>
-          <Card key={idx} lg={2}>
+        <Col key={idx} xs={12} sm={6} md={6} lg={4} xl={3}>
+          <Card>
             {/* <img
             src="https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg"
             alt="user"

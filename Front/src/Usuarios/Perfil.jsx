@@ -206,7 +206,7 @@ function Perfil() {
               )}
                <div className="fecha">
                <button
-              onClick={() => goToEvento(el.Evento.id)}
+              onClick={() => goToEvento(el.id)}
               key={index}
               className="tituloEvento col"
             >
@@ -345,7 +345,7 @@ function Perfil() {
           <div className="creador">
             <div className="fecha">
             <button
-              onClick={() => goToEvento(el.id_evento)}
+              onClick={() => goToEvento(el.Evento.id)}
               key={index}
               className="tituloEvento col"
             >
