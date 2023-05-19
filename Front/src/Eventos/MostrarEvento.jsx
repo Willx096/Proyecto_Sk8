@@ -89,7 +89,7 @@ function MostrarEvento({}) {
         <Carousel className="carusel-fotos">
             {evento.FotosEventos.map((e,idx)=>(<Carousel.Item key={idx} interval={1000}>
           <img
-            className="d-block w-100"
+            className="imagen-carousel"
             height={360}
             width={100}
             src={"http://localhost:5000/"+e.fotos}
