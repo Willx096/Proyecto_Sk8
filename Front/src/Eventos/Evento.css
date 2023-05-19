@@ -84,17 +84,19 @@ hr {
   pointer-events: auto !important;
   margin-top: 20px;
   border-radius: 12px;
+  
 }
 
 .carusel-fotos{
   border-radius: 10px;
   background-color:#CFCFCF;
+  
 }
 
 .imagen-carousel{
   display: flex;
   align-items: center;
-  width:1100px;
-  height:500px;
+  width:1100px !important;
+  height:500px !important;
   margin: auto;
 }

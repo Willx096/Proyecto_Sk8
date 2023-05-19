@@ -52,7 +52,8 @@ function MostrarEvento({}) {
             <p className="usuario">{e.Usuario.nickname}</p>
             <p className="puntuacion">{e.puntuacion}</p>
             <hr />
-            <b className="valoracion">Descripción:</b><br />
+            <b className="valoracion">Descripción:</b>
+            <br />
             <p className="texto-valoracion">{e.valoracion}</p>
           </Card>
         </Col>
@@ -76,7 +77,6 @@ function MostrarEvento({}) {
   );
 
   return (
-    
     <div class="mx-5">
       <br />
 
@@ -86,21 +86,21 @@ function MostrarEvento({}) {
         alt=""
       />
       <h3 className="text-center">{evento.titulo}</h3>
-        <Carousel className="carusel-fotos">
-            {evento.FotosEventos.map((e,idx)=>(<Carousel.Item key={idx} interval={1000}>
-          <img
-            className="imagen-carousel"
-            height={360}
-            width={100}
-            src={"http://localhost:5000/"+e.fotos}
-            alt="First slide"
-          />
-          <Carousel.Caption></Carousel.Caption>
-        </Carousel.Item>))}
-
-
-    
+      <Carousel className="carusel-fotos">
+        {evento.FotosEventos.map((e, idx) => (
+          <Carousel.Item key={idx} interval={1000}>
+            <img
+              className="imagen-carousel img-fluid"
+              height={360}
+              width={100}
+              src={"http://localhost:5000/" + e.fotos}
+              alt="First slide"
+            />
+            <Carousel.Caption></Carousel.Caption>
+          </Carousel.Item>
+        ))}
       </Carousel>
+      <br />
       <Row>
         <Col>
           <div className="texto-evento">
@@ -144,7 +144,6 @@ function MostrarEvento({}) {
         </Col>
       </Row>
       <Row className="d-flex justify-content-center">{listacards}</Row>
-
     </div>
   );
 }
