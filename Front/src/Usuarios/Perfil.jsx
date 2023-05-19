@@ -153,8 +153,8 @@ function Perfil() {
   ).map((el, index) => {
     const puntuaciones = el.Participacions.map((e) => e.puntuacion);
     //llamo a la funcion que calcula la media
-    const media = valoMedia(puntuaciones);  
-    // const media = valoMedia(puntuaciones2).toFixed(1);
+    // const media = valoMedia(puntuaciones);  
+    const media = valoMedia(puntuaciones).toFixed(1);
     return (
       <Card>
         <div className="cardsEventos">
