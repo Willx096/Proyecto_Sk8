@@ -87,13 +87,14 @@ hr {
 }
 
 .carusel-fotos{
-  background-color:rgba(151, 151, 151, 0.267);
+  border-radius: 10px;
+  background-color:#CFCFCF;
 }
 
 .imagen-carousel{
   display: flex;
   align-items: center;
-  width:900px;
+  width:1100px;
   height:500px;
   margin: auto;
 }
