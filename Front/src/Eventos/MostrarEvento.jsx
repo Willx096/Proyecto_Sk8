@@ -7,11 +7,12 @@ import { goldIcona, greenIcona, redIcona, greyIcona } from "./Icona";
 import MapSimple from "../mapa/MapSimple";
 
 function MostrarEvento({}) {
+  const {API_URL } = useContext(GlobalContext);
   const [evento, setEvento] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/eventos/${id}`)
+    fetch(API_URL+`eventos/${id}`)
       .then((resultado) => resultado.json())
       .then((resultado2) => {
         if (resultado2.ok === true) {

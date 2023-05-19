@@ -10,8 +10,9 @@ import GlobalContext from "../GlobalContext";
 import PerfilEvento from "./PerfilEvento";
 import MostrarEvento from "./MostrarEvento";
 
+
 function Eventos(props) {
-  const { userid } = useContext(GlobalContext);
+  const { userid, API_URL } = useContext(GlobalContext);
   const [direccion, setDireccion] = useState("");
   const [eventoSeleccionado, setEventoSeleccionado] = useState({});
   // const [eventoDetalle, setEventoDetalle] = useState({});
@@ -25,7 +26,7 @@ function Eventos(props) {
   );
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/eventos")
+    fetch(API_URL+"eventos")
       .then((response) => response.json())
       .then((x) => {
         console.log("Eventos recibidos", x);

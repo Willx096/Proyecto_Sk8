@@ -7,7 +7,7 @@ import "../mapa/leaflet.css";
 import GlobalContext from "../GlobalContext";
 
 function NuevoEvento(props) {
-  const { userid, token } = useContext(GlobalContext);
+  const { userid, token, API_URL } = useContext(GlobalContext);
   //Constantes con toastify para que el usuario seapa si se a creado el evetno o no
   const formularioOk = () => toast.success("Evento creado!");
   const formularioBad = () => toast.error("Evento no creado");
@@ -85,7 +85,7 @@ function NuevoEvento(props) {
       redirect: "follow",
     };
 
-    fetch("http://localhost:5000/api/eventos", requestOptions)
+    fetch(API_URL+"eventos", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .then(() => {

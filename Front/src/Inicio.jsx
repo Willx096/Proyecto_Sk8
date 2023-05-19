@@ -13,8 +13,9 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 
+
 function Inicio(props) {
-  const { showRegister, setShowRegister, setShowLogin } =
+  const { showRegister, setShowRegister, setShowLogin, API_URL } =
     useContext(GlobalContext);
 
   const [data, setData] = useState(null);
@@ -43,7 +44,7 @@ function Inicio(props) {
       headers: { "Content-Type": "application/json" },
     };
 
-    fetch(`http://localhost:5000/api/participacion`, requestOptions)
+    fetch(API_URL+`participacion`, requestOptions)
       .then((res) => res.json())
       .then((res) => {
         if (res.ok === true) {
@@ -116,6 +117,7 @@ function Inicio(props) {
     ));
 
   return (
+    <>
     <div>
       <div className="video">
         <video
@@ -155,9 +157,12 @@ function Inicio(props) {
         {Valorations}
       </div>
 
-      <div id="content"> {!showRegister ? <></> : <Registro />}</div>
+      <div > {!showRegister ? <></> : <Registro />}</div>
+      
       <Footer />
     </div>
+    <div id="content" ></div>
+    </>
   );
 }
 

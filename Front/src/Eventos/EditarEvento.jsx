@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Button, Form, FormControl, Modal, Row } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import { API_URL } from "../apiConfig.js";
 
 function EditarEvento({ refresh, setRefresh, eventoId, eventos }) {
   //Parametros para mostar o no el modal
@@ -38,7 +39,7 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos }) {
       return;
     }
 
-    const URL = `http://localhost:5000/api/eventos/${eventoId}`;
+    const URL = API_URL+`eventos/${eventoId}`;
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import GlobalContext from "../GlobalContext";
 // import FotosEvento from "../Usuarios/FotosEvento";
 import DropArea from "../Usuarios/DropArea"
+import { API_URL } from "../apiConfig";
 
 function Valoraciones({ eventoid, cargarPerfil }) {
   const [show, setShow] = useState(false);
@@ -33,7 +34,7 @@ function Valoraciones({ eventoid, cargarPerfil }) {
     };
 
     fetch(
-      `http://localhost:5000/api/participacion/usuario/${userid}/evento/${eventoid}/valoracion`,
+      API_URL+`participacion/usuario/${userid}/evento/${eventoid}/valoracion`,
       requestOptions
     )
       .then((data) => data.json())

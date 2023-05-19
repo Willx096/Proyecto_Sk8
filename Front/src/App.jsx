@@ -111,7 +111,8 @@ function App() {
           goHome,
           setShowRegister,
           showRegister,
-          foto
+          foto,
+          API_URL
         }}
       >
         <NavUsuario />

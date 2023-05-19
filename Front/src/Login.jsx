@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
 function Login({ showLogin, iniciaSesion, setShowLogin }) {
+  
   const [email, setEmail] = useState("");
   const [pswd, setPswd] = useState("");
   const [validated, setValidated] = useState(false);

@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Button, Form, Modal, Row } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import GlobalContext from "../GlobalContext";
+import { API_URL } from "../apiConfig";
 
 function Editar({ perfil, refresh, setRefresh }) {
   const { userid } = useContext(GlobalContext);
@@ -51,7 +52,7 @@ function Editar({ perfil, refresh, setRefresh }) {
       return;
     }
 
-    const URL = `http://localhost:5000/api/usuarios/${userid}`;
+    const URL = API_URL+`usuarios/${userid}`;
 
     var formData = new FormData();
     formData.append("nombre", usuario.nombre);
@@ -217,8 +218,8 @@ function Editar({ perfil, refresh, setRefresh }) {
             </Button>
           </Modal.Footer>
         </Form>
-      </Modal>
       <ToastContainer />
+      </Modal>
     </>
   );
 }

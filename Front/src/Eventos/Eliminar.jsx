@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Button, Modal, Row } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
+import { API_URL } from "../apiConfig.js";
 
 function EliminarEvento({ participacionId, eventoId, refresh, setRefresh }) {
   const formularioOk = () => toast.success("Evento eliminado!");
   const formularioBad = () => toast.error("Evento no eliminado");
+  
 
   //funcion que elimina el usuario de la base de datos
   function eliminarEvento(e) {
@@ -17,7 +19,7 @@ function EliminarEvento({ participacionId, eventoId, refresh, setRefresh }) {
       return;
     }
 
-    const URL = `http://localhost:5000/api/eventos/${eventoId}`;
+    const URL = API_URL+`eventos/${eventoId}`;
 
     var requestOptions = {
       method: "DELETE",

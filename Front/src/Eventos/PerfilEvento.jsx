@@ -8,6 +8,7 @@ import Eventos from "./Eventos";
 import EditarEvento from "./EditarEvento";
 
 function PerfilEvento({ evento, refresh, setRefresh }) {
+  const { API_URL } = useContext(GlobalContext);
   const participantes = evento.Participacions.map((e) => e.id_usuario);
   const datos = evento;
 
@@ -91,7 +92,7 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
       redirect: "follow",
     };
 
-    fetch("http://localhost:5000/api/participacion/apuntarse", requestOptions)
+    fetch(API_URL+"participacion/apuntarse", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .then(() => setApuntado(!apuntado)) // actualiza el estado de apuntado/desapuntado

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Button, Modal, Row } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
+import { API_URL } from "../apiConfig";
 
 function Eliminar() {
   const { userid, logout } = useContext(GlobalContext);
@@ -9,7 +10,7 @@ function Eliminar() {
   function eliminarUsuario(e) {
     e.preventDefault();
 
-    const URL = `http://localhost:5000/api/usuarios/${userid}`;
+    const URL = API_URL+`usuarios/${userid}`;
 
     var requestOptions = {
       method: "DELETE",

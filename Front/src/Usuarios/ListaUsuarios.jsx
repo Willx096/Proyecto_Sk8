@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect,useContext } from "react";
 import {Table} from "react-bootstrap"
 import GlobalContext from "../GlobalContext.js";
+import { API_URL } from "../apiConfig.js";
 
 
 function ListaUsuarios() {
@@ -18,7 +19,7 @@ function ListaUsuarios() {
       headers: { "Content-Type": "application/json", authorization: token },
     };
 
-    fetch("http://localhost:5000/api/usuarios", requestOptions)
+    fetch(API_URL+"usuarios", requestOptions)
       .then((data) => data.json())
       .then((data) => {
         if (data.ok === true) {

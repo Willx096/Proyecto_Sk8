@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Container } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
+import { API_URL } from "../apiConfig";
 
 function Registro() {
   //Validate para validar que los campos se han rellenado
@@ -62,7 +63,7 @@ function Registro() {
       redirect: "follow",
     };
 
-    fetch("http://localhost:5000/api/usuarios", requestOptions)
+    fetch(API_URL+"usuarios", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .then(() => {

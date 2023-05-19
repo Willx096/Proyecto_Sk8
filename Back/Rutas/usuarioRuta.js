@@ -23,6 +23,7 @@ Usuario.hasMany(Participacion, { foreignKey: "id_usuario" });
 Usuario.hasMany(Evento, { foreignKey: "id_usuario" });
 Usuario.hasMany(FotosEvento, { foreignKey: "id_usuario" });
 Participacion.belongsTo(Evento, { foreignKey: "id_evento" });
+Evento.belongsTo(Usuario, { foreignKey: "id_usuario" });
 
 const router = express.Router();
 
@@ -75,13 +76,13 @@ router.get("/:id", autentica, function (req, res, next) {
         include: [
           {
             model: Evento,
-            include: [{ model: Usuario }, { model: Participacion }],
+            include: [{ model: Usuario }, { model: Participacion} ],
           },
           {
             model: Participacion,
             include: [
               {
-                model: Evento,
+                model: Evento,  include:{model: Usuario}
               },
               { model: Usuario },
             ],

@@ -12,6 +12,7 @@ import EliminarEvento from "../Eventos/Eliminar";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faUsers, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { API_URL } from "../apiConfig";
 function Perfil() {
   const { userid, token } = useContext(GlobalContext);
   const [datos, setDatos] = useState(null);
@@ -45,7 +46,7 @@ function Perfil() {
     };
 
     fetch(
-      `http://localhost:5000/api/usuarios/${usuarioId || userid}`,
+      API_URL+`usuarios/${usuarioId || userid}`,
       requestOptions
     )
       .then((resultado) => resultado.json())
@@ -152,7 +153,7 @@ function Perfil() {
   ).map((el, index) => {
     const puntuaciones = el.Participacions.map((e) => e.puntuacion);
     //llamo a la funcion que calcula la media
-    const media = valoMedia(puntuaciones);
+    const media = valoMedia(puntuaciones);  
     // const media = valoMedia(puntuaciones2).toFixed(1);
     return (
       <Card>
@@ -224,7 +225,11 @@ function Perfil() {
   //Eventos en los que se ha apuntado
   const EventParticipateFuture = datos.Participacions.filter(
     (el) => new Date(el.Evento.fecha).getTime() > fechaHoy.getTime()
-  ).map((el, index) => (
+  ).map((el, index) => { 
+    const nombreC = el.Evento.Usuario.nombre; 
+    
+    
+    return (
     <Card>
       <div className="cardsEventos container">
         <Card.Body>
@@ -257,26 +262,26 @@ function Perfil() {
               <i>{new Date(el.Evento.fecha).toLocaleDateString()}</i>
             </div>
             <div>
-              {/* <img
+              <img
               style={{
                 width: "30px",
                 height: "30px",
                 borderRadius: "30px",
                 objectFit: "cover",
               }}
-              src={"http://localhost:5000/" + el.Usuario.foto}
+              src={"http://localhost:5000/" + el.Evento.Usuario.foto}
               alt=""
-            /> */}
-              By:
+            />
+             
               <button onClick={() => goToPerfil(el.Evento.id_usuario)}>
-                {el.Usuario.nombre}
+                {el.Evento.Usuario.nombre}
               </button>
             </div>
           </div>
         </Card.Body>
       </div>
     </Card>
-  ));
+  )});
 
   //Eventos en los que se ha apuntado que ya han pasado
   const EventParticipatePast = datos.Participacions.filter(
@@ -351,18 +356,18 @@ function Perfil() {
             </div>
             <div>
               <img
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "30px",
-                  objectFit: "cover",
-                }}
-                src={"http://localhost:5000/" + el.Usuario.foto}
-                alt=""
-              />
-           
+              style={{
+                width: "30px",
+                height: "30px",
+                borderRadius: "30px",
+                objectFit: "cover",
+              }}
+              src={"http://localhost:5000/" + el.Evento.Usuario.foto}
+              alt=""
+            />
+             
               <button onClick={() => goToPerfil(el.Evento.id_usuario)}>
-                {el.Usuario.nombre}
+                {el.Evento.Usuario.nombre}
               </button>
             </div>
           </div>

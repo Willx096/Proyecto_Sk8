@@ -1,5 +1,6 @@
 import GlobalContext from "../GlobalContext";
 import React, { useState, useContext } from 'react';
+import { API_URL } from "../apiConfig";
 
 const DropArea = ({ eventoid}) => {
     const { userid, token } = useContext(GlobalContext);
@@ -48,7 +49,7 @@ const DropArea = ({ eventoid}) => {
       body: data
     }
 
-    fetch("http://localhost:5000/api/participacion/subir-fotos", options)
+    fetch(API_URL+"participacion/subir-fotos", options)
       .then(res => res.json())
       .then(res => {
         console.log(res)
