@@ -6,7 +6,7 @@
   height: 150px;
   object-fit: cover;
 }
-.usuario{
+.usuario {
   margin-top: 10px;
   text-align: center;
 }
@@ -22,28 +22,27 @@ hr {
   width: 100px;
 }
 
-.tituloEventosd{
-    text-align: center;
-    width: 100%;
-    height: 50px;
+.tituloEventosd {
+  text-align: center;
+  width: 100%;
+  height: 50px;
 }
 
-.carusel-fotos{
+.carusel-fotos {
   margin-left: 80px;
   margin-right: 80px;
-  
 }
-.leyenda{
-    width: 100%;
-    height: 21%;
-    /* display: flex; */
+.leyenda {
+  width: 100%;
+  height: 21%;
+  /* display: flex; */
 }
 
-.contenidoLeyenda{
-    width: 25%;
-    height: 100%;
-    text-align: center;
-    /* display: flex; */
+.contenidoLeyenda {
+  width: 25%;
+  height: 100%;
+  text-align: center;
+  /* display: flex; */
 }
 
 .valoracion {
@@ -56,23 +55,23 @@ hr {
   font-size: 16px;
 }
 
-.texto-evento{
+.texto-evento {
   padding-top: 30px;
   border-radius: 10px;
 }
 
-.descripcion2{
+.descripcion2 {
   background-color: rgba(151, 151, 151, 0.267);
   font-size: large;
 }
 
-.texto-des{
+.texto-des {
   text-align: center;
 }
-.texto-des2{
+.texto-des2 {
   text-align: center;
 }
-.texto-evento2{
+.texto-evento2 {
   background-color: rgba(151, 151, 151, 0.267);
   font-size: large;
   border-radius: 10px;
@@ -80,12 +79,24 @@ hr {
 .mapa-mostrar-evento {
   float: right;
   border: 1px solid black;
-  height: 280px !important; 
+  height: 280px !important;
   width: 100%;
   pointer-events: auto !important;
   margin-top: 20px;
   border-radius: 12px;
+  
 }
 
+.carusel-fotos{
+  border-radius: 10px;
+  background-color:#CFCFCF;
+  
+}
 
-
+.imagen-carousel{
+  display: flex;
+  align-items: center;
+  width:1100px !important;
+  height:500px !important;
+  margin: auto;
+}
