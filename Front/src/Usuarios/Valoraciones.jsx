@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import GlobalContext from "../GlobalContext";
 // import FotosEvento from "../Usuarios/FotosEvento";
 import DropArea from "../Usuarios/DropArea"
-import { API_URL } from "../apiConfig";
+import { API_URL, IMG_URL  } from "../apiConfig";
 
 function Valoraciones({ eventoid, cargarPerfil }) {
   const [show, setShow] = useState(false);

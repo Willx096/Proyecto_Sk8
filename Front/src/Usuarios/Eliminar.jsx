@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Button, Modal, Row } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
-import { API_URL } from "../apiConfig";
+import { API_URL, IMG_URL  } from "../apiConfig";
 
 function Eliminar() {
   const { userid, logout } = useContext(GlobalContext);

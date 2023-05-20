@@ -1,6 +1,6 @@
 import GlobalContext from "../GlobalContext";
 import React, { useState, useContext } from 'react';
-import { API_URL } from "../apiConfig";
+import { API_URL, IMG_URL  } from "../apiConfig";
 
 const DropArea = ({ eventoid}) => {
     const { userid, token } = useContext(GlobalContext);

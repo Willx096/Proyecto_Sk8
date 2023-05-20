@@ -7,7 +7,7 @@ import Registro from "./Usuarios/Registro";
 import ListaUsuarios from "./Usuarios/ListaUsuarios";
 import NavUsuario from "./NavBar/Navbar";
 import Login from "./Login";
-import { API_URL } from './apiConfig.js'; 
+import { API_URL, IMG_URL  } from './apiConfig.js'; 
 //Estilo
 import "./App.css";
 //React
@@ -112,7 +112,8 @@ function App() {
           setShowRegister,
           showRegister,
           foto,
-          API_URL
+          API_URL,
+          IMG_URL
         }}
       >
         <NavUsuario />

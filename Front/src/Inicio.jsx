@@ -13,9 +13,11 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { API_URL, IMG_URL  } from './apiConfig.js'; 
+
 
 function Inicio(props) {
-  const { showRegister, setShowRegister, setShowLogin, API_URL } =
+  const { showRegister, setShowRegister, setShowLogin, API_URL, IMG_URL } =
     useContext(GlobalContext);
 
   const [data, setData] = useState(null);
@@ -92,7 +94,7 @@ function Inicio(props) {
                     borderRadius: "30px",
                     objectFit: "cover",
                   }}
-                  src={"http://localhost:5000/" + el.Usuario.foto}
+                  src={IMG_URL + el.Usuario.foto}
                   alt=""
                 />
                 <div>

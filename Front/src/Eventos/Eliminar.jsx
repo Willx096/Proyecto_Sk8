@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Button, Modal, Row } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-import { API_URL } from "../apiConfig.js";
+import { API_URL, IMG_URL  } from "../apiConfig.js";
 
 function EliminarEvento({ participacionId, eventoId, refresh, setRefresh }) {
   const formularioOk = () => toast.success("Evento eliminado!");

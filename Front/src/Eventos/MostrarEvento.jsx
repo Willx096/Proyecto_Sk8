@@ -7,13 +7,13 @@ import GlobalContext from "../GlobalContext";
 import { goldIcona, greenIcona, redIcona, greyIcona } from "./Icona";
 import MapSimple from "../mapa/MapSimple";
 
-function MostrarEvento({}) {
-  const {API_URL } = useContext(GlobalContext);
+function MostrarEvento({ }) {
+  const { API_URL, IMG_URL } = useContext(GlobalContext);
   const [evento, setEvento] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(API_URL+`eventos/${id}`)
+    fetch(API_URL + `eventos/${id}`)
       .then((resultado) => resultado.json())
       .then((resultado2) => {
         if (resultado2.ok === true) {
@@ -47,7 +47,7 @@ function MostrarEvento({}) {
                 borderRadius: "80px",
                 objectFit: "cover",
               }}
-              src={"http://localhost:5000/" + e.Usuario.foto}
+              src={IMG_URL + e.Usuario.foto}
               className="imagen-usuario"
               alt=""
             />
@@ -72,8 +72,8 @@ function MostrarEvento({}) {
         evento.nivel === "Avanzado"
           ? redIcona
           : evento.nivel === "Intermedio"
-          ? goldIcona
-          : greenIcona
+            ? goldIcona
+            : greenIcona
       }
     ></Marker>
   );
@@ -83,7 +83,7 @@ function MostrarEvento({}) {
       <br />
 
       <img
-        src={"http://localhost:5000/" + evento.foto}
+        src={IMG_URL + evento.foto}
         style={{ width: 100 }}
         alt=""
       />
@@ -95,7 +95,7 @@ function MostrarEvento({}) {
               className="imagen-carousel img-fluid"
               height={360}
               width={100}
-              src={"http://localhost:5000/" + e.fotos}
+              src={IMG_URL + e.fotos}
               alt="First slide"
             />
             <Carousel.Caption></Carousel.Caption>

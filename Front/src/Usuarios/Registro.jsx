@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Container } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-import { API_URL } from "../apiConfig";
+import { API_URL, IMG_URL  } from "../apiConfig";
 
 function Registro() {
   //Validate para validar que los campos se han rellenado

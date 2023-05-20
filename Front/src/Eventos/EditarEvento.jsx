@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Button, Form, FormControl, Modal, Row } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { API_URL } from "../apiConfig.js";
+import { API_URL, IMG_URL  } from "../apiConfig.js";
 
 function EditarEvento({ refresh, setRefresh, eventoId, eventos }) {
   //Parametros para mostar o no el modal

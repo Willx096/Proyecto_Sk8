@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect,useContext } from "react";
 import {Table} from "react-bootstrap"
 import GlobalContext from "../GlobalContext.js";
-import { API_URL } from "../apiConfig.js";
+import { API_URL, IMG_URL  } from "../apiConfig.js";
 
 
 function ListaUsuarios() {

@@ -5,7 +5,7 @@ import GlobalContext from "../GlobalContext";
 
 
 const NavUsuario = () => {
-  const { username, admin, nombreNav, logout, foto } =
+  const { username, admin, nombreNav, logout, foto, API_URL, IMG_URL} =
     useContext(GlobalContext);
    
 
@@ -45,7 +45,7 @@ const NavUsuario = () => {
                   borderRadius: "30px",
                   objectFit: "cover",
                 }}
-                src={"http://localhost:5000/" + foto}
+                src={IMG_URL + foto}
                 alt=""
               />
                <div className="userNav"> {nombreNav}</div>

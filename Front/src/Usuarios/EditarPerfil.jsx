@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Button, Form, Modal, Row } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import GlobalContext from "../GlobalContext";
-import { API_URL } from "../apiConfig";
+import { API_URL, IMG_URL  } from "../apiConfig";
 
 function Editar({ perfil, refresh, setRefresh }) {
   const { userid } = useContext(GlobalContext);

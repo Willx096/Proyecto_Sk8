@@ -12,12 +12,15 @@ import EliminarEvento from "../Eventos/Eliminar";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faUsers, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import { API_URL } from "../apiConfig";
+
 function Perfil() {
-  const { userid, token } = useContext(GlobalContext);
+  const { userid, token, API_URL, IMG_URL } = useContext(GlobalContext);
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
+
+
+  console.log("urls", API_URL, IMG_URL)
 
   let { usuarioId } = useParams();
 
@@ -71,7 +74,7 @@ function Perfil() {
   const foto = (
     <img
       className="fotoPerfil"
-      src={"http://localhost:5000/" + datos.foto}
+      src={IMG_URL + datos.foto}
       alt=""
     />
   );
@@ -269,7 +272,7 @@ function Perfil() {
                 borderRadius: "30px",
                 objectFit: "cover",
               }}
-              src={"http://localhost:5000/" + el.Evento.Usuario.foto}
+              src={IMG_URL + el.Evento.Usuario.foto}
               alt=""
             />
              
@@ -362,7 +365,7 @@ function Perfil() {
                 borderRadius: "30px",
                 objectFit: "cover",
               }}
-              src={"http://localhost:5000/" + el.Evento.Usuario.foto}
+              src={IMG_URL + el.Evento.Usuario.foto}
               alt=""
             />
              
