@@ -79,7 +79,7 @@ function MostrarEvento({}) {
   );
 
   return (
-    <div className="mx-5">
+    <div className="mx-5 tituloEventos">
       <br />
 
       <img
