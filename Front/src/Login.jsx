@@ -18,11 +18,10 @@ function Login({ showLogin, iniciaSesion, setShowLogin }) {
     <>
       <Modal show={showLogin} onHide={() => setShowLogin(false)}>
         <Form onSubmit={onSubmit} validated={validated}>
-          <Modal.Header closeButton>
-            <Modal.Title>Inicia sesión para empezar a Skeatear!</Modal.Title>
-            {/* la idea aqui es poner algo que no sea tan cutre pero que no se inciiar sesion y ya */}
+          <Modal.Header closeButton className="modalStyle">
+            <Modal.Title>Inicia sesión para empezar a Skatear!</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body >
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Correo Electrónico</Form.Label>
               <Form.Control
@@ -51,9 +50,9 @@ function Login({ showLogin, iniciaSesion, setShowLogin }) {
               </Form.Control.Feedback>
             </Form.Group>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer >
             <Button
-              variant="primary"
+              variant="secondary"
               type="submit"
               onClick={() => setValidated(true)}
             >

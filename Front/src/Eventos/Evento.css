@@ -45,6 +45,9 @@ hr {
   /* display: flex; */
 }
 
+
+
+
 .valoracion {
   text-align: center;
   font-style: italic;
@@ -61,8 +64,9 @@ hr {
 }
 
 .descripcion2 {
-  background-color: rgba(151, 151, 151, 0.267);
+  background-color: rgba(150, 184, 255, 0.641);
   font-size: large;
+  padding: 10px;
 }
 
 .texto-des {
@@ -72,10 +76,11 @@ hr {
   text-align: center;
 }
 .texto-evento2 {
-  background-color: rgba(151, 151, 151, 0.267);
+  background-color: rgba(150, 184, 255, 0.641);
   font-size: large;
-  border-radius: 10px;
+  padding: 10px;
 }
+
 .mapa-mostrar-evento {
   float: right;
   border: 1px solid black;
@@ -83,13 +88,13 @@ hr {
   width: 100%;
   pointer-events: auto !important;
   margin-top: 20px;
-  border-radius: 12px;
+  
   
 }
 
 .carusel-fotos{
-  border-radius: 10px;
-  background-color:#CFCFCF;
+ 
+  background-color: rgb(207, 222, 255)
   
 }
 
@@ -99,4 +104,8 @@ hr {
   width:1100px !important;
   height:500px !important;
   margin: auto;
+}
+
+.contenidoEvento {
+  background-color: rgb(207, 222, 255)
 }

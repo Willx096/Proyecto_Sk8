@@ -10,8 +10,8 @@ function Footer() {
             <div className="row d-flex justify-content-center">
               <div className="col-auto">
                 <p className="pt-1">
-                  <strong>
-                    Para cualquier incidencia contacte a este email:
+                  <strong>Para cualquier incidencia o pregunta, contacte a este email:
+                   
                   </strong>
                 </p>
               </div>
@@ -26,9 +26,9 @@ function Footer() {
         </div>
 
         <div class="text-center p-2 bg-dark">
-          © 2023 Copyright:
-          <a class="text-white" href="https://skatezone.com/">
-            SkateZone
+          © 2023 Copyright: 
+           <a class="text-white" href="https://skate-zone.com/">
+             SkateZone
           </a>
         </div>
       </footer>

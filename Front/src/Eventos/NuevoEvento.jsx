@@ -109,11 +109,11 @@ function NuevoEvento(props) {
   return (
     <div className="mx-4">
       {/* className="image" demomento */}
-      <Row>
+      <Row className="tituloEventos">
         <h3>Crear un nuevo evento</h3>
         {/*deberiamos pensar un titulo o dejar este que indica que esta pantalla  */}
       </Row>
-      <Row>
+      <Row className="nuevoEvento">
         <Col>
           <Form noValidate validated={validated} onSubmit={CrearEvento}>
             <Row md={2}>
@@ -259,7 +259,7 @@ function NuevoEvento(props) {
               </Form.Group>
             </Row>
             <div className="d-flex justify-content-center">
-              <Button variant="primary" type="submit">
+              <Button variant="secondary" type="submit">
                 Crear
               </Button>
             </div>

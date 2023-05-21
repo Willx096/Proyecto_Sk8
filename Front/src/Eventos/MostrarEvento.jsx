@@ -79,7 +79,7 @@ function MostrarEvento({}) {
   );
 
   return (
-    <div class="mx-5">
+    <div class="mx-5 tituloEventos">
       <br />
 
       <img
@@ -87,7 +87,7 @@ function MostrarEvento({}) {
         style={{ width: 100 }}
         alt=""
       />
-      <h3 className="text-center">{evento.titulo}</h3>
+      <h3 >{evento.titulo}</h3>
       <Carousel className="carusel-fotos">
         {evento.FotosEventos.map((e, idx) => (
           <Carousel.Item key={idx} interval={1000}>
@@ -104,7 +104,7 @@ function MostrarEvento({}) {
       </Carousel>
       <br />
       <Row>
-        <Col>
+        <Col className="contenidoEvento">
           <div className="texto-evento">
             <p className="descripcion2">
               <p>

@@ -12,9 +12,9 @@ const NavUsuario = () => {
   // console.log(nombre)
   if (!username) {
     return (
-      <Navbar  className="px-4" bg="light" variant="light" expand="lg">
+      <Navbar  className="px-4" bg="dark" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand href="/" to="/" >Sk8tea</Navbar.Brand>
+          <Navbar.Brand href="/" to="/" ><img src="../src/img/logo.png" alt="uwu" /></Navbar.Brand>
           {/* <Navbar.Toggle /> */}
           <Navbar.Collapse className="justify-content-end">
             <Navbar>

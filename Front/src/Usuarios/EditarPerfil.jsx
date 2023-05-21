@@ -88,7 +88,7 @@ function Editar({ perfil, refresh, setRefresh }) {
 
   return (
     <>
-      <Button variant="outline-secondary" onClick={handleShow}>
+      <Button variant="outline-light" onClick={handleShow}>
         Editar
       </Button>
 

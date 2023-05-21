@@ -1,11 +1,11 @@
-import React from "react";
+ import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { Button, Card, ListGroup } from "react-bootstrap";
 import GlobalContext from "../GlobalContext";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
-import Eventos from "./Eventos";
-import EditarEvento from "./EditarEvento";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot, faUsers} from "@fortawesome/free-solid-svg-icons";
 
 function PerfilEvento({ evento, refresh, setRefresh }) {
   const { API_URL } = useContext(GlobalContext);
@@ -32,22 +32,21 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
     setApuntado(participantes.includes(userid));
   }, [evento]);
 
-  console.log("provando datos", datos);
   //Tabla de eventos
   const filas = (
-    <Card.Body>
-      <Card.Header as="h5">Evento creado por:{" "+datos.Usuario.nickname}</Card.Header>
+    <Card.Body className="eventoSeleccionado">
+      <Card.Header  as="h3">{datos.titulo}</Card.Header>
       <ListGroup className="list-group-flush">
       <ListGroup.Item className="mb-2">
-        {datos.titulo}
+      Evento creado por:{" "+datos.Usuario.nickname}
       </ListGroup.Item>
       <ListGroup.Item className="mb-2">
         {datos.descripcion}
       </ListGroup.Item>
         <ListGroup.Item className="mb-2">
-          Fecha: {datos.fecha} Hora: {datos.hora}
+          Fecha: <b>{new Date(datos.fecha).toLocaleDateString()}</b> Hora: <b>{datos.hora}</b>
         </ListGroup.Item>
-        <ListGroup.Item className="mb-2">Dirección: {datos.direccion}</ListGroup.Item>
+        <ListGroup.Item className="mb-2"><FontAwesomeIcon icon={faLocationDot} /> {datos.direccion}</ListGroup.Item>
         <ListGroup.Item className="mb-2">Nivel: {datos.nivel}</ListGroup.Item>
         <ListGroup.Item>
           {/* Muestra los nkckames separados por comoas */}
@@ -56,11 +55,12 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
           {datos.Participacions.map((e) => e.Usuario?.nickname).join(", ")}
         </span> */}
           {/* Muestra los nkckames sin separar por comoas y coje el id del usuario y te manda a perfi/id pero solo muestra tu usuario */}
-          Participantes:{datos.Participacions.length}/{datos.participantes}
-          <span>
+          <FontAwesomeIcon icon={faUsers} /> {datos.Participacions.length}/{datos.participantes}
+        </ListGroup.Item>
+        <ListGroup.Item> Lista de participantes:
             {datos.Participacions.map((e, i) => (
               <Card.Link
-                variant="dark"
+                className="participantesLista"
                 key={i}
                 onClick={() => goToPerfil(e.Usuario.id)}
               >
@@ -68,9 +68,7 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
                 {e.Usuario.nickname}
               </Card.Link>
             ))}
-          </span>
-          <br />
-        </ListGroup.Item>
+          </ListGroup.Item>
       </ListGroup>
     </Card.Body>
   );
@@ -102,7 +100,7 @@ function PerfilEvento({ evento, refresh, setRefresh }) {
 
   return (
     <>
-      <Card style={{ marginTop: "30px"}} border="dark">
+      <Card  style={{ marginTop: "30px"}} >
         {filas}
         {userid === datos.id_usuario ? ( //Si el usuario logeado coincide con el id_usuario del evento le mostrara para editar
           <>

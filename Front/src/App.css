@@ -2,22 +2,8 @@
     margin-right: 20px;
 }
 
-/* estilos en un mismo archivo o en diferentes */
-/* Estilo barra navegación */
-button {
-    background-color: transparent;
-    outline: transparent;
-    border-color: transparent;
-    padding: 0;
-}
 
-.dropArea {
-    margin: 20px;
-    padding: 20px;
-    border: solid gray
-   
-}
-
+/* barra navegación */
 .userNav {
     display: inline-block;
     margin-left: 10px;
@@ -28,13 +14,14 @@ button {
 
 .containerDatos {
     margin-top: 30px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    
 }
 
+
+
 .eventos {
-    background-color: rgba(151, 151, 151, 0.267);
+    background-color: rgb(148, 182, 255);
     margin: 1%;
-    /* border-radius: 15px; */
     padding: 20px;
 }
 
@@ -43,8 +30,8 @@ button {
     height: 200px;
    border-radius: 200px;
    object-fit: cover;
-   
-   /* object-fit: contain; */
+   margin-left: 20px;
+   filter: drop-shadow(0 0 0.5rem rgba(34, 34, 34, 0.918));
 }
 
 .columnasDatos {
@@ -53,6 +40,11 @@ button {
     margin-top: 60px;
     padding: 30px;
     text-align: left;
+    
+}
+
+.columnasDatos2 {
+color: white;
 }
 
 .columnasDatos hr {
@@ -74,21 +66,18 @@ button {
 
 
 .descripcion {
-    background-color: rgb(201, 201, 201);
+    background-color: rgb(207, 222, 255);
     padding: 20px;
     font-size: 16px;
-    /* border-radius: 15px; */
 
 }
 
 .botones {
     display: flex;
-    justify-content: flex-end;
-    padding: 10px;
-    padding-top: 20px;
-    font-size: 16px;
-    text-align: right;
-gap: 10px;
+    justify-content:flex-end;
+    gap: 10px;
+    padding: 20px;
+
 }
 
 .contacto {
@@ -112,16 +101,12 @@ gap: 10px;
     
 }
 
-/* .card {
-    margin: 10px;  
-} */
-
 .cardsEventos {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    background-color: rgba(216, 216, 216, 0.486);
-    
+    background-color: rgb(177, 202, 255);
+    filter: drop-shadow(0 0 0.5rem rgba(107, 107, 107, 0.448));
 }
 
 
@@ -144,10 +129,17 @@ gap: 10px;
     padding-bottom: 10px;
 }
 
+/* modals */
 
+.dropArea {
+    margin: 20px;
+    padding: 20px;
+    border: solid gray
+   
+}
 
-.bodyModal {
-    background-color: rgba(185, 185, 185, 0.486);
+.modalStyle {
+    background-color: rgb(170, 174, 182);
 }
 
 .creador {
@@ -169,30 +161,41 @@ gap: 10px;
 .imagenesSubidas div {
 padding: 10px;}
 
+
+
+
+
 /* pantalla de inicio */
+
+.sinDatos {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.tituloDivCards h2 {
+    text-align: center;
+    padding: 20px;
+    padding-right: 50px;
+    font-size: 40px;
+    color: rgb(158, 189, 255);
+    filter: drop-shadow(0 0 0.75rem rgb(105, 105, 105));
+}
 
 .cardsValoraciones {
     margin: 20px;
-    
+    filter: drop-shadow(0 0 0.75rem rgb(54, 47, 47))
 }
 
 .cardsValoraciones div {
     margin: 10px;
     padding: 0px;
     border-radius: 0px;
+    background-color: rgb(158, 189, 255);
+    
 }
 
-.inputs input {
-    border-radius: 0px;
-}
 
-.inputs textarea {
-    border-radius: 0px;
-}
-
-.inputs select {
-    border-radius: 0px;
-}
 
 .containerValoraciones {
     display: flex;
@@ -230,22 +233,23 @@ padding: 10px;}
     margin: 0px;
 }
 
-.logoweb {
-    width: 500px;
-}
-
-
-
 .sobreposicion {
     background-color: rgba(54, 54, 54, 0.856);
-    width: 40%;
+    width: 50%;
     position: absolute;
-    padding: 20px;
-     left: 15%; 
+    padding: 0px;
+     left: 45%; 
  color: white;
      top: 20%;
      border-radius: 10px;
 }
+
+.nombreWeb {
+    width: 100%;
+    height: 200px;
+    align-content: center;
+    padding: 10px;
+  }
 
 @media screen and (max-width: 500px) {
    
@@ -272,17 +276,127 @@ padding: 10px;}
         flex-wrap: wrap;
         width: 100%;
      }
-    
+     .nombreWeb {
+        width: 100%;
+        height: 80px;
+      }
   }
 
-@media screen and (max-width: 800px) and (min-width: 500px)  {
+@media screen and (max-width: 1100px) and (min-width: 500px)  {
     .sobreposicion {
  
-        width: 90%;
+        width: 70%;
         position: absolute;
-         left: 5%; 
+         left: 25%; 
          top:20%;
      
     }
+    .nombreWeb {
+        width: 100%;
+        height: 150px;
+      }
   
   }
+
+  /* registrarse */
+
+  .registrarse {
+    color: white;
+}
+
+.registrarse input {
+    border-radius: 0px;
+}
+
+.registrarse textarea {
+    border-radius: 0px;
+}
+
+.registrarse select {
+    border-radius: 0px;
+}
+  
+
+/* lista eventos */
+
+.tituloEventos h3 {
+    text-align: center;
+    padding: 20px;
+    padding-right: 50px;
+    font-size: 40px;
+    color: rgb(158, 189, 255);
+    filter: drop-shadow(0 0 0.75rem rgb(105, 105, 105));
+}
+
+.containerListaEventos {
+    background-color: rgb(207, 222, 255);
+    padding: 20px;
+}
+
+.containerListaEventos div {
+    border-radius: 0px;
+    border: transparent;
+    
+}
+
+.containerListaEventos input {
+    border-radius: 0px;
+    border: transparent;
+    
+}
+
+.containerListaEventos select {
+    border-radius: 0px;
+    border: transparent;
+    
+}
+
+.eventoSeleccionado {
+    background-color: rgb(176, 201, 255);
+    
+ 
+}
+.eventoSeleccionado div {
+    background-color: rgba(196, 196, 196, 0);
+ 
+}
+
+.leyenda {
+    padding: 20px;
+}
+
+.iconosLeyenda {
+    filter: drop-shadow(0 0 0.25rem rgba(68, 68, 68, 0.253));
+}
+
+.participantesLista {
+    color:white;
+    text-decoration: solid;
+    font-weight: bold;
+}
+
+.participantesLista:hover {
+    color:rgb(0, 0, 0);
+    font-weight: bold;
+}
+
+.botonInfo button {
+    text-decoration: none;
+    border: 0px;
+    background-color: transparent;
+}
+
+/* crear evento */
+
+.nuevoEvento {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+.nuevoEvento label{
+    padding-top: 10px;
+}
+
+.mapa {
+    border-radius: 0px;
+    border-color: transparent;
+}

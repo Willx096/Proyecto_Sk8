@@ -89,7 +89,7 @@ function Registro() {
   }
 
   return (
-    <div className="m-5 inputs">
+    <div className="m-5 registrarse">
       <Form
         id="registro-id"
         noValidate
@@ -99,7 +99,7 @@ function Registro() {
       >
         <Row>
           <Form.Label>
-            <h3>Registrate y empieza a Skatear!</h3>
+            <h2>Regístrate y empieza a Skatear!</h2>
           </Form.Label>
           {/* la idea aqui es poner algo que anime a unirse pero que no de cringe como lo que hay puesto ahora */}
         </Row>
@@ -115,7 +115,7 @@ function Registro() {
               type="txt"
               placeholder="Franzisco"
             />
-            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      
             <Form.Control.Feedback type="invalid">
               Introduce un nombre.
             </Form.Control.Feedback>
@@ -131,7 +131,7 @@ function Registro() {
               type="txt"
               placeholder="Perez"
             />
-            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      
             <Form.Control.Feedback type="invalid">
               Introduce un Apellido.
             </Form.Control.Feedback>
@@ -147,7 +147,7 @@ function Registro() {
               placeholder="Fran34"
               required
             />
-            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      
             <Form.Control.Feedback type="invalid">
               Elige un nombre de usuario.
             </Form.Control.Feedback>
@@ -161,7 +161,7 @@ function Registro() {
               type="email"
               placeholder="f3ranz4@gmail.com"
             />
-            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      
             <Form.Control.Feedback type="invalid">
               Introduce un email.
             </Form.Control.Feedback>
@@ -189,7 +189,7 @@ function Registro() {
               }
               type="date"
             />
-            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      
             <Form.Control.Feedback type="invalid">
               Fecha de nacimiento no valida.
             </Form.Control.Feedback>
@@ -206,7 +206,7 @@ function Registro() {
               <option>Intermedio</option>
               <option>Avanzado</option>
             </Form.Select>
-            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Tiempo patinando</Form.Label>
@@ -224,7 +224,7 @@ function Registro() {
               <option>Más de 1 año</option>
               <option>Muchos años</option>
             </Form.Select>
-            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
@@ -235,7 +235,7 @@ function Registro() {
               type="password"
               placeholder="Password"
             />
-            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      
             <Form.Control.Feedback type="invalid">
               Introduce una contraseña.
             </Form.Control.Feedback>
@@ -264,7 +264,7 @@ function Registro() {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Button variant="outline-secondary" type="submit">
+            <Button variant="outline-light" type="submit">
               Registrarse
             </Button>
           </Form.Group>

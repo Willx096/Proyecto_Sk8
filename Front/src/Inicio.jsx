@@ -8,21 +8,15 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSpinner,
-  faStar,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faStar } from "@fortawesome/free-solid-svg-icons";
 
-
-function Inicio(props) {
+function Inicio() {
   const { showRegister, setShowRegister, setShowLogin, API_URL } =
     useContext(GlobalContext);
 
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
-
-  let { usuarioId } = useParams();
 
   //navegación entre perfiles
   const goTo = useNavigate();
@@ -31,6 +25,7 @@ function Inicio(props) {
     goTo("/mostrar-evento/" + id_evento); // Redirige al perfil del evento
   }
 
+  //para que se muestre y te lleve al registro
   const element = document.getElementById("content");
 
   function scrollToTop() {
@@ -44,7 +39,7 @@ function Inicio(props) {
       headers: { "Content-Type": "application/json" },
     };
 
-    fetch(API_URL+`participacion`, requestOptions)
+    fetch(API_URL + `participacion`, requestOptions)
       .then((res) => res.json())
       .then((res) => {
         if (res.ok === true) {
@@ -62,7 +57,7 @@ function Inicio(props) {
 
   if (!data)
     return (
-      <div className="d-flex justify-content-center">
+      <div className="sinDatos">
         <FontAwesomeIcon icon={faSpinner} spin spinReverse size="2xl" />
       </div>
     );
@@ -118,50 +113,52 @@ function Inicio(props) {
 
   return (
     <>
-    <div>
-      <div className="video">
-        <video
-          src={encabezado}
-          autoPlay
-          loop
-          muted
-          className="img-fluid video"
-          alt="imagen-inicio"
-        />
-        <div className="sobreposicion">
-          {/* <img src={titulo} className="logoweb" alt="" /> */}
-          <h2>Skate Zone</h2>
-          <p>
-            Skate Zone una web hecha por Skaters para Skaters. En esta web
-            podrás compartir con otras personas tu pasión por el skate, tengas
-            el nivel que tengas.
-          </p>
+      <div>
+        <div className="video">
+          <video
+            src={encabezado}
+            autoPlay
+            loop
+            muted
+            className="img-fluid video"
+            alt="imagen-inicio"
+          />
+          <div className="sobreposicion">
+            <img
+              src="../src/img/nombreWeb.PNG"
+              className="nombreWeb"
+              alt="Hola"
+            />
 
-          <div className="botones">
-            <Button variant="dark" onClick={() => setShowLogin(true)}>
-              {/* hacer este tambien con boton de bootstrap o asi */}
-              Inicia sesión
-            </Button>
-            <p>o</p>
-            <Button variant="dark" onClick={() => scrollToTop()}>
-              Registrate
-            </Button>
+            <div className="botones">
+              <Button variant="dark" onClick={() => setShowLogin(true)}>
+                Inicia sesión
+              </Button>
+
+              <Button variant="dark" onClick={() => scrollToTop()}>
+                Regístrate
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div
-        className="cardsValoraciones"
-        style={{ display: "flex", flexDirection: "column" }}
-      >
-        {Valorations}
-      </div>
+        <div>
+          <div className="tituloDivCards">
+            <h2><i>Experiencias</i></h2>
+          </div>
+          <div
+            className="cardsValoraciones"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            {Valorations}
+          </div>
+        </div>
 
-      <div > {!showRegister ? <></> : <Registro />}</div>
-      
-      <Footer />
-    </div>
-    <div id="content" ></div>
+        <div> {!showRegister ? <></> : <Registro />}</div>
+
+        <Footer />
+      </div>
+      <div id="content"></div>
     </>
   );
 }

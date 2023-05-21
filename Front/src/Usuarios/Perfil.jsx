@@ -107,7 +107,7 @@ function Perfil() {
                 Nivel: <i>{el.nivel}</i>
               </div>
             </div>
-            <div className="datosEventos">
+            <div className="datosEventos ">
               <div className="posicionIconos">
                 <FontAwesomeIcon icon={faLocationDot} />
                 <div>{el.direccion}</div>
@@ -135,9 +135,7 @@ function Perfil() {
                       setRefresh={setRefresh}
                     />
                   </div>
-                  <div>
-                    <i>Fecha: {new Date(el.fecha).toLocaleDateString()}</i>
-                  </div>
+                   
                 </div>
               )}
             </div>
@@ -204,16 +202,16 @@ function Perfil() {
                   </div>
                 </div>
               )}
-               <div className="fecha">
+               <div className="fecha botonInfo">
                <button
               onClick={() => goToEvento(el.id)}
               key={index}
-              className="tituloEvento col"
+              className="col"
             >
               <FontAwesomeIcon icon={faCircleInfo} size="lg" />
             </button>
               <i> {new Date(el.fecha).toLocaleDateString()}</i>
-               
+              
               </div>
             </div>
           </Card.Body>
@@ -256,12 +254,13 @@ function Perfil() {
             </div>
           </div>
 
-          <div className="creador">
+          <div className="creador botonInfo">
             {" "}
             <div className="fecha ">
-              <i>{new Date(el.Evento.fecha).toLocaleDateString()}</i>
+            <i> {new Date(el.Evento.fecha).toLocaleDateString()}</i>
+              
             </div>
-            <div>
+            <div >
               <img
               style={{
                 width: "30px",
@@ -292,7 +291,7 @@ function Perfil() {
         <Card.Body>
           <div className="posicionDatos row">
             <div
-              className="tituloEvento col"
+              className="botonInfo"
             >
               <b>{el.Evento.titulo}</b>
             </div>
@@ -342,17 +341,16 @@ function Perfil() {
             </div>
           </div>
 
-          <div className="creador">
+          <div className="creador botonInfo">
             <div className="fecha">
             <button
               onClick={() => goToEvento(el.Evento.id)}
               key={index}
-              className="tituloEvento col"
-            >
-              <FontAwesomeIcon icon={faCircleInfo} size="lg" />
-            </button> 
-               <i> {new Date(el.Evento.fecha).toLocaleDateString()}</i>
               
+            >
+              <FontAwesomeIcon icon={faCircleInfo} size="lg"  />
+            </button> 
+            <i> {new Date(el.Evento.fecha).toLocaleDateString()}</i> <i>{el.Evento.hora}</i>
             </div>
             <div>
               <img
@@ -383,7 +381,7 @@ function Perfil() {
           <div className="fotoPerfil">{foto}</div>
         </Col>
 
-        <Col xs={12} md={6} lg={3} className="columnasDatos">
+        <Col xs={12} md={6} lg={3} className="columnasDatos2">
           <div className="titulos">
             {datos.nombre} {datos.apellido}
           </div>

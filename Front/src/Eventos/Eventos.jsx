@@ -79,11 +79,11 @@ function Eventos(props) {
 
   return (
     <>
-      <div class="mx-4">
-        <div className="tituloEventosd">
-          <h3>Eventos Disponibles</h3>
+      <div class="mx-4 ">
+        <div className="tituloEventos">
+          <h3>Selecciona un evento y apúntate!</h3>
         </div>
-        <Row className="pb-2 bg-secondary" xs={1} sm={1} lg={2}>
+        <Row className="pb-2 containerListaEventos" xs={1} sm={1} lg={2}>
           <Col>
             <Row className="mb-1">
               <Form.Group as={Col} sm={5}>
@@ -123,6 +123,7 @@ function Eventos(props) {
                   <FontAwesomeIcon
                     icon={faLocationDot}
                     size="xl"
+                    className="iconosLeyenda"
                     style={{ color: "#2990ff" }}
                   />
                 </div>
@@ -132,6 +133,7 @@ function Eventos(props) {
                   <FontAwesomeIcon
                     icon={faLocationDot}
                     size="xl"
+                    className="iconosLeyenda"
                     style={{ color: "#17c814" }}
                   />
                 </div>
@@ -141,6 +143,7 @@ function Eventos(props) {
                   <FontAwesomeIcon
                     icon={faLocationDot}
                     size="xl"
+                    className="iconosLeyenda"
                     style={{ color: "#e8e23b" }}
                   />
                 </div>
@@ -150,6 +153,7 @@ function Eventos(props) {
                   <FontAwesomeIcon
                     icon={faLocationDot}
                     size="xl"
+                    className="iconosLeyenda"
                     style={{ color: "#e30d0d" }}
                   />
                 </div>
@@ -161,6 +165,7 @@ function Eventos(props) {
                   <FontAwesomeIcon
                     icon={faLocationDot}
                     size="xl"
+                    className="iconosLeyenda"
                     style={{ color: "#2990ff" }}
                   />
                 </div>
