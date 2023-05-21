@@ -137,6 +137,7 @@ function EditarEvento({ refresh, setRefresh, eventoId, eventos }) {
                     required
                   >
                     <option>Selecciona el Nivel</option>
+                    <option>Todos</option>
                     <option>Principante</option>
                     <option>Intermedio</option>
                     <option>Avanzado</option>

@@ -25,10 +25,10 @@ function Footer() {
           </section>
         </div>
 
-        <div class="text-center p-2 bg-dark">
-          © 2023 Copyright: 
-           <a class="text-white" href="https://skate-zone.com/">
-             SkateZone
+        <div className="text-center p-2 bg-dark">
+          © 2023 Copyright:
+          <a className="text-white" href="https://skatezone.com/">
+            SkateZone
           </a>
         </div>
       </footer>
