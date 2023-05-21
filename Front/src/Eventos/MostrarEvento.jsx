@@ -79,7 +79,7 @@ function MostrarEvento({}) {
   );
 
   return (
-    <div class="mx-5">
+    <div className="mx-5">
       <br />
 
       <img
